@@ -1,4 +1,5 @@
 #include "charater.h"
+#include "flower.h"
 #include "../scene/sceneManager.h"
 #include "projectile.h"
 #include "../shapes/Rectangle.h"
@@ -6,15 +7,15 @@
 #include <stdio.h>
 #include <stdbool.h>
 /*
-   [Character function]
+   [Flower function]
 */
 //hello
-Elements *New_Character(int label)
+Elements *New_Flower(int label)
 {
-    Character *pDerivedObj = (Character *)malloc(sizeof(Character));
+    Flower *pDerivedObj = (Flower *)malloc(sizeof(Flower));
     Elements *pObj = New_Elements(label);
     // setting derived object member
-    // load character images
+    // load flower images
     char state_string[3][10] = {"stop", "move", "attack"};
     for (int i = 0; i < 3; i++)
     {
@@ -28,34 +29,33 @@ Elements *New_Character(int label)
     al_set_sample_instance_playmode(pDerivedObj->atk_Sound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(pDerivedObj->atk_Sound, al_get_default_mixer());
 
-    // initial the geometric information of character
+    // initial the geometric information of flower
     pDerivedObj->width = pDerivedObj->gif_status[0]->width;
     pDerivedObj->height = pDerivedObj->gif_status[0]->height;
-    pDerivedObj->x = 100;
+    pDerivedObj->x = 400;
     pDerivedObj->y = HEIGHT - pDerivedObj->height - 60;
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
                                         pDerivedObj->y,
                                         pDerivedObj->x + pDerivedObj->width,
                                         pDerivedObj->y + pDerivedObj->height);
-    pDerivedObj->dir = true; // true: face to right, false: face to left
+    pDerivedObj->dir = false; // true: face to right, false: face to left
     // initial the animation component
-    pDerivedObj->state = ATK;
+    pDerivedObj->state = STOP;
     pDerivedObj->new_proj = false;
     pObj->pDerivedObj = pDerivedObj;
     // setting derived object function
-    pObj->Draw = Character_draw;
-    pObj->Update = Character_update;
-    pObj->Interact = Character_interact;
-    pObj->Destroy = Character_destory;
+    pObj->Draw = Flower_draw;
+    pObj->Update = Flower_update;
+    pObj->Interact = Flower_interact;
+    pObj->Destroy = Flower_destory;
     return pObj;
 }
-void Character_update(Elements *self)
+void Flower_update(Elements *self)
 {
     // use the idea of finite state machine to deal with different state
-    Character *chara = ((Character *)(self->pDerivedObj));
+    Flower *chara = ((Flower *)(self->pDerivedObj));
     if (chara->state == STOP)
     {
-        chara->state = ATK;
         if (key_state[ALLEGRO_KEY_SPACE])
         {
             chara->state = ATK;
@@ -77,7 +77,6 @@ void Character_update(Elements *self)
     }
     else if (chara->state == MOVE)
     {
-        chara->state = ATK;
         if (key_state[ALLEGRO_KEY_SPACE])
         {
             chara->state = ATK;
@@ -85,13 +84,13 @@ void Character_update(Elements *self)
         else if (key_state[ALLEGRO_KEY_A])
         {
             chara->dir = false;
-            _Character_update_position(self, -5, 0);
+            _Flower_update_position(self, -5, 0);
             chara->state = MOVE;
         }
         else if (key_state[ALLEGRO_KEY_D])
         {
             chara->dir = true;
-            _Character_update_position(self, 5, 0);
+            _Flower_update_position(self, 5, 0);
             chara->state = MOVE;
         }
         if (chara->gif_status[chara->state]->done)
@@ -99,7 +98,6 @@ void Character_update(Elements *self)
     }
     else if (chara->state == ATK)
     {
-        chara->state = ATK;
         if (chara->gif_status[chara->state]->done)
         {
             chara->state = STOP;
@@ -125,13 +123,12 @@ void Character_update(Elements *self)
             _Register_elements(scene, pro);
             chara->new_proj = true;
         }
-        chara->state = ATK;
     }
 }
-void Character_draw(Elements *self)
+void Flower_draw(Elements *self)
 {
     // with the state, draw corresponding image
-    Character *chara = ((Character *)(self->pDerivedObj));
+    Flower *chara = ((Flower *)(self->pDerivedObj));
     ALLEGRO_BITMAP *frame = algif_get_bitmap(chara->gif_status[chara->state], al_get_time());
     if (frame)
     {
@@ -142,9 +139,9 @@ void Character_draw(Elements *self)
         al_play_sample_instance(chara->atk_Sound);
     }
 }
-void Character_destory(Elements *self)
+void Flower_destory(Elements *self)
 {
-    Character *Obj = ((Character *)(self->pDerivedObj));
+    Flower *Obj = ((Flower *)(self->pDerivedObj));
     al_destroy_sample_instance(Obj->atk_Sound);
     for (int i = 0; i < 3; i++)
         algif_destroy_animation(Obj->gif_status[i]);
@@ -153,9 +150,9 @@ void Character_destory(Elements *self)
     free(self);
 }
 
-void _Character_update_position(Elements *self, int dx, int dy)
+void _Flower_update_position(Elements *self, int dx, int dy)
 {
-    Character *chara = ((Character *)(self->pDerivedObj));
+    Flower *chara = ((Flower *)(self->pDerivedObj));
     chara->x += dx;
     chara->y += dy;
     Shape *hitbox = chara->hitbox;
@@ -163,4 +160,4 @@ void _Character_update_position(Elements *self, int dx, int dy)
     hitbox->update_center_y(hitbox, dy);
 }
 
-void Character_interact(Elements *self, Elements *tar) {}
+void Flower_interact(Elements *self, Elements *tar) {}

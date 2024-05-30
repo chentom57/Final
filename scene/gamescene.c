@@ -14,6 +14,8 @@ Scene *New_GameScene(int label)
     _Register_elements(pObj, New_Teleport(Teleport_L));
     _Register_elements(pObj, New_Tree(Tree_L));
     _Register_elements(pObj, New_Character(Character_L));
+    _Register_elements(pObj, New_Flower(Flower_L));
+
     // setting derived object function
     pObj->Update = game_scene_update;
     pObj->Draw = game_scene_draw;
