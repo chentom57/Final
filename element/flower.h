@@ -30,12 +30,20 @@ typedef struct _Flower
     bool new_proj;
     Shape *hitbox; // the hitbox of object
 } Flower;
+<<<<<<< HEAD
 Elements *New_Flower(int label, int x, int y);
 void Flower_placing(int x, int y);
+=======
+Elements *New_Flower(int label);
+>>>>>>> 1785477cdfb8bf61fd8b6055c8662ff6945aedff
 void _Flower_update_position(Elements *self, int dx, int dy);
 void Flower_update(Elements *self);
 void Flower_interact(Elements *self, Elements *target);
 void Flower_draw(Elements *self);
 void Flower_destory(Elements *self);
 
+<<<<<<< HEAD
 #endif
+=======
+#endif
+>>>>>>> 1785477cdfb8bf61fd8b6055c8662ff6945aedff

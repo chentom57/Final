@@ -12,7 +12,10 @@
 #include "../element/Resume.h"
 #include "../element/map.h"
 #include "../element/flower.h"
+<<<<<<< HEAD
 #include "../element/Ball2.h"
+=======
+>>>>>>> 1785477cdfb8bf61fd8b6055c8662ff6945aedff
 /*
    [game scene object]
 */
@@ -28,7 +31,10 @@ typedef enum EleType
     Resume_L,
     Flower_L,
     Ball_L,
+<<<<<<< HEAD
     Ball2_L
+=======
+>>>>>>> 1785477cdfb8bf61fd8b6055c8662ff6945aedff
     
 } EleType;
 typedef struct _GameScene
