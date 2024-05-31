@@ -6,11 +6,12 @@
 #include "../algif5/src/algif.h"
 #include <stdio.h>
 #include <stdbool.h>
+#include <unistd.h>
 /*
    [Flower function]
 */
 //hello
-Elements *New_Flower(int label)
+Elements *New_Flower(int label, int x, int y)
 {
     Flower *pDerivedObj = (Flower *)malloc(sizeof(Flower));
     Elements *pObj = New_Elements(label);
@@ -32,13 +33,13 @@ Elements *New_Flower(int label)
     // initial the geometric information of flower
     pDerivedObj->width = pDerivedObj->gif_status[0]->width;
     pDerivedObj->height = pDerivedObj->gif_status[0]->height;
-    pDerivedObj->x = 400;
-    pDerivedObj->y = HEIGHT - pDerivedObj->height - 60;
+    pDerivedObj->x = x;
+    pDerivedObj->y = y;
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
                                         pDerivedObj->y,
                                         pDerivedObj->x + pDerivedObj->width,
                                         pDerivedObj->y + pDerivedObj->height);
-    pDerivedObj->dir = false; // true: face to right, false: face to left
+    pDerivedObj->dir = true; // true: face to right, false: face to left
     // initial the animation component
     pDerivedObj->state = STOP;
     pDerivedObj->new_proj = false;
@@ -50,55 +51,27 @@ Elements *New_Flower(int label)
     pObj->Destroy = Flower_destory;
     return pObj;
 }
+void Flower_placing(int x, int y){
+//     if(key_state[ALLEGRO_KEY_SPACE]){
+//         printf("spcae is pressed");
+//         New_Flower(Flower_L, 1, 1);
+//     }
+// }
+}
 void Flower_update(Elements *self)
 {
+    
     // use the idea of finite state machine to deal with different state
     Flower *chara = ((Flower *)(self->pDerivedObj));
-    if (chara->state == STOP)
-    {
-        if (key_state[ALLEGRO_KEY_SPACE])
-        {
-            chara->state = ATK;
-        }
-        else if (key_state[ALLEGRO_KEY_A])
-        {
-            chara->dir = false;
-            chara->state = MOVE;
-        }
-        else if (key_state[ALLEGRO_KEY_D])
-        {
-            chara->dir = true;
-            chara->state = MOVE;
-        }
-        else
-        {
-            chara->state = STOP;
-        }
-    }
-    else if (chara->state == MOVE)
-    {
-        if (key_state[ALLEGRO_KEY_SPACE])
-        {
-            chara->state = ATK;
-        }
-        else if (key_state[ALLEGRO_KEY_A])
-        {
-            chara->dir = false;
-            _Flower_update_position(self, -5, 0);
-            chara->state = MOVE;
-        }
-        else if (key_state[ALLEGRO_KEY_D])
-        {
-            chara->dir = true;
-            _Flower_update_position(self, 5, 0);
-            chara->state = MOVE;
-        }
-        if (chara->gif_status[chara->state]->done)
-            chara->state = STOP;
-    }
-    else if (chara->state == ATK)
-    {
-        if (chara->gif_status[chara->state]->done)
+    // if(key_state[ALLEGRO_KEY_SPACE]){
+    //     printf("spcae is pressed");
+    //     //New_Flower(Flower_L, 1, 1);
+    //     sleep(1);
+    // }
+    
+    chara->state = ATK;
+    
+    if (chara->gif_status[chara->state]->done)
         {
             chara->state = STOP;
             chara->new_proj = false;
@@ -106,12 +79,16 @@ void Flower_update(Elements *self)
         if (chara->gif_status[ATK]->display_index == 2 && chara->new_proj == false)
         {
             Elements *pro;
+            // Elements *pro2;
             if (chara->dir)
             {
                 pro = New_Projectile(Projectile_L,
                                      chara->x + chara->width - 100,
                                      chara->y + 10,
                                      5);
+                // printf("enterd");
+                // pro2 = New_Flower(Flower_L, 100, 100);
+                // _Register_elements(scene, pro2);
             }
             else
             {
@@ -123,7 +100,87 @@ void Flower_update(Elements *self)
             _Register_elements(scene, pro);
             chara->new_proj = true;
         }
-    }
+        chara->state = ATK;
+    // if (chara->state == STOP)
+    // {
+    //     // chara->state = ATK;
+    //     if (key_state[ALLEGRO_KEY_SPACE])
+    //     {
+            
+    //         chara->state = ATK;
+    //     }
+    //     else if (key_state[ALLEGRO_KEY_A])
+    //     {
+    //         // Elements *flo;
+    //         // flo = New_Flower(Flower_L, 100, 100);
+    //         // _Register_elements(scene, flo);
+        
+    //         printf("A");
+    //         chara->dir = false;
+    //         chara->state = MOVE;
+    //     }
+    //     else if (key_state[ALLEGRO_KEY_D])
+    //     {
+    //         chara->dir = true;
+    //         chara->state = MOVE;
+    //     }
+    //     else
+    //     {
+    //         chara->state = STOP;
+    //     }
+    // }
+    // else if (chara->state == MOVE)
+    // {
+    //     // chara->state = ATK;
+    //     if (key_state[ALLEGRO_KEY_SPACE])
+    //     {
+    //         chara->state = ATK;
+    //     }
+    //     else if (key_state[ALLEGRO_KEY_A])
+    //     {
+    //         chara->dir = false;
+    //         _Flower_update_position(self, -5, 0);
+    //         chara->state = MOVE;
+    //     }
+    //     else if (key_state[ALLEGRO_KEY_D])
+    //     {
+    //         chara->dir = true;
+    //         _Flower_update_position(self, 5, 0);
+    //         chara->state = MOVE;
+    //     }
+    //     if (chara->gif_status[chara->state]->done)
+    //         chara->state = STOP;
+    // }
+    // else if (chara->state == ATK)
+    // {
+    //     // chara->state = ATK;
+    //     if (chara->gif_status[chara->state]->done)
+    //     {
+    //         chara->state = STOP;
+    //         chara->new_proj = false;
+    //     }
+    //     if (chara->gif_status[ATK]->display_index == 2 && chara->new_proj == false)
+    //     {
+    //         Elements *pro;
+    //         if (chara->dir)
+    //         {
+    //             pro = New_Projectile(Projectile_L,
+    //                                  chara->x + chara->width - 100,
+    //                                  chara->y + 10,
+    //                                  5);
+    //         }
+    //         else
+    //         {
+    //             pro = New_Projectile(Projectile_L,
+    //                                  chara->x - 50,
+    //                                  chara->y + 10,
+    //                                  -5);
+    //         }
+    //         _Register_elements(scene, pro);
+    //         chara->new_proj = true;
+    //     }
+    //     // chara->state = ATK;
+    // }
 }
 void Flower_draw(Elements *self)
 {
@@ -159,5 +216,4 @@ void _Flower_update_position(Elements *self, int dx, int dy)
     hitbox->update_center_x(hitbox, dx);
     hitbox->update_center_y(hitbox, dy);
 }
-
 void Flower_interact(Elements *self, Elements *tar) {}
