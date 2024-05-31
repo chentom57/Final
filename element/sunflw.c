@@ -1,5 +1,5 @@
 #include "charater.h"
-#include "flower.h"
+#include "sunflw.h"
 #include "../scene/sceneManager.h"
 #include "projectile.h"
 #include "../shapes/Rectangle.h"
@@ -8,15 +8,15 @@
 #include <stdbool.h>
 #include <unistd.h>
 /*
-   [Flower function]
+   [Sunflw function]
 */
 //hello
-Elements *New_Flower(int label, int x, int y)
+Elements *New_Sunflw(int label, int x, int y)
 {
-    Flower *pDerivedObj = (Flower *)malloc(sizeof(Flower));
+    Sunflw *pDerivedObj = (Sunflw *)malloc(sizeof(Sunflw));
     Elements *pObj = New_Elements(label);
     // setting derived object member
-    // load flower images
+    // load sunflw images
     char state_string[3][10] = {"stop", "move", "attack"};
     for (int i = 0; i < 3; i++)
     {
@@ -30,7 +30,7 @@ Elements *New_Flower(int label, int x, int y)
     al_set_sample_instance_playmode(pDerivedObj->atk_Sound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(pDerivedObj->atk_Sound, al_get_default_mixer());
 
-    // initial the geometric information of flower
+    // initial the geometric information of sunflw
     pDerivedObj->width = pDerivedObj->gif_status[0]->width;
     pDerivedObj->height = pDerivedObj->gif_status[0]->height;
     pDerivedObj->x = x;
@@ -45,26 +45,26 @@ Elements *New_Flower(int label, int x, int y)
     pDerivedObj->new_proj = false;
     pObj->pDerivedObj = pDerivedObj;
     // setting derived object function
-    pObj->Draw = Flower_draw;
-    pObj->Update = Flower_update;
-    pObj->Interact = Flower_interact;
-    pObj->Destroy = Flower_destory;
+    pObj->Draw = Sunflw_draw;
+    pObj->Update = Sunflw_update;
+    pObj->Interact = Sunflw_interact;
+    pObj->Destroy = Sunflw_destory;
     return pObj;
 }
-void Flower_placing(int x, int y){
+void Sunflw_placing(int x, int y){
 //     if(key_state[ALLEGRO_KEY_SPACE]){
 //         printf("spcae is pressed");
-//         New_Flower(Flower_L, 1, 1);
+//         New_Sunflw(Sunflw_L, 1, 1);
 //     }
 // }
 }
-void Flower_update(Elements *self)
+void Sunflw_update(Elements *self)
 {
     // use the idea of finite state machine to deal with different state
-    Flower *chara = ((Flower *)(self->pDerivedObj));
+    Sunflw *chara = ((Sunflw *)(self->pDerivedObj));
     // if(key_state[ALLEGRO_KEY_SPACE]){
     //     printf("spcae is pressed");
-    //     //New_Flower(Flower_L, 1, 1);
+    //     //New_Sunflw(Sunflw_L, 1, 1);
     //     sleep(1);
     // }
     // if(mouse_state[2] == 1){
@@ -87,7 +87,7 @@ void Flower_update(Elements *self)
                                      chara->y + 10,
                                      5);
                 // printf("enterd");
-                // pro2 = New_Flower(Flower_L, 100, 100);
+                // pro2 = New_Sunflw(Sunflw_L, 100, 100);
                 // _Register_elements(scene, pro2);
             }
             else
@@ -112,7 +112,7 @@ void Flower_update(Elements *self)
     //     else if (key_state[ALLEGRO_KEY_A])
     //     {
     //         // Elements *flo;
-    //         // flo = New_Flower(Flower_L, 100, 100);
+    //         // flo = New_Sunflw(Sunflw_L, 100, 100);
     //         // _Register_elements(scene, flo);
         
     //         printf("A");
@@ -139,13 +139,13 @@ void Flower_update(Elements *self)
     //     else if (key_state[ALLEGRO_KEY_A])
     //     {
     //         chara->dir = false;
-    //         _Flower_update_position(self, -5, 0);
+    //         _Sunflw_update_position(self, -5, 0);
     //         chara->state = MOVE;
     //     }
     //     else if (key_state[ALLEGRO_KEY_D])
     //     {
     //         chara->dir = true;
-    //         _Flower_update_position(self, 5, 0);
+    //         _Sunflw_update_position(self, 5, 0);
     //         chara->state = MOVE;
     //     }
     //     if (chara->gif_status[chara->state]->done)
@@ -182,10 +182,10 @@ void Flower_update(Elements *self)
     //     // chara->state = ATK;
     // }
 }
-void Flower_draw(Elements *self)
+void Sunflw_draw(Elements *self)
 {
     // with the state, draw corresponding image
-    Flower *chara = ((Flower *)(self->pDerivedObj));
+    Sunflw *chara = ((Sunflw *)(self->pDerivedObj));
     ALLEGRO_BITMAP *frame = algif_get_bitmap(chara->gif_status[chara->state], al_get_time());
     if (frame)
     {
@@ -196,9 +196,9 @@ void Flower_draw(Elements *self)
         al_play_sample_instance(chara->atk_Sound);
     }
 }
-void Flower_destory(Elements *self)
+void Sunflw_destory(Elements *self)
 {
-    Flower *Obj = ((Flower *)(self->pDerivedObj));
+    Sunflw *Obj = ((Sunflw *)(self->pDerivedObj));
     al_destroy_sample_instance(Obj->atk_Sound);
     for (int i = 0; i < 3; i++)
         algif_destroy_animation(Obj->gif_status[i]);
@@ -207,16 +207,16 @@ void Flower_destory(Elements *self)
     free(self);
 }
 
-void _Flower_update_position(Elements *self, int dx, int dy)
+void _Sunflw_update_position(Elements *self, int dx, int dy)
 {
-    Flower *chara = ((Flower *)(self->pDerivedObj));
+    Sunflw *chara = ((Sunflw *)(self->pDerivedObj));
     chara->x += dx;
     chara->y += dy;
     Shape *hitbox = chara->hitbox;
     hitbox->update_center_x(hitbox, dx);
     hitbox->update_center_y(hitbox, dy);
 }
-void Flower_interact(Elements *self, Elements *tar) {
+void Sunflw_interact(Elements *self, Elements *tar) {
     // if(mouse_state[2] == 1){
     //     printf("mouse right clicked");
     // }

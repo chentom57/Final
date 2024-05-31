@@ -20,7 +20,7 @@ Elements *New_Ball2(int label)
     pDerivedObj->state2 = 0;
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = Character_L;
-    pObj->inter_obj[pObj->inter_len++] = Tree_L;
+    pObj->inter_obj[pObj->inter_len++] = Flower_L;
 
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
@@ -49,57 +49,57 @@ void Ball2_update(Elements *self)
         //     // _Register_elements(scene, flo);
         //     chara2 -> state2 = 0;
         if(al_mouse_button_down(&msstate, 1)){//*mouse right button is clicked return 1
-            printf("mouse is clicked\n");
+            printf("mouse left is clicked\n");
             flo = New_Flower(Flower_L, (Obj->x) -80, (Obj->y) -80);//*generate new flower
             _Register_elements(scene, flo);
             chara2 -> state2 = 1;
         }
         else chara2 -> state2 = 0;
-        
         // sleep(1);
     }
     else if(chara2 -> state2 == 1){
         if(al_mouse_button_down(&msstate, 1)){
-            printf("mouse is clicked\n");
+            printf("mouse left is clicked\n");
             chara2 -> state2 = 1;
         }
         else chara2 -> state2 = 0;
-        
     }
     
 }
 void Ball2_interact(Elements *self, Elements *tar)
 {
+    // printf("hello");
     Ball2 *Obj = ((Ball2 *)(self->pDerivedObj));
-    if (tar->label == Character_L)
-    {
+    // if (tar->label == Character_L)
+    // {
+    //     Character *Obj2 = ((Character *)(tar->pDerivedObj));
 
-        Character *Obj2 = ((Character *)(tar->pDerivedObj));
-
-        if (Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox))
-        {
-            Obj->color = al_map_rgb(0, 255, 0);
-            Obj->in = Character_L;
-        }
-        else if (Obj->in == Character_L)
-        {
-            Obj->color = al_map_rgb(255, 0, 0);
-            Obj->in = -1;
-        }
-    }
-    else if (tar->label == Tree_L)
+    //     if (Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox))
+    //     {
+    //         Obj->color = al_map_rgb(0, 255, 0);
+    //         Obj->in = Character_L;
+    //     }
+    //     else if (Obj->in == Character_L)
+    //     {
+    //         Obj->color = al_map_rgb(255, 0, 0);
+    //         Obj->in = -1;
+    //     }
+    // }
+    if (tar->label == Flower_L)
     {
-        Tree *Obj2 = ((Tree *)(tar->pDerivedObj));
-        if (Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox))
+        Flower *Obj2 = ((Flower *)(tar->pDerivedObj));
+        if ((Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox))&&mouse_state[2] == 1)
         {
+            printf("mouse right clicked\n");
+            tar -> dele = true;
             Obj->color = al_map_rgb(0, 0, 255);
-            Obj->in = Tree_L;
+            // Obj->in = Flower_L;
         }
-        else if (Obj->in == Tree_L)
-        {
-            Obj->color = al_map_rgb(255, 0, 0);
-            Obj->in = -1;
-        }
+        // else if (Obj->in == Flower_L)
+        // {
+        //     Obj->color = al_map_rgb(255, 0, 0);
+        //     Obj->in = -1;
+        // }
     }
 }
 void Ball2_draw(Elements *self)

@@ -48,9 +48,9 @@ void Projectile_interact(Elements *self, Elements *tar)
     Projectile *Obj = ((Projectile *)(self->pDerivedObj));
     if (tar->label == Floor_L)
     {
-        if (Obj->x < 0 - Obj->width)
+        if(Obj->x < 0 - Obj->width)
             self->dele = true;
-        else if (Obj->x > WIDTH + Obj->width)
+        else if(Obj->x > WIDTH + Obj->width)
             self->dele = true;
     }
     else if (tar->label == Tree_L)
