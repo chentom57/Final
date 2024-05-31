@@ -40,10 +40,7 @@ void Start_interact(Elements *self, Elements *tar)
        Ball *Obj2 = ((Ball *)(tar->pDerivedObj));
         if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]){
             Obj->start=1;
-<<<<<<< HEAD
             al_rest(1);//避免在按鈕位置產生植物
-=======
->>>>>>> 1785477cdfb8bf61fd8b6055c8662ff6945aedff
         }
     }
 
