@@ -41,7 +41,7 @@ Elements *New_Flower(int label, int x, int y)
                                         pDerivedObj->y + pDerivedObj->height);
     pDerivedObj->dir = true; // true: face to right, false: face to left
     // initial the animation component
-    pDerivedObj->state = STOP;
+    pDerivedObj->state = ATK;
     pDerivedObj->new_proj = false;
     pObj->pDerivedObj = pDerivedObj;
     // setting derived object function

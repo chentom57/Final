@@ -3,6 +3,12 @@
 		"PATH": "${workspaceFolder}\\..\\MinGW\\bin;${env:PATH}"
 	},
 	"files.associations": {
-		"stdbool.h": "c"
+		"stdbool.h": "c",
+		"ball.h": "c",
+		"algif.h": "c",
+		"events.h": "c",
+		"charater.h": "c",
+		"element.h": "c",
+		"projectile.h": "c"
 	}
 }

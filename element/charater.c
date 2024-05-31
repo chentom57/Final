@@ -27,18 +27,20 @@ Elements *New_Character(int label)
     pDerivedObj->atk_Sound = al_create_sample_instance(sample);
     al_set_sample_instance_playmode(pDerivedObj->atk_Sound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(pDerivedObj->atk_Sound, al_get_default_mixer());
-
     // initial the geometric information of character
     pDerivedObj->width = pDerivedObj->gif_status[0]->width;
     pDerivedObj->height = pDerivedObj->gif_status[0]->height;
+    pDerivedObj->x = 300;
     pDerivedObj->x = 100;
     pDerivedObj->y = HEIGHT - pDerivedObj->height - 60;
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
                                         pDerivedObj->y,
                                         pDerivedObj->x + pDerivedObj->width,
                                         pDerivedObj->y + pDerivedObj->height);
+    pDerivedObj->dir = false; // true: face to right, false: face to left
     pDerivedObj->dir = true; // true: face to right, false: face to left
     // initial the animation component
+    pDerivedObj->state = STOP;
     pDerivedObj->state = ATK;
     pDerivedObj->new_proj = false;
     pObj->pDerivedObj = pDerivedObj;
@@ -152,7 +154,6 @@ void Character_destory(Elements *self)
     free(Obj);
     free(self);
 }
-
 void _Character_update_position(Elements *self, int dx, int dy)
 {
     Character *chara = ((Character *)(self->pDerivedObj));
@@ -162,5 +163,4 @@ void _Character_update_position(Elements *self, int dx, int dy)
     hitbox->update_center_x(hitbox, dx);
     hitbox->update_center_y(hitbox, dy);
 }
-
 void Character_interact(Elements *self, Elements *tar) {}

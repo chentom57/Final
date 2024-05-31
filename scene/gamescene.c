@@ -7,15 +7,17 @@ Scene *New_GameScene(int label)
     GameScene *pDerivedObj = (GameScene *)malloc(sizeof(GameScene));
     Scene *pObj = New_Scene(label);
     // setting derived object member
-    pDerivedObj->background = al_load_bitmap("assets/image/stage.jpg");
+    //pDerivedObj->background = al_load_bitmap("assets/image/stage.jpg");
     pObj->pDerivedObj = pDerivedObj;
     // register element
     _Register_elements(pObj, New_Floor(Floor_L));
-    _Register_elements(pObj, New_Teleport(Teleport_L));
-    _Register_elements(pObj, New_Tree(Tree_L));
-    _Register_elements(pObj, New_Character(Character_L));
-    _Register_elements(pObj, New_Flower(Flower_L));
-
+    // _Register_elements(pObj, New_Character(Character_L));
+    _Register_elements(pObj, New_Back(Back_L));
+    _Register_elements(pObj, New_Resume(Resume_L));
+    _Register_elements(pObj, New_Ball(Ball_L));
+    _Register_elements(pObj, New_Ball2(Ball2_L));
+     _Register_elements(pObj, New_map(Map_L));
+    //  _Register_elements(pObj, New_Flower(Flower_L));
     // setting derived object function
     pObj->Update = game_scene_update;
     pObj->Draw = game_scene_draw;
@@ -46,6 +48,26 @@ void game_scene_update(Scene *self)
             }
         }
     }
+    for (int i = 0; i < allEle.len; i++)
+    {
+        Elements *ele = allEle.arr[i];
+        if(ele->label==Back_L){
+            Back *Obj = ((Back *)(ele->pDerivedObj));
+            if(Obj->back==1){
+                    self->scene_end = true;
+                    window = 0;
+            }
+
+        }
+       else if(ele->label==Resume_L){
+            Resume *Obj = ((Resume *)(ele->pDerivedObj));
+            if(Obj->Resume==1){
+                    self->scene_end = true;
+                    window = 1;
+            }
+
+        }
+    }
     // remove element
     for (int i = 0; i < allEle.len; i++)
     {
@@ -57,8 +79,8 @@ void game_scene_update(Scene *self)
 void game_scene_draw(Scene *self)
 {
     al_clear_to_color(al_map_rgb(0, 0, 0));
-    GameScene *gs = ((GameScene *)(self->pDerivedObj));
-    al_draw_bitmap(gs->background, 0, 0, 0);
+    //GameScene *gs = ((GameScene *)(self->pDerivedObj));
+    //al_draw_bitmap(gs->background, 0, 0, 0);
     ElementVec allEle = _Get_all_elements(self);
     for (int i = 0; i < allEle.len; i++)
     {
@@ -69,8 +91,8 @@ void game_scene_draw(Scene *self)
 void game_scene_destroy(Scene *self)
 {
     GameScene *Obj = ((GameScene *)(self->pDerivedObj));
-    ALLEGRO_BITMAP *background = Obj->background;
-    al_destroy_bitmap(background);
+    //ALLEGRO_BITMAP *background = Obj->background;
+    //al_destroy_bitmap(background);
     ElementVec allEle = _Get_all_elements(self);
     for (int i = 0; i < allEle.len; i++)
     {
