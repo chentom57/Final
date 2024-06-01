@@ -6,17 +6,18 @@ Elements *New_Back_gg(int label)
 {
     Back_gg *pDerivedObj = (Back_gg *)malloc(sizeof(Back_gg));
     Elements *pObj = New_Elements(label);
+    pDerivedObj->img = al_load_bitmap("assets/image/gameover_b.png");
+    pDerivedObj->width =al_get_bitmap_width(pDerivedObj->img);
+    pDerivedObj->heigh =al_get_bitmap_height(pDerivedObj->img);
     pDerivedObj->Back_gg=0;
     pDerivedObj->x = 450;  
-    pDerivedObj->y = 220;
-    pDerivedObj->width =150;
-    pDerivedObj->heigh=70;
+    pDerivedObj->y = 400;
     pDerivedObj->in = -1;
     pDerivedObj->color = al_map_rgb(255, 255, 255);
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x-pDerivedObj->width/2,
                                      pDerivedObj->y-pDerivedObj->heigh/2,
                                      pDerivedObj->x+pDerivedObj->width/2,pDerivedObj->y+pDerivedObj->heigh/2);
-    pDerivedObj->font=al_load_ttf_font("assets/font/pirulen.ttf", 18, 0);
+    pDerivedObj->font=al_load_ttf_font("assets/font/pirulen.ttf",28, 0);
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = MOUSE_gg_L;
 
@@ -38,18 +39,23 @@ void Back_gg_interact(Elements *self, Elements *tar)
     if (tar->label == MOUSE_gg_L)
     {
        Ball *Obj2 = ((Ball *)(tar->pDerivedObj));
-        if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]){
-            Obj->color=al_map_rgb(200,200,200);
-            Obj->Back_gg=1;
+        if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)){
+            Obj->color=al_map_rgb(255,193,37);
+            if(mouse_state[1])
+                Obj->Back_gg=1;
+        }
+        else{
+             Obj->color=al_map_rgb(255,255,255);
         }
     }
 
 }
 void Back_gg_draw(Elements *self)
 {
+    
     Back_gg *Obj = ((Back_gg *)(self->pDerivedObj));
-    al_draw_rectangle(Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,Obj->x+(Obj->width)/2,Obj->y+(Obj->heigh)/2,Obj->color,3);
-    al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6, ALLEGRO_ALIGN_CENTRE, "MENU");
+    al_draw_bitmap(Obj->img,Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,0);
+    al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6.5, ALLEGRO_ALIGN_CENTRE, "MENU");
 }
 void Back_gg_destory(Elements *self)
 {

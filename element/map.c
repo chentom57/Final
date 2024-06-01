@@ -12,7 +12,7 @@ Elements *New_map(int label)
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->x = 0;  
-    pDerivedObj->y = 50;
+    pDerivedObj->y = 0;
     pDerivedObj->in = -1;
     pDerivedObj->color = al_map_rgb(0, 0, 255);
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,

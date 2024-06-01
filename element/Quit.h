@@ -20,6 +20,7 @@ typedef struct _Quit
     Shape *hitbox; // the hitbox of object
     ALLEGRO_COLOR color;
     ALLEGRO_FONT *font;
+    ALLEGRO_BITMAP *img;
 } Quit;
 
 Elements *New_Quit(int label);
