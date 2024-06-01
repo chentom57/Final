@@ -4,7 +4,7 @@
 */
 time_t start_time_gs,current_time_gs; 
 int zombie1_created=0;
-int Gold=1000,Score=0;
+
 Scene *New_GameScene(int label)
 {
     GameScene *pDerivedObj = (GameScene *)malloc(sizeof(GameScene));
@@ -14,7 +14,8 @@ Scene *New_GameScene(int label)
     //pDerivedObj->background = al_load_bitmap("assets/image/stage.jpg");
     pObj->pDerivedObj = pDerivedObj;
     start_time_gs=time(NULL);
-    
+    Gold=500;
+    Score=0;
     pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 24, 0);
     pDerivedObj->font2 = al_load_ttf_font("assets/font/pirulen.ttf", 36, 0);
     // Load sound
@@ -26,9 +27,11 @@ Scene *New_GameScene(int label)
     _Register_elements(pObj, New_Back(Back_L));
     _Register_elements(pObj, New_Resume(Resume_L));
      _Register_elements(pObj, New_flower_button(FlowerB_L));
+     _Register_elements(pObj, New_sunflw_button(SunflwB_L));
     _Register_elements(pObj, New_Ball(Ball_L));
     _Register_elements(pObj, New_Ball2(Ball2_L));
-     _Register_elements(pObj, New_map(Map_L));
+    _Register_elements(pObj, New_map(Map_L));
+    
       //_Register_elements(pObj, New_Zombie1(Zombie1_L)); //Burce add:Register Zomvie1
     //  _Register_elements(pObj, New_Flower(Flower_L));
     // setting derived object function
@@ -41,10 +44,9 @@ Scene *New_GameScene(int label)
 void game_scene_update(Scene *self)
 {
     current_time_gs=time(NULL);
-    Gold=(current_time_gs-start_time_gs)*100+1000;
-    Score=(current_time_gs-start_time_gs)*20;
+
     game_scene_zombie(self);
-    if(current_time_gs-start_time_gs>20){
+    if(current_time_gs-start_time_gs>40){
                     self->scene_end = true;
                     window = 3;
             

@@ -2,22 +2,33 @@
 //Bruce add timer
 #include <time.h>
 time_t start_time, current_time;
-
+#include <stdlib.h> /* 亂數相關函數 */
 
 #include "Zombie1.h"
 #include "../shapes/Circle.h"
 int a = 1;
-
+//0601:random: used for create zombie's y-axis
+int ranflag = 1;
 /*
    [Zombie1 function]
 */
 Elements *New_Zombie1(int label)
 {   
+    if(ranflag == 1){
+        srand( time(NULL) );
+        ranflag = 0;
+    }    
+    
     //Bruce add timer define& start
     time(&start_time);
-    
+
     Zombie1 *pDerivedObj = (Zombie1 *)malloc(sizeof(Zombie1));
     Elements *pObj = New_Elements(label);
+    
+    //0601:used for random create y-axis for zombie spawning
+    double ran_num = ((double)rand()/RAND_MAX);
+    
+
     // setting derived object member
 
     pDerivedObj->img = al_load_bitmap("assets/image/zombie1.png");
@@ -25,11 +36,13 @@ Elements *New_Zombie1(int label)
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->gameover = 0;
     pDerivedObj->x = 800;
-    pDerivedObj->y = 200;
-    pDerivedObj->v = 1; //速度
-    pDerivedObj->hitbox = New_Circle(pDerivedObj->x + pDerivedObj->width / 2,
-                                     pDerivedObj->y + pDerivedObj->height / 2,
-                                     min(pDerivedObj->width, pDerivedObj->height) / 2);
+
+    //printf("rand: %f\n", ran_num);
+    pDerivedObj->y =  ran_num * (HEIGHT-300) ;
+    pDerivedObj->v = 0.5; //速度
+    pDerivedObj->hitbox = New_Circle(pDerivedObj->x + pDerivedObj->width / 2 - 40,
+                                     pDerivedObj->y + pDerivedObj->height / 2 - 40,
+                                     min(pDerivedObj->width, pDerivedObj->height) / 2 - 40);
     // setting the interact object
     
     pObj->inter_obj[pObj->inter_len++] = Projectile_L;
@@ -49,22 +62,30 @@ void Zombie1_update(Elements *self)
     Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
     _Zombie1_update_position(self, Obj->v, Obj->v);
     if(Obj-> x <0){
-        //Bruce add: if x<0, then game over //待算hitbox!
+        //Bruce add: if x<0, then game over 
         printf("game over!\n");
         Obj->gameover = 1;
         
     }
 
 }
-void _Zombie1_update_position(Elements *self, int dx, int dy)
+void _Zombie1_update_position(Elements *self, float dx, float dy)
 {
     Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
 
     //Bruce add timer
     time(&current_time);
     
-    Obj->x -=  1.5* dx;
+    Obj->x -=  1* dx;
     Obj->y -= a * dy;
+    
+    if((Obj ->y < 50 )){
+       a = -1;
+    }
+    else if (Obj -> y > 530)
+    {
+        a = 1;
+    }
 
     if(difftime(current_time, start_time) > 1.0){
         a= a*-1;
@@ -91,6 +112,8 @@ void Zombie1_interact(Elements *self, Elements *tar)
         Projectile *Obj2 = ((Projectile *)(tar->pDerivedObj));
         if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
         {
+          Gold+=100;
+          Score+=100;
           self->dele=true;
           printf("Hit!");
     

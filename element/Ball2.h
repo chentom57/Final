@@ -3,6 +3,7 @@
 #include "element.h"
 #include "../scene/gamescene.h" // for element label
 #include "../shapes/Shape.h"
+#include "../global.h"
 /*
    [Ball2 object]
 */
@@ -12,6 +13,7 @@ typedef struct _Ball2
     int r;    // the radius
     int in;
     int state2;
+    int selflw;
     Shape *hitbox; // the hitbox of object
     ALLEGRO_COLOR color;
 } Ball2;
