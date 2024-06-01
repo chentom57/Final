@@ -12,6 +12,7 @@
 		"projectile.h": "c",
 		"rectangle.h": "c",
 		"sunflw.h": "c",
+<<<<<<< HEAD
 		"shape.h": "c",
 		"global.h": "c",
 		"scenemanager.h": "c",
@@ -19,5 +20,9 @@
 		"scene.h": "c",
 		"stdio.h": "c",
 		"sun.h": "c"
+=======
+		"shape.h": "c"
+
+>>>>>>> 5209c18dbe970630fcc64be3f87da639d790fa19
 	}
 }

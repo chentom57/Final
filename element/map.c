@@ -8,15 +8,16 @@ Elements *New_map(int label)
     Elements *pObj = New_Elements(label);
     memset(pDerivedObj->placed,0,50);
     pDerivedObj->map=0;
-    pDerivedObj->x = 420;  
-    pDerivedObj->y = 320;
-    pDerivedObj->width =750;
-    pDerivedObj->heigh=550;
+    pDerivedObj->img = al_load_bitmap("assets/image/map4.png");
+    pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
+    pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
+    pDerivedObj->x = 0;  
+    pDerivedObj->y = 50;
     pDerivedObj->in = -1;
     pDerivedObj->color = al_map_rgb(0, 0, 255);
-    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x-pDerivedObj->width/2,
-                                     pDerivedObj->y-pDerivedObj->heigh/2,
-                                     pDerivedObj->x+pDerivedObj->width/2,pDerivedObj->y+pDerivedObj->heigh/2);
+    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
+                                     pDerivedObj->y,
+                                     pDerivedObj->x+pDerivedObj->width,pDerivedObj->y+pDerivedObj->height);
 
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = Ball_L;
@@ -41,7 +42,7 @@ void map_interact(Elements *self, Elements *tar)
 void map_draw(Elements *self)
 {
     map *Obj = ((map *)(self->pDerivedObj));
-    al_draw_rectangle(Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,Obj->x+(Obj->width)/2,Obj->y+(Obj->heigh)/2,Obj->color,5);
+    al_draw_bitmap(Obj->img, Obj->x,Obj->y,0);
     
 }
 void map_destory(Elements *self)

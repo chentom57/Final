@@ -8,7 +8,7 @@ Elements *New_Resume(int label)
     Elements *pObj = New_Elements(label);
     pDerivedObj->Resume=0;
     pDerivedObj->x = 850;  
-    pDerivedObj->y = 150;
+    pDerivedObj->y = 120;
     pDerivedObj->width =70;
     pDerivedObj->heigh=42;
     pDerivedObj->in = -1;

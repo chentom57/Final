@@ -13,12 +13,13 @@ typedef struct _map
 {
     int map;
     int x, y; // the position of image
-    int width,heigh;    // the width 
+    int width,height;    // the width 
     int in;
     int placed[5][10];
     Shape *hitbox;// the hitbox of object
     ALLEGRO_COLOR color;
     ALLEGRO_FONT *font;
+    ALLEGRO_BITMAP *img;
 } map;
 
 Elements *New_map(int label);
