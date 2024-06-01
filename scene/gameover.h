@@ -24,6 +24,7 @@ typedef struct _gameover
     ALLEGRO_FONT *font_g;
     ALLEGRO_SAMPLE *song_g;
     ALLEGRO_SAMPLE_INSTANCE *sample_instance_g;
+    ALLEGRO_BITMAP *background;
     ALLEGRO_BITMAP *img;
     int title_x_g, title_y_g;
 } gameover;

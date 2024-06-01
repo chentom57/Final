@@ -20,6 +20,7 @@ typedef struct _Back_gg
     Shape *hitbox; // the hitbox of object
     ALLEGRO_COLOR color;
     ALLEGRO_FONT *font;
+     ALLEGRO_BITMAP *img;
 } Back_gg;
 
 Elements *New_Back_gg(int label);
