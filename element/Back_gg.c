@@ -8,7 +8,7 @@ Elements *New_Back_gg(int label)
     Elements *pObj = New_Elements(label);
     pDerivedObj->Back_gg=0;
     pDerivedObj->x = 450;  
-    pDerivedObj->y = 220;
+    pDerivedObj->y = 380;
     pDerivedObj->width =150;
     pDerivedObj->heigh=70;
     pDerivedObj->in = -1;

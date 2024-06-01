@@ -6,13 +6,14 @@ Elements *New_Start(int label)
 {
     Start *pDerivedObj = (Start *)malloc(sizeof(Start));
     Elements *pObj = New_Elements(label);
+    pDerivedObj->img = al_load_bitmap("assets/image/button_menu.png");
     pDerivedObj->x = 450;
-    pDerivedObj->y = 270;
-    pDerivedObj->width =200;
-    pDerivedObj->heigh=120;
+    pDerivedObj->y = 370;
+    pDerivedObj->width =al_get_bitmap_width(pDerivedObj->img);
+    pDerivedObj->heigh =al_get_bitmap_height(pDerivedObj->img);
     pDerivedObj->in = -1;
     pDerivedObj->start=0;
-    pDerivedObj->color = al_map_rgb(255,236,139);
+    pDerivedObj->color = al_map_rgb(255,255,255);
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x-pDerivedObj->width/2,
                                      pDerivedObj->y-pDerivedObj->heigh/2,
                                      pDerivedObj->x+pDerivedObj->width/2,pDerivedObj->y+pDerivedObj->heigh/2);
@@ -38,17 +39,23 @@ void Start_interact(Elements *self, Elements *tar)
     if (tar->label == MOUSE_L)
     {
        Ball *Obj2 = ((Ball *)(tar->pDerivedObj));
-        if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]){
-            Obj->start=1;
-            al_rest(1);//避免在按鈕位置產生植物
+        if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)){
+            Obj->color=al_map_rgb(255,193,37);
+            if(mouse_state[1]){
+                Obj->start=1;
+                al_rest(1);//避免在按鈕位置產生植物
+            }
+        }
+        else{
+            Obj->color=al_map_rgb(255,255,255);
         }
     }
 }
 void Start_draw(Elements *self)
 {
     Start *Obj = ((Start *)(self->pDerivedObj));
-    al_draw_rectangle(Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,Obj->x+(Obj->width)/2,Obj->y+(Obj->heigh)/2,Obj->color,(Obj->width)/20);
-    al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6, ALLEGRO_ALIGN_CENTRE, "START");
+    al_draw_bitmap(Obj->img,Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,0);
+    al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/5, ALLEGRO_ALIGN_CENTRE, "START");
 }
 void Start_destory(Elements *self)
 {

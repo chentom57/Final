@@ -17,6 +17,8 @@ Scene *New_Menu(int label)
     pDerivedObj->sample_instance = al_create_sample_instance(pDerivedObj->song);
     pDerivedObj->title_x = WIDTH / 2;
     pDerivedObj->title_y = HEIGHT / 2;
+    pDerivedObj->background = al_load_bitmap("assets/image/menu.png");
+    pDerivedObj->img = al_load_bitmap("assets/image/vs.png");
     // Loop the song until the display closes
     al_set_sample_instance_playmode(pDerivedObj->sample_instance, ALLEGRO_PLAYMODE_LOOP);
     al_restore_default_mixer();
@@ -95,6 +97,9 @@ void menu_update(Scene *self)
 }
 void menu_draw(Scene *self)
 {
+    Menu *Obj = ((Menu *)(self->pDerivedObj));
+    al_draw_bitmap(Obj->background, 0, 0, 0);
+    al_draw_bitmap(Obj->img, 330,60,0);
     // Menu *Obj = ((Menu *)(self->pDerivedObj));
     // al_draw_text(Obj->font, al_map_rgb(233, 211, 33), Obj->title_x, Obj->title_y, ALLEGRO_ALIGN_CENTRE, "Press 'Space' to start");
     // al_draw_rectangle(Obj->title_x - 150, Obj->title_y - 50, Obj->title_x + 150, Obj->title_y + 50, al_map_rgb(255, 255, 255), 0);

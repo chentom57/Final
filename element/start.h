@@ -20,6 +20,7 @@ typedef struct _Start
     Shape *hitbox; // the hitbox of object
     ALLEGRO_COLOR color;
     ALLEGRO_FONT *font;
+    ALLEGRO_BITMAP *img;
 } Start;
 
 Elements *New_Start(int label);

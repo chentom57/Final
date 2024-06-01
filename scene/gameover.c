@@ -14,10 +14,11 @@ Scene *New_gameover(int label)
     pDerivedObj->font_g = al_load_ttf_font("assets/font/pirulen.ttf", 36, 0);
     // Load sound
     pDerivedObj->song_g = al_load_sample("assets/sound/menu.mp3");
+    pDerivedObj->img = al_load_bitmap("assets/image/gameover.png");
     al_reserve_samples(24);
     pDerivedObj->sample_instance_g = al_create_sample_instance(pDerivedObj->song_g);
-    pDerivedObj->title_x_g = WIDTH / 2;
-    pDerivedObj->title_y_g = 100;
+    pDerivedObj->title_x_g = 240;
+    pDerivedObj->title_y_g = 50;
     // Loop the song until the display closes
     // al_set_sample_instance_playmode(pDerivedObj->sample_instance, ALLEGRO_PLAYMODE_LOOP);
     // al_restore_default_mixer();
@@ -89,8 +90,9 @@ void gameover_update(Scene *self)
 void gameover_draw(Scene *self)
 {
     gameover *Obj = ((gameover *)(self->pDerivedObj));
-    al_draw_text(Obj->font_g, al_map_rgb(233, 211, 33), Obj->title_x_g, Obj->title_y_g, ALLEGRO_ALIGN_CENTRE, "GAME OVER");
-    al_draw_rectangle(Obj->title_x_g - 150, Obj->title_y_g - 40, Obj->title_x_g + 150, Obj->title_y_g + 70, al_map_rgb(255, 255, 255), 0);
+    al_draw_bitmap(Obj->img, Obj->title_x_g,Obj->title_y_g,0);
+    // al_draw_text(Obj->font_g, al_map_rgb(233, 211, 33), Obj->title_x_g, Obj->title_y_g, ALLEGRO_ALIGN_CENTRE, "GAME OVER");
+    // al_draw_rectangle(Obj->title_x_g - 150, Obj->title_y_g - 40, Obj->title_x_g + 150, Obj->title_y_g + 70, al_map_rgb(255, 255, 255), 0);
     al_play_sample_instance(Obj->sample_instance_g);
     ElementVec allEle = _Get_all_elements(self);
     for (int i = 0; i < allEle.len; i++)

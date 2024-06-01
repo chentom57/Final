@@ -9,10 +9,12 @@ Scene *New_GameScene(int label)
 {
     GameScene *pDerivedObj = (GameScene *)malloc(sizeof(GameScene));
     Scene *pObj = New_Scene(label);
+    printf("%d",pObj->label);
     // setting derived object member
     //pDerivedObj->background = al_load_bitmap("assets/image/stage.jpg");
     pObj->pDerivedObj = pDerivedObj;
     start_time_gs=time(NULL);
+    
     pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 24, 0);
     pDerivedObj->font2 = al_load_ttf_font("assets/font/pirulen.ttf", 36, 0);
     // Load sound
@@ -119,7 +121,7 @@ void game_scene_draw(Scene *self)
     al_clear_to_color(al_map_rgb(0, 0, 0));
     GameScene *gs = ((GameScene *)(self->pDerivedObj));
     current_time_gs=time(NULL);
-    sprintf(gs->text, "%ld",(long)(current_time_gs-start_time_gs));
+    sprintf(gs->text, "%ld",(long)(current_time_gs-start_time_gs-1));
     sprintf(Gold_text, "%d",Gold);
     sprintf(score_text, "%d",Score);
     //al_draw_bitmap(gs->background, 0, 0, 0);
@@ -127,7 +129,8 @@ void game_scene_draw(Scene *self)
      al_draw_text(gs->font, al_map_rgb(233, 211, 222),200,620, ALLEGRO_ALIGN_CENTRE,Gold_text );
      al_draw_text(gs->font, al_map_rgb(111, 211, 33),350,620, ALLEGRO_ALIGN_CENTRE,"Score:");
      al_draw_text(gs->font, al_map_rgb(111, 211, 33),450,620, ALLEGRO_ALIGN_CENTRE,score_text );
-     al_draw_text(gs->font2, al_map_rgb(233, 211, 33),850,350, ALLEGRO_ALIGN_CENTRE,gs->text );
+     al_draw_text(gs->font2, al_map_rgb(233, 211, 33),750,600, ALLEGRO_ALIGN_CENTRE,"Time:");
+     al_draw_text(gs->font2, al_map_rgb(233, 211, 33),850,600, ALLEGRO_ALIGN_CENTRE,gs->text );
 
     ElementVec allEle = _Get_all_elements(self);
     for (int i = 0; i < allEle.len; i++)

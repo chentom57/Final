@@ -91,8 +91,8 @@ void Zombie1_interact(Elements *self, Elements *tar)
         Projectile *Obj2 = ((Projectile *)(tar->pDerivedObj));
         if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
         {
-          //self->dele=true;
-          //printf("Hit!");
+          self->dele=true;
+          printf("Hit!");
     
         }
     }
