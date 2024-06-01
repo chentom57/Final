@@ -76,7 +76,7 @@ void Flower_update(Elements *self)
             chara->state = STOP;
             chara->new_proj = false;
         }
-        if (chara->gif_status[ATK]->display_index == 2 && chara->new_proj == false)
+        if (chara->gif_status[ATK]->display_index == 1 && chara->new_proj == false)
         {
             Elements *pro;
             // Elements *pro2;
@@ -84,7 +84,7 @@ void Flower_update(Elements *self)
             {
                 pro = New_Projectile(Projectile_L,
                                      chara->x + chara->width - 100,
-                                     chara->y + 10,
+                                     chara->y - 10,
                                      5);
                 // printf("enterd");
                 // pro2 = New_Flower(Flower_L, 100, 100);
@@ -94,7 +94,7 @@ void Flower_update(Elements *self)
             {
                 pro = New_Projectile(Projectile_L,
                                      chara->x - 50,
-                                     chara->y + 10,
+                                     chara->y - 10,
                                      -5);
             }
             _Register_elements(scene, pro);

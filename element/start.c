@@ -43,7 +43,6 @@ void Start_interact(Elements *self, Elements *tar)
             al_rest(1);//避免在按鈕位置產生植物
         }
     }
-
 }
 void Start_draw(Elements *self)
 {

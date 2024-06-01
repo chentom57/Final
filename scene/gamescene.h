@@ -28,7 +28,9 @@ typedef enum EleType
     Resume_L,
     Flower_L,
     Ball_L,
-    Ball2_L
+    Ball2_L,
+    Sunflw_L,
+    Sun_L
     
 } EleType;
 typedef struct _GameScene

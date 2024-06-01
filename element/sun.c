@@ -1,14 +1,14 @@
-#include "projectile.h"
+#include "sun.h"
 #include "../shapes/Circle.h"
 /*
-   [Projectile function]
+   [Sun function]
 */
-Elements *New_Projectile(int label, int x, int y, int v)
+Elements *New_Sun(int label, int x, int y, int v)
 {
-    Projectile *pDerivedObj = (Projectile *)malloc(sizeof(Projectile));
+    Sun *pDerivedObj = (Sun *)malloc(sizeof(Sun));
     Elements *pObj = New_Elements(label);
     // setting derived object member
-    pDerivedObj->img = al_load_bitmap("assets/image/projectile.png");
+    pDerivedObj->img = al_load_bitmap("assets/image/sun.png");
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj->img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj->img);
     pDerivedObj->x = x;
@@ -22,29 +22,31 @@ Elements *New_Projectile(int label, int x, int y, int v)
     pObj->inter_obj[pObj->inter_len++] = Floor_L;
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
-    pObj->Update = Projectile_update;
-    pObj->Interact = Projectile_interact;
-    pObj->Draw = Projectile_draw;
-    pObj->Destroy = Projectile_destory;
+    pObj->Update = Sun_update;
+    pObj->Interact = Sun_interact;
+    pObj->Draw = Sun_draw;
+    pObj->Destroy = Sun_destory;
+
     return pObj;
 }
-void Projectile_update(Elements *self)
+void Sun_update(Elements *self)
 {
-    Projectile *Obj = ((Projectile *)(self->pDerivedObj));
-    _Projectile_update_position(self, Obj->v, 0);
+    
+    Sun *Obj = ((Sun *)(self->pDerivedObj));
+    _Sun_update_position(self,0 , -(Obj->v));
 }
-void _Projectile_update_position(Elements *self, int dx, int dy)
+void _Sun_update_position(Elements *self, int dx, int dy)
 {
-    Projectile *Obj = ((Projectile *)(self->pDerivedObj));
+    Sun *Obj = ((Sun *)(self->pDerivedObj));
     Obj->x += dx;
     Obj->y += dy;
     Shape *hitbox = Obj->hitbox;
     hitbox->update_center_x(hitbox, dx);
     hitbox->update_center_y(hitbox, dy);
 }
-void Projectile_interact(Elements *self, Elements *tar)
+void Sun_interact(Elements *self, Elements *tar)
 {
-    Projectile *Obj = ((Projectile *)(self->pDerivedObj));
+    Sun *Obj = ((Sun *)(self->pDerivedObj));
     if (tar->label == Floor_L)
     {
         if(Obj->x < 0 - Obj->width)
@@ -61,17 +63,17 @@ void Projectile_interact(Elements *self, Elements *tar)
         }
     }
 }
-void Projectile_draw(Elements *self)
+void Sun_draw(Elements *self)
 {
-    Projectile *Obj = ((Projectile *)(self->pDerivedObj));
+    Sun *Obj = ((Sun *)(self->pDerivedObj));
     if (Obj->v > 0)
         al_draw_bitmap(Obj->img, Obj->x, Obj->y, ALLEGRO_FLIP_HORIZONTAL);
     else
         al_draw_bitmap(Obj->img, Obj->x, Obj->y, 0);
 }
-void Projectile_destory(Elements *self)
+void Sun_destory(Elements *self)
 {
-    Projectile *Obj = ((Projectile *)(self->pDerivedObj));
+    Sun *Obj = ((Sun *)(self->pDerivedObj));
     al_destroy_bitmap(Obj->img);
     free(Obj->hitbox);
     free(Obj);

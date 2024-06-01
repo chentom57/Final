@@ -4,6 +4,8 @@
 #include <allegro5/allegro_primitives.h>
 #include "../scene/sceneManager.h"
 #include "charater.h"
+#include "sun.h"
+#include "sunflw.h"
 #include<stdio.h>
 Elements *New_Ball2(int label)
 {
@@ -21,6 +23,8 @@ Elements *New_Ball2(int label)
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = Character_L;
     pObj->inter_obj[pObj->inter_len++] = Flower_L;
+    pObj->inter_obj[pObj->inter_len++] = Sun_L;
+    pObj->inter_obj[pObj->inter_len++] = Sunflw_L;
 
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
@@ -41,6 +45,7 @@ void Ball2_update(Elements *self)
     Obj->y = mouse.y;
     Ball2 *chara2 = ((Ball2 *)(self->pDerivedObj));
     Elements *flo;
+    Elements *flo2;
     al_get_mouse_state(&msstate);
     if(chara2 -> state2 == 0){
         // // if(key_state[ALLEGRO_KEY_SPACE]){
@@ -54,6 +59,12 @@ void Ball2_update(Elements *self)
             _Register_elements(scene, flo);
             chara2 -> state2 = 1;
         }
+        else if(key_state[ALLEGRO_KEY_SPACE]){//*mouse right button is clicked return 1
+            printf("space is clicked1");
+            flo2 = New_Sunflw(Sunflw_L, (Obj->x) -80, (Obj->y) -80);//*generate new flower
+            _Register_elements(scene, flo2);
+            chara2 -> state2 = 1;
+        }
         else chara2 -> state2 = 0;
         // sleep(1);
     }
@@ -62,9 +73,12 @@ void Ball2_update(Elements *self)
             printf("mouse left is clicked\n");
             chara2 -> state2 = 1;
         }
+        else if(key_state[ALLEGRO_KEY_SPACE]){
+            printf("space is clicked\n");
+            chara2 -> state2 = 1;
+        }
         else chara2 -> state2 = 0;
     }
-    
 }
 void Ball2_interact(Elements *self, Elements *tar)
 {
@@ -88,7 +102,7 @@ void Ball2_interact(Elements *self, Elements *tar)
     if (tar->label == Flower_L)
     {
         Flower *Obj2 = ((Flower *)(tar->pDerivedObj));
-        if ((Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox))&&mouse_state[2] == 1)
+        if ((Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox))&&(mouse_state[2] == 1))
         {
             printf("mouse right clicked\n");
             tar -> dele = true;
@@ -101,6 +115,40 @@ void Ball2_interact(Elements *self, Elements *tar)
         //     Obj->in = -1;
         // }
     }
+    else if (tar->label == Sun_L)
+    {
+        // printf("entered new sun");
+        Sun *Obj2 = ((Sun *)(tar->pDerivedObj));
+        if ((Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox))&&(mouse_state[2] == 1))
+        {
+            printf("mouse right clicked2\n");
+            tar -> dele = true;
+            Obj->color = al_map_rgb(0, 0, 255);
+            // Obj->in = Flower_L;
+        }
+        // else if (Obj->in == Flower_L)
+        // {
+        //     Obj->color = al_map_rgb(255, 0, 0);
+        //     Obj->in = -1;
+        // }
+    }
+    else if (tar->label == Sunflw_L)
+    {
+        Sunflw *Obj2 = ((Sunflw *)(tar->pDerivedObj));
+        if ((Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox))&&(mouse_state[2] == 1))
+        {
+            printf("mouse right clicked\n");
+            tar -> dele = true;
+            Obj->color = al_map_rgb(0, 0, 255);
+            // Obj->in = Flower_L;
+        }
+        // else if (Obj->in == Flower_L)
+        // {
+        //     Obj->color = al_map_rgb(255, 0, 0);
+        //     Obj->in = -1;
+        // }
+    }
+    
 }
 void Ball2_draw(Elements *self)
 {

@@ -1,5 +1,6 @@
 #include "charater.h"
 #include "sunflw.h"
+#include "sun.h"
 #include "../scene/sceneManager.h"
 #include "projectile.h"
 #include "../shapes/Rectangle.h"
@@ -21,11 +22,11 @@ Elements *New_Sunflw(int label, int x, int y)
     for (int i = 0; i < 3; i++)
     {
         char buffer[50];
-        sprintf(buffer, "assets/image/chara_%s.gif", state_string[i]);
+        sprintf(buffer, "assets/image/chara2_%s.gif", state_string[i]);
         pDerivedObj->gif_status[i] = algif_new_gif(buffer, -1);
     }
     // load effective sound
-    ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/atk_sound.mp3");
+    ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/atk_sound2.mp3");
     pDerivedObj->atk_Sound = al_create_sample_instance(sample);
     al_set_sample_instance_playmode(pDerivedObj->atk_Sound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(pDerivedObj->atk_Sound, al_get_default_mixer());
@@ -70,32 +71,34 @@ void Sunflw_update(Elements *self)
     // if(mouse_state[2] == 1){
     //     printf("mouse right clicked");
     // }
-    chara->state = ATK;
+    
     if (chara->gif_status[chara->state]->done)
         {
             chara->state = STOP;
             chara->new_proj = false;
         }
-        if (chara->gif_status[ATK]->display_index == 2 && chara->new_proj == false)
+        if (chara->gif_status[ATK]->display_index == 1 && chara->new_proj == false)
         {
+            
             Elements *pro;
             // Elements *pro2;
             if (chara->dir)
             {
-                pro = New_Projectile(Projectile_L,
+                printf("entered new sun\n");
+                pro = New_Sun(Sun_L,
                                      chara->x + chara->width - 100,
                                      chara->y + 10,
-                                     5);
+                                     1);
                 // printf("enterd");
                 // pro2 = New_Sunflw(Sunflw_L, 100, 100);
                 // _Register_elements(scene, pro2);
             }
             else
             {
-                pro = New_Projectile(Projectile_L,
+                pro = New_Sun(Sun_L,
                                      chara->x - 50,
                                      chara->y + 10,
-                                     -5);
+                                     -1);
             }
             _Register_elements(scene, pro);
             chara->new_proj = true;

@@ -12,6 +12,12 @@
 		"projectile.h": "c",
 		"rectangle.h": "c",
 		"sunflw.h": "c",
-		"shape.h": "c"
+		"shape.h": "c",
+		"global.h": "c",
+		"scenemanager.h": "c",
+		"ball2.h": "c",
+		"scene.h": "c",
+		"stdio.h": "c",
+		"sun.h": "c"
 	}
 }
