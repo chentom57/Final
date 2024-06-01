@@ -19,7 +19,6 @@ Elements *New_Zombie1(int label)
     Zombie1 *pDerivedObj = (Zombie1 *)malloc(sizeof(Zombie1));
     Elements *pObj = New_Elements(label);
     // setting derived object member
-
     pDerivedObj->img = al_load_bitmap("assets/image/zombie1.png");
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
@@ -91,6 +90,8 @@ void Zombie1_interact(Elements *self, Elements *tar)
         Projectile *Obj2 = ((Projectile *)(tar->pDerivedObj));
         if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
         {
+          Gold+=100;
+          Score+=100;
           self->dele=true;
           printf("Hit!");
     

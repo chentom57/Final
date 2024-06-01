@@ -52,6 +52,7 @@ void Back_gg_interact(Elements *self, Elements *tar)
 }
 void Back_gg_draw(Elements *self)
 {
+    
     Back_gg *Obj = ((Back_gg *)(self->pDerivedObj));
     al_draw_bitmap(Obj->img,Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,0);
     al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6.5, ALLEGRO_ALIGN_CENTRE, "MENU");

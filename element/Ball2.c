@@ -53,14 +53,16 @@ void Ball2_update(Elements *self)
         //     // flo = New_Flower(Flower_L, 100, 100);
         //     // _Register_elements(scene, flo);
         //     chara2 -> state2 = 0;
-        if(al_mouse_button_down(&msstate, 1)){//*mouse right button is clicked return 1
+        if(al_mouse_button_down(&msstate, 1)&&Gold>=200){//*mouse right button is clicked return 1
             printf("mouse left is clicked\n");
+            Gold-=200;
             flo = New_Flower(Flower_L, (Obj->x) -80, (Obj->y) -80);//*generate new flower
             _Register_elements(scene, flo);
             chara2 -> state2 = 1;
         }
-        else if(key_state[ALLEGRO_KEY_SPACE]){//*mouse right button is clicked return 1
+        else if(key_state[ALLEGRO_KEY_SPACE]&&Gold>=100){//*mouse right button is clicked return 1
             printf("space is clicked1\n");
+            Gold-=100;
             flo2 = New_Sunflw(Sunflw_L, (Obj->x) -80, (Obj->y) -80);//*generate new flower
             _Register_elements(scene, flo2);
             chara2 -> state2 = 1;
@@ -120,7 +122,8 @@ void Ball2_interact(Elements *self, Elements *tar)
         // printf("entered new sun");
         Sun *Obj2 = ((Sun *)(tar->pDerivedObj));
         if ((Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox))&&(mouse_state[2] == 1))
-        {
+        {   
+            Gold+=100;
             printf("mouse right clicked2\n");
             tar -> dele = true;
             Obj->color = al_map_rgb(0, 0, 255);

@@ -3,6 +3,7 @@
 #include "element.h"
 #include "../scene/gamescene.h" // for element label
 #include "../shapes/Shape.h"
+#include "../global.h"
 /*
    [Ball2 object]
 */
