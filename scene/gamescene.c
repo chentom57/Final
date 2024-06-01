@@ -2,6 +2,9 @@
 /*
    [GameScene function]
 */
+time_t start_time_gs,current_time_gs; 
+int zombie1_created=0;
+int Gold=1000,Score=0;
 Scene *New_GameScene(int label)
 {
     GameScene *pDerivedObj = (GameScene *)malloc(sizeof(GameScene));
@@ -9,16 +12,25 @@ Scene *New_GameScene(int label)
     // setting derived object member
     //pDerivedObj->background = al_load_bitmap("assets/image/stage.jpg");
     pObj->pDerivedObj = pDerivedObj;
+    start_time_gs=time(NULL);
+    pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 24, 0);
+    pDerivedObj->font2 = al_load_ttf_font("assets/font/pirulen.ttf", 36, 0);
+    // Load sound
+    pDerivedObj->song = al_load_sample("assets/sound/menu.mp3");
+    al_reserve_samples(24);
+    pDerivedObj->sample_instance= al_create_sample_instance(pDerivedObj->song);
     // register element
-    _Register_elements(pObj, New_Floor(Floor_L));
     // _Register_elements(pObj, New_Character(Character_L));
     _Register_elements(pObj, New_Back(Back_L));
     _Register_elements(pObj, New_Resume(Resume_L));
+     _Register_elements(pObj, New_flower_button(FlowerB_L));
     _Register_elements(pObj, New_Ball(Ball_L));
     _Register_elements(pObj, New_Ball2(Ball2_L));
      _Register_elements(pObj, New_map(Map_L));
+      //_Register_elements(pObj, New_Zombie1(Zombie1_L)); //Burce add:Register Zomvie1
     //  _Register_elements(pObj, New_Flower(Flower_L));
     // setting derived object function
+    
     pObj->Update = game_scene_update;
     pObj->Draw = game_scene_draw;
     pObj->Destroy = game_scene_destroy;
@@ -26,6 +38,15 @@ Scene *New_GameScene(int label)
 }
 void game_scene_update(Scene *self)
 {
+    current_time_gs=time(NULL);
+    Gold=(current_time_gs-start_time_gs)*100+1000;
+    Score=(current_time_gs-start_time_gs)*20;
+    game_scene_zombie(self);
+    if(current_time_gs-start_time_gs>20){
+                    self->scene_end = true;
+                    window = 3;
+            
+    }
     // update every element
     ElementVec allEle = _Get_all_elements(self);
     for (int i = 0; i < allEle.len; i++)
@@ -59,11 +80,27 @@ void game_scene_update(Scene *self)
             }
 
         }
-       else if(ele->label==Resume_L){
+        else if(ele->label==Resume_L){
             Resume *Obj = ((Resume *)(ele->pDerivedObj));
             if(Obj->Resume==1){
                     self->scene_end = true;
                     window = 1;
+            }
+
+        }
+        else if(ele->label==FlowerB_L){
+            flower_button *Obj = ((flower_button *)(ele->pDerivedObj));
+            if(Obj->flower_button==1){
+                    self->scene_end = true;
+                    window = 3;
+            }
+
+        }
+        else if(ele->label==Zombie1_L){
+            Zombie1 *Obj = ((Zombie1 *)(ele->pDerivedObj));
+            if(Obj->gameover==1){
+                    self->scene_end = true;
+                    window = 2;
             }
 
         }
@@ -77,10 +114,21 @@ void game_scene_update(Scene *self)
     }
 }
 void game_scene_draw(Scene *self)
-{
+{   
+    char Gold_text[100],score_text[100];
     al_clear_to_color(al_map_rgb(0, 0, 0));
-    //GameScene *gs = ((GameScene *)(self->pDerivedObj));
+    GameScene *gs = ((GameScene *)(self->pDerivedObj));
+    current_time_gs=time(NULL);
+    sprintf(gs->text, "%ld",(long)(current_time_gs-start_time_gs));
+    sprintf(Gold_text, "%d",Gold);
+    sprintf(score_text, "%d",Score);
     //al_draw_bitmap(gs->background, 0, 0, 0);
+    al_draw_text(gs->font, al_map_rgb(233, 211, 222),100,620, ALLEGRO_ALIGN_CENTRE,"Gold:");
+     al_draw_text(gs->font, al_map_rgb(233, 211, 222),200,620, ALLEGRO_ALIGN_CENTRE,Gold_text );
+     al_draw_text(gs->font, al_map_rgb(111, 211, 33),350,620, ALLEGRO_ALIGN_CENTRE,"Score:");
+     al_draw_text(gs->font, al_map_rgb(111, 211, 33),450,620, ALLEGRO_ALIGN_CENTRE,score_text );
+     al_draw_text(gs->font2, al_map_rgb(233, 211, 33),850,350, ALLEGRO_ALIGN_CENTRE,gs->text );
+
     ElementVec allEle = _Get_all_elements(self);
     for (int i = 0; i < allEle.len; i++)
     {
@@ -101,4 +149,16 @@ void game_scene_destroy(Scene *self)
     }
     free(Obj);
     free(self);
+}
+//Create zombie schedule
+void game_scene_zombie(Scene *self){
+     
+     if((current_time_gs-start_time_gs)%3==1){
+        zombie1_created=0;                     //reset the bool zombie been created
+     }
+     if((current_time_gs-start_time_gs)%3==0&&zombie1_created==0){
+     _Register_elements(self, New_Zombie1(Zombie1_L));
+        zombie1_created=1;
+     }
+
 }

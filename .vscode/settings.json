@@ -10,6 +10,9 @@
 		"charater.h": "c",
 		"element.h": "c",
 		"projectile.h": "c",
-		"rectangle.h": "c"
+		"rectangle.h": "c",
+		"sunflw.h": "c",
+		"shape.h": "c"
+
 	}
 }
