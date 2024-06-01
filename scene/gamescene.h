@@ -15,6 +15,7 @@
 #include "../element/flower.h"
 #include "../element/Ball2.h"
 #include "../element/flower_button.h"
+#include "../element/sunflw_button.h"
 #include "../element/Zombie1.h"
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
@@ -39,7 +40,8 @@ typedef enum EleType
     Ball_L,
     Ball2_L,
     Sun_L,
-    Sunflw_L
+    Sunflw_L,
+    SunflwB_L
     
 } EleType;
 typedef struct _GameScene

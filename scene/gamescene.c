@@ -23,7 +23,8 @@ Scene *New_GameScene(int label)
     // _Register_elements(pObj, New_Character(Character_L));
     _Register_elements(pObj, New_Back(Back_L));
     _Register_elements(pObj, New_Resume(Resume_L));
-     _Register_elements(pObj, New_flower_button(FlowerB_L));
+    _Register_elements(pObj, New_flower_button(FlowerB_L));
+    _Register_elements(pObj, New_sunflw_button(SunflwB_L));
     _Register_elements(pObj, New_Ball(Ball_L));
     _Register_elements(pObj, New_Ball2(Ball2_L));
      _Register_elements(pObj, New_map(Map_L));

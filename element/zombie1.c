@@ -3,7 +3,6 @@
 #include <time.h>
 time_t start_time, current_time;
 
-
 #include "Zombie1.h"
 #include "../shapes/Circle.h"
 int a = 1;
@@ -45,7 +44,6 @@ Elements *New_Zombie1(int label)
 }
 void Zombie1_update(Elements *self)
 {
-
     Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
     _Zombie1_update_position(self, Obj->v, Obj->v);
     if(Obj-> x <0){
@@ -63,7 +61,7 @@ void _Zombie1_update_position(Elements *self, int dx, int dy)
     //Bruce add timer
     time(&current_time);
     
-    Obj->x -=  1.5* dx;
+    Obj->x -=  1* dx;
     Obj->y -= a * dy;
 
     if(difftime(current_time, start_time) > 1.0){
