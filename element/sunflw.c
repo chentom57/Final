@@ -45,6 +45,7 @@ Elements *New_Sunflw(int label, int x, int y)
     pDerivedObj->state = ATK;
     pDerivedObj->new_proj = false;
     pObj->pDerivedObj = pDerivedObj;
+    pObj->inter_obj[pObj->inter_len++] = Ball2_L;
     // setting derived object function
     pObj->Draw = Sunflw_draw;
     pObj->Update = Sunflw_update;
@@ -220,8 +221,14 @@ void _Sunflw_update_position(Elements *self, int dx, int dy)
     hitbox->update_center_y(hitbox, dy);
 }
 void Sunflw_interact(Elements *self, Elements *tar) {
-    // if(mouse_state[2] == 1){
-    //     printf("mouse right clicked");
-    // }
+
+    Sunflw *Obj = ((Sunflw*)(self->pDerivedObj));
+     if(tar->label==Ball2_L){
+        Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
+        if(Obj2->placed_range->overlap(Obj2->placed_range, Obj->hitbox))
+            Obj2->lap=1;
+        else
+            Obj2->lap=0; 
+     }
 
 }

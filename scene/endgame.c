@@ -7,7 +7,7 @@
 */
 Scene *New_endgame(int label)
 {
-    window=0;
+    Victory=1;
     endgame *pDerivedObj = (endgame *)malloc(sizeof(endgame));
     Scene *pObj = New_Scene(label);
     // setting derived object member
@@ -101,6 +101,7 @@ void endgame_draw(Scene *self)
 }
 void endgame_destroy(Scene *self)
 {
+    Victory=0;
     endgame *Obj = ((endgame *)(self->pDerivedObj));
     al_destroy_font(Obj->font_e);
     al_destroy_sample(Obj->song_e);

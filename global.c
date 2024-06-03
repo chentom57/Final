@@ -8,6 +8,7 @@ const int HEIGHT = 672;
 int window = 0;
 int Score=0;
 int Gold=500;
+int Victory=0;
 ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 ALLEGRO_EVENT event;
 ALLEGRO_TIMER *fps = NULL;

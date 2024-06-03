@@ -6,7 +6,10 @@ Elements *New_Back_gg(int label)
 {
     Back_gg *pDerivedObj = (Back_gg *)malloc(sizeof(Back_gg));
     Elements *pObj = New_Elements(label);
-    pDerivedObj->img = al_load_bitmap("assets/image/gameover_b.png");
+    if(Victory==1)
+        pDerivedObj->img = al_load_bitmap("assets/image/victory_b.png");
+    else
+        pDerivedObj->img = al_load_bitmap("assets/image/gameover_b.png");
     pDerivedObj->width =al_get_bitmap_width(pDerivedObj->img);
     pDerivedObj->heigh =al_get_bitmap_height(pDerivedObj->img);
     pDerivedObj->Back_gg=0;

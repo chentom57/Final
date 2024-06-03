@@ -119,18 +119,11 @@ void game_scene_update(Scene *self)
 }
 void game_scene_draw(Scene *self)
 {   
-    char Gold_text[100],score_text[100];
     al_clear_to_color(al_map_rgb(0, 0, 0));
     GameScene *gs = ((GameScene *)(self->pDerivedObj));
     current_time_gs=time(NULL);
     sprintf(gs->text, "%ld",(long)(current_time_gs-start_time_gs-1));
-    sprintf(Gold_text, "%d",Gold);
-    sprintf(score_text, "%d",Score);
     //al_draw_bitmap(gs->background, 0, 0, 0);
-    al_draw_text(gs->font, al_map_rgb(233, 211, 222),100,620, ALLEGRO_ALIGN_CENTRE,"Gold:");
-     al_draw_text(gs->font, al_map_rgb(233, 211, 222),200,620, ALLEGRO_ALIGN_CENTRE,Gold_text );
-     al_draw_text(gs->font, al_map_rgb(111, 211, 33),350,620, ALLEGRO_ALIGN_CENTRE,"Score:");
-     al_draw_text(gs->font, al_map_rgb(111, 211, 33),450,620, ALLEGRO_ALIGN_CENTRE,score_text );
      al_draw_text(gs->font2, al_map_rgb(233, 211, 33),750,600, ALLEGRO_ALIGN_CENTRE,"Time:");
      al_draw_text(gs->font2, al_map_rgb(233, 211, 33),850,600, ALLEGRO_ALIGN_CENTRE,gs->text );
 

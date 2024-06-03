@@ -9,7 +9,6 @@ float dy=0;
 Scene *New_gameover(int label)
 {
     dy=0;
-    window=0;
     gameover *pDerivedObj = (gameover *)malloc(sizeof(gameover));
     Scene *pObj = New_Scene(label);
     // setting derived object member
