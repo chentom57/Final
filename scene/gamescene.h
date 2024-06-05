@@ -13,9 +13,11 @@
 #include "../element/Resume.h"
 #include "../element/map.h"
 #include "../element/flower.h"
+#include "../element/bomb.h"
 #include "../element/Ball2.h"
 #include "../element/flower_button.h"
 #include "../element/sunflw_button.h"
+#include "../element/bomb_button.h"
 #include "../element/Zombie1.h"
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
@@ -37,6 +39,8 @@ typedef enum EleType
     Resume_L,
     FlowerB_L,
     Flower_L,
+    BombB_L,
+    Bomb_L,
     Sun_L,
     Sunflw_L,
     Zombie1_L,

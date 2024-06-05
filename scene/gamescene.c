@@ -28,6 +28,7 @@ Scene *New_GameScene(int label)
     _Register_elements(pObj, New_Resume(Resume_L));
      _Register_elements(pObj, New_flower_button(FlowerB_L));
      _Register_elements(pObj, New_sunflw_button(SunflwB_L));
+      _Register_elements(pObj, New_bomb_button(BombB_L));
     _Register_elements(pObj, New_Ball(Ball_L));
     _Register_elements(pObj, New_Ball2(Ball2_L));
     _Register_elements(pObj, New_map(Map_L));
@@ -46,7 +47,7 @@ void game_scene_update(Scene *self)
     current_time_gs=time(NULL);
 
     game_scene_zombie(self);
-    if(current_time_gs-start_time_gs>40){
+    if(current_time_gs-start_time_gs>10){
                     self->scene_end = true;
                     window = 3;
             
@@ -89,14 +90,6 @@ void game_scene_update(Scene *self)
             if(Obj->Resume==1){
                     self->scene_end = true;
                     window = 1;
-            }
-
-        }
-        else if(ele->label==FlowerB_L){
-            flower_button *Obj = ((flower_button *)(ele->pDerivedObj));
-            if(Obj->flower_button==1){
-                    self->scene_end = true;
-                    window = 3;
             }
 
         }

@@ -22,6 +22,9 @@ typedef struct _endgame
 {
     ALLEGRO_FONT *font_e;
     ALLEGRO_SAMPLE *song_e;
+     ALLEGRO_BITMAP *background_e;
+    ALLEGRO_BITMAP *img_e;
+     ALLEGRO_BITMAP *img_ee;
     ALLEGRO_SAMPLE_INSTANCE *sample_instance_e;
     int title_x_e, title_y_e;
 } endgame;

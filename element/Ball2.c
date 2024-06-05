@@ -28,7 +28,7 @@ Elements *New_Ball2(int label)
     pObj->inter_obj[pObj->inter_len++] = Flower_L;
     pObj->inter_obj[pObj->inter_len++] = Sun_L;
     pObj->inter_obj[pObj->inter_len++] = Sunflw_L;
-
+    pObj->inter_obj[pObj->inter_len++] = Bomb_L;
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
     pObj->Draw = Ball2_draw;
@@ -52,6 +52,7 @@ void Ball2_update(Elements *self)
     Ball2 *chara2 = ((Ball2 *)(self->pDerivedObj));
     Elements *flo;
     Elements *flo2;
+    Elements *flo3;
     //printf("%d", Obj -> selflw);
     al_get_mouse_state(&msstate); 
     if(mouse_state[2] == 1)
@@ -73,10 +74,18 @@ void Ball2_update(Elements *self)
             Obj -> selflw =0;
         }
         else if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(Obj -> selflw == 2)&&Gold>=150&&Obj->lap==0){//*mouse right button is clicked return 1
-            printf("space is clicked1\n");
+            printf("mouse left is clicked1\n");
             Gold-=150;
             flo2 = New_Sunflw(Sunflw_L, (Obj->x) -80, (Obj->y) -80);//*generate new flower
             _Register_elements(scene, flo2);
+            chara2 -> state2 = 1;
+            Obj -> selflw =0;
+        }
+        else if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(Obj -> selflw == 3)&&Gold>=50&&Obj->y<568){//*mouse right button is clicked return 1
+            printf("mouse left is clicked1\n");
+            Gold-=50;
+            flo3 = New_bomb(Bomb_L, (Obj->x) -20, (Obj->y) -10);//*generate new flower
+            _Register_elements(scene, flo3);
             chara2 -> state2 = 1;
             Obj -> selflw =0;
         }
