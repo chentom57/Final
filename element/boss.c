@@ -4,25 +4,25 @@
 time_t start_time, current_time;
 #include <stdlib.h> /* 亂數相關函數 */
 
-#include "Zombie1.h"
+#include "Boss.h"
 #include "../shapes/Circle.h"
-int a = 1;
+int boss_speed = 1;
 //0601:random: used for create zombie's y-axis
-int ranflag = 1;
+int ranflag_boss = 1;
 /*
-   [Zombie1 function]
+   [Boss function]
 */
-Elements *New_Zombie1(int label)
+Elements *New_Boss(int label)
 {   
-    if(ranflag == 1){
+    if(ranflag_boss == 1){
         srand( time(NULL) );
-        ranflag = 0;
+        ranflag_boss = 0;
     }    
     
     //Bruce add timer define& start
     time(&start_time);
 
-    Zombie1 *pDerivedObj = (Zombie1 *)malloc(sizeof(Zombie1));
+    Boss *pDerivedObj = (Boss *)malloc(sizeof(Boss));
     Elements *pObj = New_Elements(label);
     
     //0601:used for random create y-axis for zombie spawning
@@ -31,12 +31,13 @@ Elements *New_Zombie1(int label)
 
     // setting derived object member
 
-    pDerivedObj->img = al_load_bitmap("assets/image/zombie1.png");
+    pDerivedObj->img = al_load_bitmap("assets/image/Boss.png");
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->gameover = 0;
     pDerivedObj->x = 800;
-    pDerivedObj->hp=5;
+     pDerivedObj->hp = 5; //0607 add: boss hp
+
     //printf("rand: %f\n", ran_num);
     pDerivedObj->y =  ran_num * (HEIGHT-300) ;
     pDerivedObj->v = 0.5; //速度
@@ -49,18 +50,18 @@ Elements *New_Zombie1(int label)
     
    // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
-    pObj->Update = Zombie1_update;
-    pObj->Interact = Zombie1_interact;
-    pObj->Draw = Zombie1_draw;
-    pObj->Destroy = Zombie1_destory;
+    pObj->Update = Boss_update;
+    pObj->Interact = Boss_interact;
+    pObj->Draw = Boss_draw;
+    pObj->Destroy = Boss_destory;
 
     return pObj;
 }
-void Zombie1_update(Elements *self)
+void Boss_update(Elements *self)
 {
 
-    Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
-    _Zombie1_update_position(self, Obj->v, Obj->v);
+    Boss *Obj = ((Boss *)(self->pDerivedObj));
+    _Boss_update_position(self, Obj->v, Obj->v);
     if(Obj-> x <0){
         //Bruce add: if x<0, then game over 
         printf("game over!\n");
@@ -69,35 +70,35 @@ void Zombie1_update(Elements *self)
     }
 
 }
-void _Zombie1_update_position(Elements *self, float dx, float dy)
+void _Boss_update_position(Elements *self, float dx, float dy)
 {
-    Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
+    Boss *Obj = ((Boss *)(self->pDerivedObj));
 
     //Bruce add timer
     time(&current_time);
     
     Obj->x -=  1* dx;
-    Obj->y -= a * dy;
+    Obj->y -=  boss_speed * dy;
     
     if((Obj ->y < 50 )){
-       a = -1;
+        boss_speed = -1;
     }
     else if (Obj -> y > 530)
     {
-        a = 1;
+         boss_speed = 1;
     }
 
     if(difftime(current_time, start_time) > 1.0){
-        a= a*-1;
+         boss_speed=  boss_speed  * -1;
         start_time = current_time;
     }
     Shape *hitbox = Obj->hitbox;
     hitbox->update_center_x(hitbox, dx);
     hitbox->update_center_y(hitbox, dy);
 }
-void Zombie1_interact(Elements *self, Elements *tar)
+void Boss_interact(Elements *self, Elements *tar)
 {
-    Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
+    Boss *Obj = ((Boss *)(self->pDerivedObj));
     if (tar->label == Floor_L)
     {
         if (Obj->x < 0 - Obj->width){        
@@ -112,28 +113,27 @@ void Zombie1_interact(Elements *self, Elements *tar)
         Projectile *Obj2 = ((Projectile *)(tar->pDerivedObj));
         if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
         {
-          Obj->hp--;
-          if(Obj->hp<1){
-            Gold+=100;
-            Score+=100;
-            self->dele=true;
-          }
-          printf("Hit!");
-
+            printf("Boss: ahh!");
+            Obj-> hp -= 1;
+            if(Obj -> hp < 1){
+                Gold+=100;
+                Score+=100;
+                self->dele=true;                
+            }                
         }
     }
 }
-void Zombie1_draw(Elements *self)
+void Boss_draw(Elements *self)
 {
-    Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
+    Boss *Obj = ((Boss *)(self->pDerivedObj));
     if (Obj->v > 0)
         al_draw_bitmap(Obj->img, Obj->x, Obj->y,0);
     else
         al_draw_bitmap(Obj->img, Obj->x, Obj->y, 0);
 }
-void Zombie1_destory(Elements *self)
+void Boss_destory(Elements *self)
 {
-    Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
+    Boss *Obj = ((Boss *)(self->pDerivedObj));
     al_destroy_bitmap(Obj->img);
     free(Obj->hitbox);
     free(Obj);

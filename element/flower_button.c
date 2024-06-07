@@ -7,7 +7,7 @@ Elements *New_flower_button(int label)
 {
     flower_button *pDerivedObj = (flower_button *)malloc(sizeof(flower_button));
     Elements *pObj = New_Elements(label);
-    pDerivedObj->img = al_load_bitmap("assets/image/fi_b.png");
+    pDerivedObj->img = al_load_bitmap("assets/image/flowerbutton.png");
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->x =20;  
@@ -60,8 +60,8 @@ void flower_button_draw(Elements *self)
 {
    flower_button *Obj = ((flower_button *)(self->pDerivedObj));
     al_draw_bitmap(Obj->img,Obj->x,Obj->y,0);
-    al_draw_text(Obj->font, Obj->color, Obj->x+Obj->width/2, Obj->y+Obj->height/4, ALLEGRO_ALIGN_CENTRE, "flower");
-     al_draw_text(Obj->font, Obj->color, Obj->x+Obj->width/2, Obj->y+Obj->height/4+30, ALLEGRO_ALIGN_CENTRE, "200");
+    al_draw_text(Obj->font, Obj->color, Obj->x+Obj->width/2, Obj->y+Obj->height, ALLEGRO_ALIGN_CENTRE, "flower");
+    //  al_draw_text(Obj->font, Obj->color, Obj->x+Obj->width/2, Obj->y+Obj->height/4+30, ALLEGRO_ALIGN_CENTRE, "200");
 }
 void flower_button_destory(Elements *self)
 {

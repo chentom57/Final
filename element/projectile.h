@@ -10,7 +10,8 @@ typedef struct _Projectile
 {
     int x, y;          // the position of image
     int width, height; // the width and height of image
-    int v;             // the velocity of projectile
+    int v;
+     int hp;             // the velocity of projectile
     ALLEGRO_BITMAP *img;
     Shape *hitbox; // the hitbox of object
 } Projectile;

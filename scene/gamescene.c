@@ -4,7 +4,7 @@
 */
 time_t start_time_gs,current_time_gs; 
 int zombie1_created=0;
-
+int Boss_created=0;
 Scene *New_GameScene(int label)
 {
     GameScene *pDerivedObj = (GameScene *)malloc(sizeof(GameScene));
@@ -14,6 +14,7 @@ Scene *New_GameScene(int label)
     //pDerivedObj->background = al_load_bitmap("assets/image/stage.jpg");
     pObj->pDerivedObj = pDerivedObj;
     start_time_gs=time(NULL);
+    Boss_created=0;
     Gold=500;
     Score=0;
     pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 24, 0);
@@ -104,6 +105,16 @@ void game_scene_update(Scene *self)
             }
 
         }
+         //0607 Bruce new add:boss
+        else if(ele->label==Boss_L){
+            Boss *Obj = ((Boss*)(ele->pDerivedObj));
+            if(Obj->gameover==1){
+                    self->scene_end = true;
+                    window = 2;
+            }
+
+        }
+    
     }
     // remove element
     for (int i = 0; i < allEle.len; i++)
@@ -156,6 +167,10 @@ void game_scene_zombie(Scene *self){
      _Register_elements(self, New_Zombie1(Zombie1_L));
         zombie1_created=1;
      }
+     if((current_time_gs-start_time_gs)>=10 && Boss_created==0){
+     _Register_elements(self, New_Boss(Boss_L));
+        Boss_created=1;
+     }
 
 }
 void game_scene_lottery(Scene *self){
@@ -167,9 +182,4 @@ void game_scene_lottery(Scene *self){
         Obj->lottery_created=1;
          _Register_elements(self, New_Lottery(Lottery_L));                   
      }
-    //  if((current_time_gs-start_time_gs)%3==0&&zombie1_created==0){
-    //  _Register_elements(self, New_Zombie1(Zombie1_L));
-    //     zombie1_created=1;
-    //  }
-
 }

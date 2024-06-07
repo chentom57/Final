@@ -13,6 +13,7 @@
 #include "../element/Resume.h"
 #include "../element/map.h"
 #include "../element/flower.h"
+#include "../element/Boss.h"
 #include "../element/bomb.h"
 #include "../element/Ball2.h"
 #include "../element/flower_button.h"
@@ -45,6 +46,7 @@ typedef enum EleType
     Sun_L,
     Sunflw_L,
     Zombie1_L,
+    Boss_L,
     SunflwB_L,
     Lottery_L,
     Ball_L,

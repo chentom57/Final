@@ -7,7 +7,7 @@ Elements *New_sunflw_button(int label)
 {
     sunflw_button *pDerivedObj = (sunflw_button *)malloc(sizeof(sunflw_button));
     Elements *pObj = New_Elements(label);
-    pDerivedObj->img = al_load_bitmap("assets/image/fi_b.png");
+    pDerivedObj->img = al_load_bitmap("assets/image/flowerbutton2.png");
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->x =180;  
@@ -58,8 +58,8 @@ void sunflw_button_draw(Elements *self)
 {   
     sunflw_button *Obj = ((sunflw_button *)(self->pDerivedObj));
     al_draw_bitmap(Obj->img,Obj->x,Obj->y,0);
-    al_draw_text(Obj->font, Obj->color, Obj->x+Obj->width/2, Obj->y+Obj->height/4, ALLEGRO_ALIGN_CENTRE, "Sunflw");
-     al_draw_text(Obj->font, Obj->color, Obj->x+Obj->width/2, Obj->y+Obj->height/4+30, ALLEGRO_ALIGN_CENTRE, "150");
+    al_draw_text(Obj->font, Obj->color, Obj->x+Obj->width/2, Obj->y+Obj->height, ALLEGRO_ALIGN_CENTRE, "Sunflw");
+    //  al_draw_text(Obj->font, Obj->color, Obj->x+Obj->width/2, Obj->y+Obj->height/4+30, ALLEGRO_ALIGN_CENTRE, "150");
 }
 void sunflw_button_destory(Elements *self)
 {

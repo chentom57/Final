@@ -35,10 +35,10 @@ Elements *New_Flower(int label, int x, int y)
     pDerivedObj->height = pDerivedObj->gif_status[0]->height;
     pDerivedObj->x = x;
     pDerivedObj->y = y;
-    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
-                                        pDerivedObj->y,
-                                        pDerivedObj->x + pDerivedObj->width,
-                                        pDerivedObj->y + pDerivedObj->height);
+     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x + 30,
+                                        pDerivedObj->y + 30,
+                                        pDerivedObj->x + 130,
+                                        pDerivedObj->y + 130);
     pDerivedObj->dir = true; // true: face to right, false: face to left
     // initial the animation component
     pDerivedObj->state = ATK;
@@ -63,6 +63,7 @@ void Flower_update(Elements *self)
 {
     // use the idea of finite state machine to deal with different state
     Flower *chara = ((Flower *)(self->pDerivedObj));
+    printf("flower = %d %d\n", chara -> x, chara -> y);
     // if(key_state[ALLEGRO_KEY_SPACE]){
     //     printf("spcae is pressed");
     //     //New_Flower(Flower_L, 1, 1);
@@ -77,7 +78,7 @@ void Flower_update(Elements *self)
             chara->state = STOP;
             chara->new_proj = false;
         }
-        if (chara->gif_status[ATK]->display_index == 1 && chara->new_proj == false)
+        if (chara->gif_status[ATK]->display_index == 0 && chara->new_proj == false)
         {
             Elements *pro;
             // Elements *pro2;
@@ -187,6 +188,7 @@ void Flower_draw(Elements *self)
 {
     // with the state, draw corresponding image
     Flower *chara = ((Flower *)(self->pDerivedObj));
+    al_draw_rectangle(chara->x +30,chara->y + 30,chara->x + 130,chara->y + 130, al_map_rgb(255, 255, 255), 5);//draw hitbox 
     ALLEGRO_BITMAP *frame = algif_get_bitmap(chara->gif_status[chara->state], al_get_time());
     if (frame)
     {
