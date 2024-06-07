@@ -1,5 +1,5 @@
-#ifndef sunflw_button_H_INCLUDED
-#define sunflw_button_H_INCLUDED
+#ifndef bomb_button_H_INCLUDED
+#define bomb_button_H_INCLUDED
 #include "element.h"
 #include "../scene/gamescene.h" // for element label
 #include "../shapes/Shape.h"
@@ -9,24 +9,23 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_acodec.h>
 /*
-   [sunflw_button object]
+   [bomb_button object]
 */
-typedef struct _sunflw_button
+typedef struct _bomb_button
 {
-    int sunflw_button;
+    int bomb_button;
     int x, y; // the position of image
     int width,heigh;    // the width 
     int in;
     Shape *hitbox; // the hitbox of object
     ALLEGRO_COLOR color;
     ALLEGRO_FONT *font;
-    ALLEGRO_BITMAP *img;
-} sunflw_button;
+} bomb_button;
 
-Elements *New_sunflw_button(int label);
-void sunflw_button_update(Elements *self);
-void sunflw_button_interact(Elements *self, Elements *tar);
-void sunflw_button_draw(Elements *self);
-void sunflw_button_destory(Elements *self);
+Elements *New_bomb_button(int label);
+void bomb_button_update(Elements *self);
+void bomb_button_interact(Elements *self, Elements *tar);
+void bomb_button_draw(Elements *self);
+void bomb_button_destory(Elements *self);
 
 #endif

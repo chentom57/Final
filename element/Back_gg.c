@@ -6,7 +6,10 @@ Elements *New_Back_gg(int label)
 {
     Back_gg *pDerivedObj = (Back_gg *)malloc(sizeof(Back_gg));
     Elements *pObj = New_Elements(label);
-    pDerivedObj->img = al_load_bitmap("assets/image/gameover_b.png");
+    if(Victory==1)
+        pDerivedObj->img = al_load_bitmap("assets/image/victory_b.png");
+    else
+        pDerivedObj->img = al_load_bitmap("assets/image/gameover_b.png");
     pDerivedObj->width =al_get_bitmap_width(pDerivedObj->img);
     pDerivedObj->heigh =al_get_bitmap_height(pDerivedObj->img);
     pDerivedObj->Back_gg=0;
@@ -52,7 +55,6 @@ void Back_gg_interact(Elements *self, Elements *tar)
 }
 void Back_gg_draw(Elements *self)
 {
-    
     Back_gg *Obj = ((Back_gg *)(self->pDerivedObj));
     al_draw_bitmap(Obj->img,Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,0);
     al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6.5, ALLEGRO_ALIGN_CENTRE, "MENU");

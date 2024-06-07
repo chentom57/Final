@@ -36,15 +36,16 @@ Elements *New_Sunflw(int label, int x, int y)
     pDerivedObj->height = pDerivedObj->gif_status[0]->height;
     pDerivedObj->x = x;
     pDerivedObj->y = y;
-    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
-                                        pDerivedObj->y,
-                                        pDerivedObj->x + pDerivedObj->width,
-                                        pDerivedObj->y + pDerivedObj->height);
+    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x + 30,
+                                        pDerivedObj->y + 30,
+                                        pDerivedObj->x + 130,
+                                        pDerivedObj->y + 130);
     pDerivedObj->dir = true; // true: face to right, false: face to left
     // initial the animation component
     pDerivedObj->state = ATK;
     pDerivedObj->new_proj = false;
     pObj->pDerivedObj = pDerivedObj;
+    pObj->inter_obj[pObj->inter_len++] = Ball2_L;
     // setting derived object function
     pObj->Draw = Sunflw_draw;
     pObj->Update = Sunflw_update;
@@ -189,6 +190,8 @@ void Sunflw_draw(Elements *self)
 {
     // with the state, draw corresponding image
     Sunflw *chara = ((Sunflw *)(self->pDerivedObj));
+    
+    al_draw_rectangle(chara->x +30,chara->y + 30,chara->x + 130,chara->y + 130, al_map_rgb(255, 255, 255), 5);//draw hitbox 
     ALLEGRO_BITMAP *frame = algif_get_bitmap(chara->gif_status[chara->state], al_get_time());
     if (frame)
     {
@@ -220,8 +223,14 @@ void _Sunflw_update_position(Elements *self, int dx, int dy)
     hitbox->update_center_y(hitbox, dy);
 }
 void Sunflw_interact(Elements *self, Elements *tar) {
-    // if(mouse_state[2] == 1){
-    //     printf("mouse right clicked");
-    // }
+
+    Sunflw *Obj = ((Sunflw*)(self->pDerivedObj));
+     if(tar->label==Ball2_L){
+        Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
+        if(Obj2->placed_range->overlap(Obj2->placed_range, Obj->hitbox))
+            Obj2->lap=1;
+        else
+            Obj2->lap=0; 
+     }
 
 }

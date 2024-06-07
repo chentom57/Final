@@ -9,9 +9,9 @@
 */
 typedef struct _Zombie1
 {
-    int x, y;          // the position of image
+    float x, y;          // the position of image
     int width, height; // the width and height of image
-    int v;             // the velocity of Zombie1
+    float v;             // the velocity of Zombie1
     int gameover;      // gameover flag
     ALLEGRO_BITMAP *img;
     Shape *hitbox; // the hitbox of object
@@ -21,5 +21,5 @@ void Zombie1_update(Elements *self);
 void Zombie1_interact(Elements *self, Elements *tar);
 void Zombie1_draw(Elements *self);
 void Zombie1_destory(Elements *self);
-void _Zombie1_update_position(Elements *self, int dx, int dy);
+void _Zombie1_update_position(Elements *self, float dx, float dy);
 #endif

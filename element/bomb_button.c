@@ -1,14 +1,14 @@
-#include "flower_button.h"
+#include "bomb_button.h"
 #include "../global.h"
 #include "../shapes/Rectangle.h"
 #include <allegro5/allegro_primitives.h>
 #include "Ball2.h"
-Elements *New_flower_button(int label)
+Elements *New_bomb_button(int label)
 {
-    flower_button *pDerivedObj = (flower_button *)malloc(sizeof(flower_button));
+    bomb_button *pDerivedObj = (bomb_button *)malloc(sizeof(bomb_button));
     Elements *pObj = New_Elements(label);
-    pDerivedObj->flower_button=0;
-    pDerivedObj->x = 100;  
+    pDerivedObj->bomb_button=0;
+    pDerivedObj->x =340;  
     pDerivedObj->y = 620;
     pDerivedObj->width =100;
     pDerivedObj->heigh=70;
@@ -23,45 +23,45 @@ Elements *New_flower_button(int label)
 
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
-    pObj->Draw = flower_button_draw;
-    pObj->Update = flower_button_update;
-    pObj->Interact = flower_button_interact;
-    pObj->Destroy = flower_button_destory;
+    pObj->Draw = bomb_button_draw;
+    pObj->Update = bomb_button_update;
+    pObj->Interact = bomb_button_interact;
+    pObj->Destroy = bomb_button_destory;
     return pObj;
 }
-void flower_button_update(Elements *self)
+void bomb_button_update(Elements *self)
 {
     
 }
-void flower_button_interact(Elements *self, Elements *tar)
+void bomb_button_interact(Elements *self, Elements *tar)
 {
-    flower_button *Obj = ((flower_button *)(self->pDerivedObj));
+    bomb_button *Obj = ((bomb_button *)(self->pDerivedObj));
     if (tar->label == Ball2_L)
     {
         Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
-        if(Obj2->selflw==1)
+        if(Obj2->selflw==3)
             Obj->color=al_map_rgb(255,255,255);
         else
             Obj->color=al_map_rgb(0,255,255);
-        if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]&&Gold>=200){
+        if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]&&Gold>=50){
             printf("flwoer button is clicked\n");
             Obj2->lap=1;
-            Obj2 -> selflw = 1;
-            // Obj->flower_button = 1;
+            Obj2 -> selflw = 3;
+            // Obj->bomb_button = 1;
         }
     }
 
 }
-void flower_button_draw(Elements *self)
+void bomb_button_draw(Elements *self)
 {
-    flower_button *Obj = ((flower_button *)(self->pDerivedObj));
+    bomb_button *Obj = ((bomb_button *)(self->pDerivedObj));
     al_draw_rectangle(Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,Obj->x+(Obj->width)/2,Obj->y+(Obj->heigh)/2,Obj->color,(Obj->width)/20);
-    al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6-10, ALLEGRO_ALIGN_CENTRE, "Flower");
-     al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6+15, ALLEGRO_ALIGN_CENTRE, "200");
+    al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6-10, ALLEGRO_ALIGN_CENTRE, "Bomb");
+     al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6+15, ALLEGRO_ALIGN_CENTRE, "50");
 }
-void flower_button_destory(Elements *self)
+void bomb_button_destory(Elements *self)
 {
-    flower_button *Obj = ((flower_button *)(self->pDerivedObj));
+    bomb_button *Obj = ((bomb_button *)(self->pDerivedObj));
     free(Obj->hitbox);
     free(Obj);
     free(self);

@@ -13,9 +13,11 @@
 #include "../element/Resume.h"
 #include "../element/map.h"
 #include "../element/flower.h"
+#include "../element/bomb.h"
 #include "../element/Ball2.h"
 #include "../element/flower_button.h"
 #include "../element/sunflw_button.h"
+#include "../element/bomb_button.h"
 #include "../element/Zombie1.h"
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
@@ -30,18 +32,21 @@ typedef enum EleType
     Floor_L,
     Teleport_L,
     Tree_L,
-    Zombie1_L,
+    
     Character_L,
     Projectile_L,
     Back_L,
     Resume_L,
     FlowerB_L,
     Flower_L,
-    Ball_L,
-    Ball2_L,
+    BombB_L,
+    Bomb_L,
     Sun_L,
     Sunflw_L,
-    SunflwB_L
+    Zombie1_L,
+    SunflwB_L,
+    Ball_L,
+    Ball2_L
     
 } EleType;
 typedef struct _GameScene

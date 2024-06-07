@@ -8,7 +8,7 @@ Elements *New_Ball(int label)
     Elements *pObj = New_Elements(label);
     pDerivedObj->x = mouse.x;
     pDerivedObj->y = mouse.y;
-    pDerivedObj->r = 10;
+    pDerivedObj->r = 5;
     pDerivedObj->in = -1;
     pDerivedObj->color = al_map_rgb(255, 0, 0);
     pDerivedObj->hitbox = New_Circle(pDerivedObj->x,

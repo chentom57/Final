@@ -20,6 +20,7 @@ Elements *New_Projectile(int label, int x, int y, int v)
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = Tree_L;
     pObj->inter_obj[pObj->inter_len++] = Floor_L;
+    pObj->inter_obj[pObj->inter_len++] = Zombie1_L;
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
     pObj->Update = Projectile_update;
@@ -30,7 +31,11 @@ Elements *New_Projectile(int label, int x, int y, int v)
 }
 void Projectile_update(Elements *self)
 {
+    
     Projectile *Obj = ((Projectile *)(self->pDerivedObj));
+    if(Obj -> x > 850){
+        self -> dele = true;
+    }
     _Projectile_update_position(self, Obj->v, 0);
 }
 void _Projectile_update_position(Elements *self, int dx, int dy)
@@ -45,12 +50,17 @@ void _Projectile_update_position(Elements *self, int dx, int dy)
 void Projectile_interact(Elements *self, Elements *tar)
 {
     Projectile *Obj = ((Projectile *)(self->pDerivedObj));
-    if (tar->label == Floor_L)
+    if (tar->label == Zombie1_L)
     {
-        if(Obj->x < 0 - Obj->width)
+        Zombie1 *zomb = ((Zombie1*)(tar->pDerivedObj));
+        if (zomb->hitbox->overlap(zomb->hitbox, Obj->hitbox))
+        {
             self->dele = true;
-        else if(Obj->x > WIDTH + Obj->width)
-            self->dele = true;
+        }
+        // if(Obj->x < 0 - Obj->width)
+        //     self->dele = true;
+        // else if(Obj->x > WIDTH + Obj->width)
+        //     self->dele = true;
     }
     else if (tar->label == Tree_L)
     {
