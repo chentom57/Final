@@ -4,6 +4,8 @@
 */
 time_t start_time_gs,current_time_gs; 
 int zombie1_created=0;
+//0607 Bruce add
+int Boss_created=0;
 
 Scene *New_GameScene(int label)
 {
@@ -47,7 +49,7 @@ void game_scene_update(Scene *self)
     current_time_gs=time(NULL);
 
     game_scene_zombie(self);
-    if(current_time_gs-start_time_gs>10){
+    if(current_time_gs-start_time_gs>40){
                     self->scene_end = true;
                     window = 3;
             
@@ -95,6 +97,15 @@ void game_scene_update(Scene *self)
         }
         else if(ele->label==Zombie1_L){
             Zombie1 *Obj = ((Zombie1 *)(ele->pDerivedObj));
+            if(Obj->gameover==1){
+                    self->scene_end = true;
+                    window = 2;
+            }
+
+        }
+        //0607 Bruce new add:boss
+        else if(ele->label==Boss_L){
+            Boss *Obj = ((Boss*)(ele->pDerivedObj));
             if(Obj->gameover==1){
                     self->scene_end = true;
                     window = 2;
@@ -150,6 +161,14 @@ void game_scene_zombie(Scene *self){
      if((current_time_gs-start_time_gs)%3==0&&zombie1_created==0){
      _Register_elements(self, New_Zombie1(Zombie1_L));
         zombie1_created=1;
+     }
+    //0607 Bruce add :boss
+     if((start_time_gs)%3==1){
+        Boss_created=0;                     //reset the bool zombie been created
+     }
+     if((current_time_gs-start_time_gs)%3==0 && Boss_created==0){
+     _Register_elements(self, New_Boss(Boss_L));
+        Boss_created=1;
      }
 
 }
