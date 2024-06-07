@@ -92,7 +92,6 @@ void Zombie1_interact(Elements *self, Elements *tar)
           Score+=100;
           self->dele=true;
           printf("Hit!");
-    
         }
     }
 }

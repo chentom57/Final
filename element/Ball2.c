@@ -7,6 +7,7 @@
 #include "sun.h"
 #include "sunflw.h"
 #include<stdio.h>
+#include<math.h>
 Elements *New_Ball2(int label)
 {
     Ball2 *pDerivedObj = (Ball2 *)malloc(sizeof(Ball2));
@@ -35,6 +36,7 @@ Elements *New_Ball2(int label)
     pObj->Destroy = Ball2_destory;
     return pObj;
 }
+
 void Ball2_update(Elements *self)
 {     
     
@@ -49,10 +51,10 @@ void Ball2_update(Elements *self)
     Ball2 *chara2 = ((Ball2 *)(self->pDerivedObj));
     Elements *flo;
     Elements *flo2;
-    printf("%d", Obj -> selflw);
+ 
     al_get_mouse_state(&msstate);
     if(chara2 -> state2 == 0){
-        // // if(key_state[ALLEGRO_KEY_SPACE]){
+        //     if(key_state[ALLEGRO_KEY_SPACE]){
         //     printf("entered1");
         //     // flo = New_Flower(Flower_L, 100, 100);
         //     // _Register_elements(scene, flo);
@@ -60,7 +62,12 @@ void Ball2_update(Elements *self)
         if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(Obj -> selflw == 1)){//*mouse right button is clicked return 1
             
             // printf("mouse left is clicked\n");
-            flo = New_Flower(Flower_L, (Obj->x) -80, (Obj->y) -80);//*generate new flower
+            int dist = 100;
+            double xf = round((((Obj -> x))/dist))*dist;
+            printf("xf = %lf\n", xf);
+            double yf = round((((Obj -> y))/dist))*dist;
+            printf("yf = %lf\n", yf);
+            flo = New_Flower(Flower_L, xf, yf);//*generate new flower
             _Register_elements(scene, flo);
             chara2 -> state2 = 1;
         }
