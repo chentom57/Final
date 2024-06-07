@@ -15,8 +15,9 @@ typedef struct _sunflw_button
 {
     int sunflw_button;
     int x, y; // the position of image
-    int width,heigh;    // the width 
+    int width,height;    // the width 
     int in;
+    ALLEGRO_BITMAP *img;
     Shape *hitbox; // the hitbox of object
     ALLEGRO_COLOR color;
     ALLEGRO_FONT *font;

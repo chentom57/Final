@@ -17,7 +17,9 @@ Scene *New_GameScene(int label)
     Gold=500;
     Score=0;
     pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 24, 0);
+     pDerivedObj->background_gs =al_load_bitmap("assets/image/gamescene_back.png");
     pDerivedObj->font2 = al_load_ttf_font("assets/font/pirulen.ttf", 36, 0);
+    pDerivedObj->lottery_created=0;
     // Load sound
     pDerivedObj->song = al_load_sample("assets/sound/menu.mp3");
     al_reserve_samples(24);
@@ -47,7 +49,8 @@ void game_scene_update(Scene *self)
     current_time_gs=time(NULL);
 
     game_scene_zombie(self);
-    if(current_time_gs-start_time_gs>10){
+    game_scene_lottery(self);
+    if(current_time_gs-start_time_gs>40){
                     self->scene_end = true;
                     window = 3;
             
@@ -112,8 +115,10 @@ void game_scene_update(Scene *self)
 }
 void game_scene_draw(Scene *self)
 {   
+    
     al_clear_to_color(al_map_rgb(0, 0, 0));
     GameScene *gs = ((GameScene *)(self->pDerivedObj));
+     al_draw_bitmap(gs->background_gs, 0, 0, 0);
     current_time_gs=time(NULL);
     sprintf(gs->text, "%ld",(long)(current_time_gs-start_time_gs-1));
     //al_draw_bitmap(gs->background, 0, 0, 0);
@@ -151,5 +156,20 @@ void game_scene_zombie(Scene *self){
      _Register_elements(self, New_Zombie1(Zombie1_L));
         zombie1_created=1;
      }
+
+}
+void game_scene_lottery(Scene *self){
+    GameScene *Obj = ((GameScene *)(self->pDerivedObj));
+    if((current_time_gs-start_time_gs)%10==1){
+        Obj->lottery_created=0;                     //reset the bool zombie been created
+     }
+     if((current_time_gs-start_time_gs)%10==0&&(Obj->lottery_created==0)){
+        Obj->lottery_created=1;
+         _Register_elements(self, New_Lottery(Lottery_L));                   
+     }
+    //  if((current_time_gs-start_time_gs)%3==0&&zombie1_created==0){
+    //  _Register_elements(self, New_Zombie1(Zombie1_L));
+    //     zombie1_created=1;
+    //  }
 
 }

@@ -7,16 +7,16 @@ Elements *New_flower_button(int label)
 {
     flower_button *pDerivedObj = (flower_button *)malloc(sizeof(flower_button));
     Elements *pObj = New_Elements(label);
-    pDerivedObj->flower_button=0;
-    pDerivedObj->x = 100;  
-    pDerivedObj->y = 620;
-    pDerivedObj->width =100;
-    pDerivedObj->heigh=70;
+    pDerivedObj->img = al_load_bitmap("assets/image/fi_b.png");
+    pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
+    pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
+    pDerivedObj->x =20;  
+    pDerivedObj->y = 560;
     pDerivedObj->in = -1;
     pDerivedObj->color = al_map_rgb(0, 255, 255);
-    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x-pDerivedObj->width/2,
-                                     pDerivedObj->y-pDerivedObj->heigh/2,
-                                     pDerivedObj->x+pDerivedObj->width/2,pDerivedObj->y+pDerivedObj->heigh/2);
+    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
+                                     pDerivedObj->y,
+                                     pDerivedObj->x+pDerivedObj->width,pDerivedObj->y+pDerivedObj->height);
     pDerivedObj->font=al_load_ttf_font("assets/font/pirulen.ttf", 18, 0);
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = Ball2_L;
@@ -39,10 +39,14 @@ void flower_button_interact(Elements *self, Elements *tar)
     if (tar->label == Ball2_L)
     {
         Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
+       if(Gold>=200){
         if(Obj2->selflw==1)
             Obj->color=al_map_rgb(255,255,255);
         else
             Obj->color=al_map_rgb(0,255,255);
+        }
+        else
+            Obj->color=al_map_rgb(255,0,0);
         if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]&&Gold>=200){
             printf("flwoer button is clicked\n");
             Obj2->lap=1;
@@ -54,10 +58,10 @@ void flower_button_interact(Elements *self, Elements *tar)
 }
 void flower_button_draw(Elements *self)
 {
-    flower_button *Obj = ((flower_button *)(self->pDerivedObj));
-    al_draw_rectangle(Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,Obj->x+(Obj->width)/2,Obj->y+(Obj->heigh)/2,Obj->color,(Obj->width)/20);
-    al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6-10, ALLEGRO_ALIGN_CENTRE, "Flower");
-     al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6+15, ALLEGRO_ALIGN_CENTRE, "200");
+   flower_button *Obj = ((flower_button *)(self->pDerivedObj));
+    al_draw_bitmap(Obj->img,Obj->x,Obj->y,0);
+    al_draw_text(Obj->font, Obj->color, Obj->x+Obj->width/2, Obj->y+Obj->height/4, ALLEGRO_ALIGN_CENTRE, "flower");
+     al_draw_text(Obj->font, Obj->color, Obj->x+Obj->width/2, Obj->y+Obj->height/4+30, ALLEGRO_ALIGN_CENTRE, "200");
 }
 void flower_button_destory(Elements *self)
 {

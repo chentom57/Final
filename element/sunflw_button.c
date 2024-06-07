@@ -7,16 +7,16 @@ Elements *New_sunflw_button(int label)
 {
     sunflw_button *pDerivedObj = (sunflw_button *)malloc(sizeof(sunflw_button));
     Elements *pObj = New_Elements(label);
-    pDerivedObj->sunflw_button=0;
-    pDerivedObj->x = 220;  
-    pDerivedObj->y = 620;
-    pDerivedObj->width =100;
-    pDerivedObj->heigh=70;
+    pDerivedObj->img = al_load_bitmap("assets/image/fi_b.png");
+    pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
+    pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
+    pDerivedObj->x =180;  
+    pDerivedObj->y = 560;
     pDerivedObj->in = -1;
     pDerivedObj->color = al_map_rgb(0, 255, 255);
-    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x-pDerivedObj->width/2,
-                                     pDerivedObj->y-pDerivedObj->heigh/2,
-                                     pDerivedObj->x+pDerivedObj->width/2,pDerivedObj->y+pDerivedObj->heigh/2);
+    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
+                                     pDerivedObj->y,
+                                     pDerivedObj->x+pDerivedObj->width,pDerivedObj->y+pDerivedObj->height);
     pDerivedObj->font=al_load_ttf_font("assets/font/pirulen.ttf", 18, 0);
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = Ball2_L;
@@ -38,10 +38,14 @@ void sunflw_button_interact(Elements *self, Elements *tar)
     if (tar->label == Ball2_L)
     {
         Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
+       if(Gold>=150){
         if(Obj2->selflw==2)
             Obj->color=al_map_rgb(255,255,255);
         else
             Obj->color=al_map_rgb(0,255,255);
+        }
+        else
+            Obj->color=al_map_rgb(255,0,0);
         if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]&&Gold>=150){
             printf("flwoer button is clicked\n");
             Obj2->lap=1;
@@ -51,11 +55,11 @@ void sunflw_button_interact(Elements *self, Elements *tar)
     }
 }
 void sunflw_button_draw(Elements *self)
-{
+{   
     sunflw_button *Obj = ((sunflw_button *)(self->pDerivedObj));
-    al_draw_rectangle(Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,Obj->x+(Obj->width)/2,Obj->y+(Obj->heigh)/2,Obj->color,(Obj->width)/20);
-    al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6-10, ALLEGRO_ALIGN_CENTRE, "sunflw");
-    al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6+15, ALLEGRO_ALIGN_CENTRE, "150");
+    al_draw_bitmap(Obj->img,Obj->x,Obj->y,0);
+    al_draw_text(Obj->font, Obj->color, Obj->x+Obj->width/2, Obj->y+Obj->height/4, ALLEGRO_ALIGN_CENTRE, "Sunflw");
+     al_draw_text(Obj->font, Obj->color, Obj->x+Obj->width/2, Obj->y+Obj->height/4+30, ALLEGRO_ALIGN_CENTRE, "150");
 }
 void sunflw_button_destory(Elements *self)
 {
