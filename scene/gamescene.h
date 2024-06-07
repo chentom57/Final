@@ -23,6 +23,8 @@
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include "../element/Boss.h"
+
 /*
    [game scene object]
 */
@@ -46,7 +48,8 @@ typedef enum EleType
     Zombie1_L,
     SunflwB_L,
     Ball_L,
-    Ball2_L
+    Ball2_L,
+    Boss_L
     
 } EleType;
 typedef struct _GameScene

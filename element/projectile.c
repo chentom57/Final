@@ -14,6 +14,7 @@ Elements *New_Projectile(int label, int x, int y, int v)
     pDerivedObj->x = x;
     pDerivedObj->y = y;
     pDerivedObj->v = v;
+    pDerivedObj->hp = 1;//0607 add
     pDerivedObj->hitbox = New_Circle(pDerivedObj->x + pDerivedObj->width / 2,
                                      pDerivedObj->y + pDerivedObj->height / 2,
                                      min(pDerivedObj->width, pDerivedObj->height) / 2);
@@ -70,6 +71,36 @@ void Projectile_interact(Elements *self, Elements *tar)
             self->dele = true;
         }
     }
+    //0607 add: boss and zombie -hpS
+    else if (tar->label == Boss_L)
+    {
+        Boss *Obj2 = ((Boss *)(tar->pDerivedObj));
+        if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
+        {
+            printf("bullet: ahh!");
+            Obj-> hp -= 1;
+            if(Obj -> hp < 1){
+                //Gold+=100;
+                //Score+=100;
+                self->dele=true;                
+            }                
+        }
+    }
+    else if (tar->label == Zombie1_L)
+    {
+        Zombie1 *Obj2 = ((Zombie1 *)(tar->pDerivedObj));
+        if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
+        {
+            printf("Zombie1: ahh!");
+            Obj-> hp -= 1;
+            if(Obj -> hp < 1){
+                //Gold+=100;
+                //Score+=100;
+                self->dele=true;                
+            }                
+        }
+    }
+
 }
 void Projectile_draw(Elements *self)
 {
