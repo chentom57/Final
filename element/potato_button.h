@@ -1,5 +1,5 @@
-#ifndef flower_button_H_INCLUDED
-#define flower_button_H_INCLUDED
+#ifndef potato_button_H_INCLUDED
+#define potato_button_H_INCLUDED
 #include "element.h"
 #include "../scene/gamescene.h" // for element label
 #include "../shapes/Shape.h"
@@ -9,11 +9,11 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_acodec.h>
 /*
-   [flower_button object]
+   [potato_button object]
 */
-typedef struct _flower_button
+typedef struct _potato_button
 {
-    int flower_button;
+    int potato_button;
     int x, y; // the position of image
     int width,height;    // the width 
     int in;
@@ -23,12 +23,12 @@ typedef struct _flower_button
     ALLEGRO_FONT *font;
     ALLEGRO_BITMAP *img;
     ALLEGRO_BITMAP *img2;
-} flower_button;
+} potato_button;
 
-Elements *New_flower_button(int label);
-void flower_button_update(Elements *self);
-void flower_button_interact(Elements *self, Elements *tar);
-void flower_button_draw(Elements *self);
-void flower_button_destory(Elements *self);
+Elements *New_potato_button(int label);
+void potato_button_update(Elements *self);
+void potato_button_interact(Elements *self, Elements *tar);
+void potato_button_draw(Elements *self);
+void potato_button_destory(Elements *self);
 
 #endif

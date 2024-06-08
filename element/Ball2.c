@@ -6,6 +6,7 @@
 #include "charater.h"
 #include "sun.h"
 #include "sunflw.h"
+#include "potato.h"
 #include<stdio.h>
 #include<math.h>
 Elements *New_Ball2(int label)
@@ -30,6 +31,7 @@ Elements *New_Ball2(int label)
     pObj->inter_obj[pObj->inter_len++] = Sun_L;
     pObj->inter_obj[pObj->inter_len++] = Sunflw_L;
     pObj->inter_obj[pObj->inter_len++] = Bomb_L;
+    pObj->inter_obj[pObj->inter_len++] = Potato_L;
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
     pObj->Draw = Ball2_draw;
@@ -50,12 +52,14 @@ void Ball2_update(Elements *self)
     range->update_center_y(range,mouse.y-Obj->y);
     Obj->x = mouse.x;
     Obj->y = mouse.y;
+ 
     Ball2 *chara2 = ((Ball2 *)(self->pDerivedObj));
-    Elements *flo;
-    Elements *flo2;
-    Elements *flo3;
+    Elements *flo;//flower
+    Elements *flo2;//sunflw
+    Elements *flo3;//bomb'
+    Elements *flo4;//potato
     //printf("%d", Obj -> selflw);
-    printf("ball2 = %d %d\n", Obj -> x, Obj -> y);
+    // printf("ball2 = %d %d\n", Obj -> x, Obj -> y);
     al_get_mouse_state(&msstate); 
     if(mouse_state[2] == 1)
         Obj->selflw=0;
@@ -88,13 +92,23 @@ void Ball2_update(Elements *self)
             chara2 -> state2 = 1;
             Obj -> selflw =0;
         }
-        else if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(Obj -> selflw == 3)&&Gold>=50&&Obj->y<568){//*mouse right button is clicked return 1
+        else if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(mouse.y < 500)&&(Obj -> selflw == 3)&&Gold>=50&&Obj->y<568){//*mouse right button is clicked return 1
             printf("mouse left is clicked1\n");
             double fx = round(((Obj->x) -20)/100)*100;
             double fy = round(((Obj->y) -20)/100)*100;
             Gold-=50;
             flo3 = New_bomb(Bomb_L, fx +30, fy+30);//*generate new flower
             _Register_elements(scene, flo3);
+            chara2 -> state2 = 1;
+            Obj -> selflw =0;
+        }
+        else if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(mouse.y < 500)&&(Obj -> selflw == 4)&&Gold>=50&&Obj->y<568){//*mouse right button is clicked return 1
+            printf("potato is clicked1\n");
+            double fx = round(((Obj->x) -20)/100)*100;
+            double fy = round(((Obj->y) -20)/100)*100;
+            Gold-=50;
+            flo4 = New_potato(Potato_L, fx +30, fy+30);//*generate new potato
+            _Register_elements(scene, flo4);
             chara2 -> state2 = 1;
             Obj -> selflw =0;
         }

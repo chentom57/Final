@@ -75,7 +75,6 @@ void _Boss_update_position(Elements *self, float dx, float dy)
 
     //Bruce add timer
     time(&current_time);
-
     Obj->x -=  1* dx;
     Obj->y -=  boss_speed * dy;
     

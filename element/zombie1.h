@@ -12,7 +12,8 @@ typedef struct _Zombie1
     float x, y;          // the position of image
     int width, height; // the width and height of image
     float v;             // the velocity of Zombie1
-    int gameover;      // gameover flag
+    int gameover;  // gameover flag
+    int hp;     
     ALLEGRO_BITMAP *img;
     Shape *hitbox; // the hitbox of object
 } Zombie1;

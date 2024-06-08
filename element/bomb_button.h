@@ -15,8 +15,9 @@ typedef struct _bomb_button
 {
     int bomb_button;
     int x, y; // the position of image
-    int width,heigh;    // the width 
+    int width,height;    // the width 
     int in;
+    
     Shape *hitbox; // the hitbox of object
     ALLEGRO_COLOR color;
     ALLEGRO_FONT *font;

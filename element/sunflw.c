@@ -207,7 +207,7 @@ void Sunflw_destory(Elements *self)
     Sunflw *Obj = ((Sunflw *)(self->pDerivedObj));
     al_destroy_sample_instance(Obj->atk_Sound);
     for (int i = 0; i < 3; i++)
-        algif_destroy_animation(Obj->gif_status[i]);
+    algif_destroy_animation(Obj->gif_status[i]);
     free(Obj->hitbox);
     free(Obj);
     free(self);

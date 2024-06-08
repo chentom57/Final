@@ -7,6 +7,7 @@ Elements *New_Projectile(int label, int x, int y, int v)
 {
     Projectile *pDerivedObj = (Projectile *)malloc(sizeof(Projectile));
     Elements *pObj = New_Elements(label);
+    pDerivedObj->hp = 1;//0607 add
     // setting derived object member
     pDerivedObj->img = al_load_bitmap("assets/image/projectile.png");
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj->img);
@@ -56,6 +57,7 @@ void Projectile_interact(Elements *self, Elements *tar)
         Zombie1 *zomb = ((Zombie1*)(tar->pDerivedObj));
         if (zomb->hitbox->overlap(zomb->hitbox, Obj->hitbox))
         {
+            printf("zombie hitted\n");
             self->dele = true;
         }
         // if(Obj->x < 0 - Obj->width)

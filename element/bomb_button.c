@@ -7,18 +7,18 @@ Elements *New_bomb_button(int label)
 {
     bomb_button *pDerivedObj = (bomb_button *)malloc(sizeof(bomb_button));
     Elements *pObj = New_Elements(label);
-    pDerivedObj->bomb_button=0;
+    pDerivedObj->img = al_load_bitmap("assets/image/canva.png");
+    pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
+    pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->x =340;  
-    pDerivedObj->y = 620;
-    pDerivedObj->width =100;
-    pDerivedObj->heigh=70;
+    pDerivedObj->y = 560;
     pDerivedObj->in = -1;
     pDerivedObj->color = al_map_rgb(0, 255, 255);
     pDerivedObj->img = al_load_bitmap("assets/image/bombbutton.png");
     pDerivedObj->img2 = al_load_bitmap("assets/image/bombbutton(unable).png");
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x-pDerivedObj->width/2,
-                                     pDerivedObj->y-pDerivedObj->heigh/2,
-                                     pDerivedObj->x+pDerivedObj->width/2,pDerivedObj->y+pDerivedObj->heigh/2);
+                                     pDerivedObj->y-pDerivedObj->height/2,
+                                     pDerivedObj->x+pDerivedObj->width/2,pDerivedObj->y+pDerivedObj->height/2);
     pDerivedObj->font=al_load_ttf_font("assets/font/pirulen.ttf", 18, 0);
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = Ball2_L;
@@ -41,10 +41,14 @@ void bomb_button_interact(Elements *self, Elements *tar)
     if (tar->label == Ball2_L)
     {
         Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
+        if(Gold>=50){
         if(Obj2->selflw==3)
             Obj->color=al_map_rgb(255,255,255);
         else
             Obj->color=al_map_rgb(0,255,255);
+        }
+        else
+            Obj->color=al_map_rgb(255,0,0);
         if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]&&Gold>=50){
             printf("flwoer button is clicked\n");
             Obj2->lap=1;
@@ -57,7 +61,7 @@ void bomb_button_interact(Elements *self, Elements *tar)
 void bomb_button_draw(Elements *self)
 {
     bomb_button *Obj = ((bomb_button *)(self->pDerivedObj));
-    if(Gold >= 5000){
+    if(Gold > 500){
         al_draw_bitmap(Obj->img, Obj->x - 50, Obj->y - 35,0);
     }
     else al_draw_bitmap(Obj->img2, Obj->x - 50, Obj->y - 35,0);

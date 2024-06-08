@@ -13,12 +13,15 @@
 #include "../element/Resume.h"
 #include "../element/map.h"
 #include "../element/flower.h"
+#include "../element/Boss.h"
 #include "../element/bomb.h"
 #include "../element/Ball2.h"
 #include "../element/flower_button.h"
 #include "../element/sunflw_button.h"
 #include "../element/bomb_button.h"
+#include "../element/potato_button.h"
 #include "../element/Zombie1.h"
+#include "../element/Lottery.h"
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_font.h>
@@ -46,7 +49,11 @@ typedef enum EleType
     Sun_L,
     Sunflw_L,
     Zombie1_L,
+    Potato_L,
+    PotatoB_L,
+
     SunflwB_L,
+    Lottery_L,
     Ball_L,
     Ball2_L,
     Boss_L
@@ -54,10 +61,12 @@ typedef enum EleType
 } EleType;
 typedef struct _GameScene
 {
+    int lottery_created;
     //ALLEGRO_BITMAP *background;
     ALLEGRO_FONT *font;
     ALLEGRO_FONT *font2;
     ALLEGRO_SAMPLE *song;
+    ALLEGRO_BITMAP *background_gs;
     ALLEGRO_SAMPLE_INSTANCE *sample_instance;
     char text[100];
 } GameScene;
@@ -66,4 +75,5 @@ void game_scene_update(Scene *self);
 void game_scene_draw(Scene *self);
 void game_scene_destroy(Scene *self);
 void game_scene_zombie(Scene *self); //zombie creating schedule
+void game_scene_lottery(Scene *self);
 #endif
