@@ -26,7 +26,7 @@ Elements *New_Zombie1(int label)
     Elements *pObj = New_Elements(label);
     
     //0601:used for random create y-axis for zombie spawning
-    double ran_num = ((double)rand()/RAND_MAX);
+    int ran_num = (rand() % 5);
     // setting derived object member
     pDerivedObj->img = al_load_bitmap("assets/image/zombie1.png");
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
@@ -35,7 +35,7 @@ Elements *New_Zombie1(int label)
     pDerivedObj->x = 800;
     pDerivedObj->hp=5;
     //printf("rand: %f\n", ran_num);
-    pDerivedObj->y =  ran_num * (HEIGHT-300) ;
+    pDerivedObj->y =  ran_num * 100 - 20;
     pDerivedObj->v = 0.5; //速度
     pDerivedObj->hitbox = New_Circle(pDerivedObj->x + pDerivedObj->width / 2 - 40,
                                      pDerivedObj->y + pDerivedObj->height / 2 - 40,
@@ -57,7 +57,7 @@ void Zombie1_update(Elements *self)
 {
 
     Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
-    _Zombie1_update_position(self, Obj->v, Obj->v);
+    _Zombie1_update_position(self, Obj->v, 0);
     if(Obj-> x <0){
         //Bruce add: if x<0, then game over 
         printf("game over!\n");
@@ -87,7 +87,7 @@ void _Zombie1_update_position(Elements *self, float dx, float dy)
         start_time = current_time;
     }
     Shape *hitbox = Obj->hitbox;
-    hitbox->update_center_x(hitbox, dx);
+    hitbox->update_center_x(hitbox, -1*dx);
     hitbox->update_center_y(hitbox, dy);
 }
 void Zombie1_interact(Elements *self, Elements *tar)
@@ -106,10 +106,15 @@ void Zombie1_interact(Elements *self, Elements *tar)
         Projectile *Obj2 = ((Projectile *)(tar->pDerivedObj));
         if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
         {
-            Gold+=100;
-            Score+=100;
-            self->dele=true;
-            printf("Hit!");
+            Obj->hp--;
+            printf("Hit! hp: %d\n", Obj->hp);
+            if(Obj->hp <= 0){
+                Gold+=100;
+                Score+=100;
+                self->dele=true;
+            }
+            
+            
         }
     }
 }

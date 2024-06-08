@@ -65,7 +65,7 @@ void Flower_update(Elements *self)
     
     // use the idea of finite state machine to deal with different state
     Flower *chara = ((Flower *)(self->pDerivedObj));
-    printf("flower = %d %d\n", chara -> x, chara -> y);
+    //printf("flower = %d %d\n", chara -> x, chara -> y);
     
     // if(key_state[ALLEGRO_KEY_SPACE]){
     //     printf("spcae is pressed");
