@@ -10,8 +10,8 @@ Elements *New_potato_button(int label)
     pDerivedObj->img = al_load_bitmap("assets/image/flowerbutton3.png");
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
-    pDerivedObj->x =480;  
-    pDerivedObj->y = 560;
+    pDerivedObj->x =420;  
+    pDerivedObj->y = 530;
     pDerivedObj->in = -1;
     pDerivedObj->color = al_map_rgb(0, 255, 255);
     
@@ -60,7 +60,7 @@ void potato_button_interact(Elements *self, Elements *tar)
 void potato_button_draw(Elements *self)
 {
     potato_button *Obj = ((potato_button *)(self->pDerivedObj));
-    al_draw_bitmap(Obj->img, Obj->x - 50, Obj->y - 35,0);
+    al_draw_bitmap(Obj->img, Obj->x,Obj->y, 0);
     // potato_button *Obj = ((potato_button *)(self->pDerivedObj));
     // al_draw_rectangle(Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,Obj->x+(Obj->width)/2,Obj->y+(Obj->heigh)/2,Obj->color,(Obj->width)/20);
     // al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6-10, ALLEGRO_ALIGN_CENTRE, "Flower");

@@ -33,10 +33,10 @@ Elements *New_Zombie1(int label)
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->gameover = 0;
     pDerivedObj->x = 800;
-    pDerivedObj->hp=5;
+    pDerivedObj->hp = 1;
     //printf("rand: %f\n", ran_num);
     pDerivedObj->y =  ran_num * (HEIGHT-300) ;
-    pDerivedObj->v = 0.5; //速度
+    pDerivedObj->v = 1; //速度
     pDerivedObj->hitbox = New_Circle(pDerivedObj->x + pDerivedObj->width / 2 - 40,
                                      pDerivedObj->y + pDerivedObj->height / 2 - 40,
                                      min(pDerivedObj->width, pDerivedObj->height) / 2 - 40);
@@ -58,7 +58,11 @@ void Zombie1_update(Elements *self)
 
     Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
     _Zombie1_update_position(self, Obj->v, Obj->v);
-    if(Obj-> x <0){
+    if(Obj -> hp <= 0){
+        printf("zombie out");
+        self -> dele = true;
+    }
+    if(Obj-> x < 0){
         //Bruce add: if x<0, then game over 
         printf("game over!\n");
         Obj->gameover = 1;
@@ -87,7 +91,7 @@ void _Zombie1_update_position(Elements *self, float dx, float dy)
         start_time = current_time;
     }
     Shape *hitbox = Obj->hitbox;
-    hitbox->update_center_x(hitbox, dx);
+    hitbox->update_center_x(hitbox, (-1)*dx);
     hitbox->update_center_y(hitbox, dy);
 }
 void Zombie1_interact(Elements *self, Elements *tar)
@@ -101,17 +105,17 @@ void Zombie1_interact(Elements *self, Elements *tar)
         else if (Obj->x > WIDTH + Obj->width)
             self->dele = true;
     }
-    else if (tar->label == Projectile_L)
-    {
-        Projectile *Obj2 = ((Projectile *)(tar->pDerivedObj));
-        if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
-        {
-            Gold+=100;
-            Score+=100;
-            self->dele=true;
-            printf("Hit!");
-        }
-    }
+    // else if (tar->label == Projectile_L)
+    // {
+    //     Projectile *Obj2 = ((Projectile *)(tar->pDerivedObj));
+    //     if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
+    //     {
+    //         printf("Hitted!");
+    //         Gold+=100;
+    //         Score+=100;
+    //         self -> dele=true;
+    //     }
+    // }
 }
 void Zombie1_draw(Elements *self)
 {

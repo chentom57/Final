@@ -16,7 +16,7 @@ Elements *New_Sun(int label, int x, int y, int v)
     pDerivedObj->v = v;
     pDerivedObj->hitbox = New_Circle(pDerivedObj->x + pDerivedObj->width / 2,
                                      pDerivedObj->y + pDerivedObj->height / 2,
-                                     min(pDerivedObj->width, pDerivedObj->height) / 2);
+                                     40);
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = Tree_L;
     pObj->inter_obj[pObj->inter_len++] = Floor_L;
@@ -66,6 +66,9 @@ void Sun_interact(Elements *self, Elements *tar)
 void Sun_draw(Elements *self)
 {
     Sun *Obj = ((Sun *)(self->pDerivedObj));
+    al_draw_circle(Obj->x + Obj->width / 2,
+                                     Obj->y + Obj->height / 2,
+                                     40, al_map_rgb(255, 255, 0), 2);
     if (Obj->v > 0)
         al_draw_bitmap(Obj->img, Obj->x, Obj->y, ALLEGRO_FLIP_HORIZONTAL);
     else
