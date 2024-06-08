@@ -18,7 +18,7 @@ Elements *New_Projectile(int label, int x, int y, int v)
     pDerivedObj->hp = 1;//0607 add
     pDerivedObj->hitbox = New_Circle(pDerivedObj->x + pDerivedObj->width / 2,
                                      pDerivedObj->y + pDerivedObj->height / 2,
-                                     min(pDerivedObj->width, pDerivedObj->height) / 2);
+                                     15);
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = Tree_L;
     pObj->inter_obj[pObj->inter_len++] = Floor_L;
@@ -107,6 +107,9 @@ void Projectile_interact(Elements *self, Elements *tar)
 void Projectile_draw(Elements *self)
 {
     Projectile *Obj = ((Projectile *)(self->pDerivedObj));
+    al_draw_circle(Obj->x + Obj->width / 2,
+                                     Obj->y + Obj->height / 2,
+                                     15 , al_map_rgb(255, 255, 255), 3);
     if (Obj->v > 0)
         al_draw_bitmap(Obj->img, Obj->x, Obj->y, ALLEGRO_FLIP_HORIZONTAL);
     else

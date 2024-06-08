@@ -35,11 +35,11 @@ Elements *New_Zombie1(int label)
     pDerivedObj->x = 800;
     pDerivedObj->hp=5;
     //printf("rand: %f\n", ran_num);
-    pDerivedObj->y =  ran_num * 100 - 20;
-    pDerivedObj->v = 0.5; //速度
-    pDerivedObj->hitbox = New_Circle(pDerivedObj->x + pDerivedObj->width / 2 - 40,
-                                     pDerivedObj->y + pDerivedObj->height / 2 - 40,
-                                     min(pDerivedObj->width, pDerivedObj->height) / 2 - 40);
+    pDerivedObj->y =  ran_num * 100 ;
+    pDerivedObj->v = 1; //速度
+    pDerivedObj->hitbox = New_Circle(pDerivedObj->x + pDerivedObj->width / 2.5 + 30,
+                                     pDerivedObj->y + pDerivedObj->height / 2.5 + 20 ,
+                                     min(pDerivedObj->width, pDerivedObj->height) / 2.5 );
     // setting the interact object
     
     pObj->inter_obj[pObj->inter_len++] = Projectile_L;
@@ -121,9 +121,10 @@ void Zombie1_interact(Elements *self, Elements *tar)
 void Zombie1_draw(Elements *self)
 {
     Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
-    al_draw_circle(Obj->x + Obj->width / 2 - 40,
-                                     Obj->y + Obj->height / 2 - 40,
-                                     min(Obj->width, Obj->height) / 2 - 40, al_map_rgb(255, 255, 255), 3);
+    al_draw_circle(Obj->x + Obj->width / 2.5 + 30,
+                                     Obj->y + Obj->height / 2.5 + 20 ,
+                                     min(Obj->width,Obj->height) / 2.5 , al_map_rgb(255, 255, 255), 3);
+    
     if (Obj->v > 0)
         al_draw_bitmap(Obj->img, Obj->x, Obj->y,0);
     else

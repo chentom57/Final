@@ -70,13 +70,13 @@ void Ball2_update(Elements *self)
         //     // flo = New_Flower(Flower_L, 100, 100);
         //     // _Register_elements(scene, flo);
         //     chara2 -> state2 = 0;
-        if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(Obj -> selflw == 1)&&Gold>=200&&Obj->lap==0&&placed[Obj->block_x][Obj->block_y]==0){
+        if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(Obj -> selflw == 1)&&Gold>=100&&Obj->lap==0&&placed[Obj->block_x][Obj->block_y]==0){
             //*mouse right button is clicked return 1
             
             printf("mouse left is clicked\n");
             double fx = round(((Obj->x))/100)*100;
             double fy = round(((Obj->y))/100)*100;
-            Gold-=200;
+            Gold-=100;
             flo = New_Flower(Flower_L, fx, fy);//*generate new flower
             _Register_elements(scene, flo);
             placed[Obj->block_x][Obj->block_y]=1;
