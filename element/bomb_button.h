@@ -20,6 +20,8 @@ typedef struct _bomb_button
     Shape *hitbox; // the hitbox of object
     ALLEGRO_COLOR color;
     ALLEGRO_FONT *font;
+    ALLEGRO_BITMAP *img;
+    ALLEGRO_BITMAP *img2;
 } bomb_button;
 
 Elements *New_bomb_button(int label);

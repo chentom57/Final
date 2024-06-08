@@ -20,6 +20,8 @@ typedef struct _flower_button
     Shape *hitbox; // the hitbox of object
     ALLEGRO_COLOR color;
     ALLEGRO_FONT *font;
+    ALLEGRO_BITMAP *img;
+    ALLEGRO_BITMAP *img2;
 } flower_button;
 
 Elements *New_flower_button(int label);

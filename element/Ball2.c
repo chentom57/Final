@@ -93,7 +93,7 @@ void Ball2_update(Elements *self)
             double fx = round(((Obj->x) -20)/100)*100;
             double fy = round(((Obj->y) -20)/100)*100;
             Gold-=50;
-            flo3 = New_bomb(Bomb_L, fx+ 30, fy+ 30);//*generate new flower
+            flo3 = New_bomb(Bomb_L, fx +30, fy+30);//*generate new flower
             _Register_elements(scene, flo3);
             chara2 -> state2 = 1;
             Obj -> selflw =0;

@@ -37,8 +37,8 @@ Elements *New_bomb(int label, int x, int y)
     pDerivedObj->height =al_get_bitmap_height(pDerivedObj->img);
     pDerivedObj->x = x;
     pDerivedObj->y = y;
-     pDerivedObj->color = al_map_rgb(255, 255, 255);
-       pDerivedObj->font=al_load_ttf_font("assets/font/pirulen.ttf",20, 0);
+    pDerivedObj->color = al_map_rgb(255, 255, 255);
+    pDerivedObj->font=al_load_ttf_font("assets/font/pirulen.ttf",20, 0);
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
                                         pDerivedObj->y,
                                         pDerivedObj->x + pDerivedObj->width,
@@ -222,7 +222,7 @@ void bomb_interact(Elements *self, Elements *tar) {
      current_time_bo=time(NULL);
     if((long)(current_time_bo-Obj->start_local-1)>3){
         printf("a");
-       self->dele=true;
+        self->dele=true;
     }
     
     //  if(tar->label==Ball2_L){

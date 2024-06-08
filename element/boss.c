@@ -58,8 +58,8 @@ Elements *New_Boss(int label)
 }
 void Boss_update(Elements *self)
 {
-
     Boss *Obj = ((Boss *)(self->pDerivedObj));
+    printf("%d", Obj -> hp);
     _Boss_update_position(self, Obj->v, Obj->v);
     if(Obj-> x <0){
         //Bruce add: if x<0, then game over 

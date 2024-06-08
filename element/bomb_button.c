@@ -14,6 +14,8 @@ Elements *New_bomb_button(int label)
     pDerivedObj->heigh=70;
     pDerivedObj->in = -1;
     pDerivedObj->color = al_map_rgb(0, 255, 255);
+    pDerivedObj->img = al_load_bitmap("assets/image/bombbutton.png");
+    pDerivedObj->img2 = al_load_bitmap("assets/image/bombbutton(unable).png");
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x-pDerivedObj->width/2,
                                      pDerivedObj->y-pDerivedObj->heigh/2,
                                      pDerivedObj->x+pDerivedObj->width/2,pDerivedObj->y+pDerivedObj->heigh/2);
@@ -55,9 +57,14 @@ void bomb_button_interact(Elements *self, Elements *tar)
 void bomb_button_draw(Elements *self)
 {
     bomb_button *Obj = ((bomb_button *)(self->pDerivedObj));
-    al_draw_rectangle(Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,Obj->x+(Obj->width)/2,Obj->y+(Obj->heigh)/2,Obj->color,(Obj->width)/20);
-    al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6-10, ALLEGRO_ALIGN_CENTRE, "Bomb");
-     al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6+15, ALLEGRO_ALIGN_CENTRE, "50");
+    if(Gold >= 5000){
+        al_draw_bitmap(Obj->img, Obj->x - 50, Obj->y - 35,0);
+    }
+    else al_draw_bitmap(Obj->img2, Obj->x - 50, Obj->y - 35,0);
+    // bomb_button *Obj = ((bomb_button *)(self->pDerivedObj));
+    // al_draw_rectangle(Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,Obj->x+(Obj->width)/2,Obj->y+(Obj->heigh)/2,Obj->color,(Obj->width)/20);
+    // al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6-10, ALLEGRO_ALIGN_CENTRE, "Bomb");
+    //  al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6+15, ALLEGRO_ALIGN_CENTRE, "50");
 }
 void bomb_button_destory(Elements *self)
 {

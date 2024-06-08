@@ -14,6 +14,7 @@ Elements *New_flower_button(int label)
     pDerivedObj->heigh=70;
     pDerivedObj->in = -1;
     pDerivedObj->color = al_map_rgb(0, 255, 255);
+    pDerivedObj->img = al_load_bitmap("assets/image/flowerbutton3.png");
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x-pDerivedObj->width/2,
                                      pDerivedObj->y-pDerivedObj->heigh/2,
                                      pDerivedObj->x+pDerivedObj->width/2,pDerivedObj->y+pDerivedObj->heigh/2);
@@ -55,9 +56,11 @@ void flower_button_interact(Elements *self, Elements *tar)
 void flower_button_draw(Elements *self)
 {
     flower_button *Obj = ((flower_button *)(self->pDerivedObj));
-    al_draw_rectangle(Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,Obj->x+(Obj->width)/2,Obj->y+(Obj->heigh)/2,Obj->color,(Obj->width)/20);
-    al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6-10, ALLEGRO_ALIGN_CENTRE, "Flower");
-     al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6+15, ALLEGRO_ALIGN_CENTRE, "200");
+    al_draw_bitmap(Obj->img, Obj->x - 50, Obj->y - 35,0);
+    // flower_button *Obj = ((flower_button *)(self->pDerivedObj));
+    // al_draw_rectangle(Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,Obj->x+(Obj->width)/2,Obj->y+(Obj->heigh)/2,Obj->color,(Obj->width)/20);
+    // al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6-10, ALLEGRO_ALIGN_CENTRE, "Flower");
+    //  al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6+15, ALLEGRO_ALIGN_CENTRE, "200");
 }
 void flower_button_destory(Elements *self)
 {

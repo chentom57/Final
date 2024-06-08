@@ -21,6 +21,7 @@ typedef struct _sunflw_button
     ALLEGRO_COLOR color;
     ALLEGRO_FONT *font;
     ALLEGRO_BITMAP *img;
+    ALLEGRO_BITMAP *img2;
 } sunflw_button;
 
 Elements *New_sunflw_button(int label);

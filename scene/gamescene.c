@@ -157,7 +157,7 @@ void game_scene_zombie(Scene *self){
      if((current_time_gs-start_time_gs)%3==1){
         zombie1_created=0;                     //reset the bool zombie been created
      }
-     if((current_time_gs-start_time_gs)%3==0&&zombie1_created==0){
+     if(((current_time_gs-start_time_gs)%3==0)&&(zombie1_created==0)){
      _Register_elements(self, New_Zombie1(Zombie1_L));
         zombie1_created=1;
      }
@@ -165,7 +165,7 @@ void game_scene_zombie(Scene *self){
      if((start_time_gs)%3==1){
         Boss_created=0;                     //reset the bool zombie been created
      }
-     if((current_time_gs-start_time_gs)%3==0 && Boss_created==0){
+     if(((current_time_gs-start_time_gs)%3==0) && (Boss_created==0)){
      _Register_elements(self, New_Boss(Boss_L));
         Boss_created=1;
      }

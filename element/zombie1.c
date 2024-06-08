@@ -53,7 +53,6 @@ Elements *New_Zombie1(int label)
     pObj->Interact = Zombie1_interact;
     pObj->Draw = Zombie1_draw;
     pObj->Destroy = Zombie1_destory;
-
     return pObj;
 }
 void Zombie1_update(Elements *self)
@@ -65,9 +64,7 @@ void Zombie1_update(Elements *self)
         //Bruce add: if x<0, then game over 
         printf("game over!\n");
         Obj->gameover = 1;
-        
     }
-
 }
 void _Zombie1_update_position(Elements *self, float dx, float dy)
 {
