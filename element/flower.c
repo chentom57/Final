@@ -81,7 +81,7 @@ void Flower_update(Elements *self)
             chara->state = STOP;
             chara->new_proj = false;
         }
-        if (chara->gif_status[ATK]->display_index == 1 && chara->new_proj == false)
+        if (chara->gif_status[ATK]->display_index == 8 && chara->new_proj == false)
         {
             Elements *pro;
             // Elements *pro2;

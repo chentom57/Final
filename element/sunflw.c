@@ -78,7 +78,7 @@ void Sunflw_update(Elements *self)
             chara->state = STOP;
             chara->new_proj = false;
         }
-        if (chara->gif_status[ATK]->display_index == 1 && chara->new_proj == false)
+        if (chara->gif_status[ATK]->display_index == 20 && chara->new_proj == false)
         {
             
             Elements *pro;

@@ -26,20 +26,20 @@ Elements *New_Zombie1(int label)
     Elements *pObj = New_Elements(label);
     
     //0601:used for random create y-axis for zombie spawning
-    double ran_num = ((double)rand()/RAND_MAX);
+    int ran_num = (rand() % 5);
     // setting derived object member
     pDerivedObj->img = al_load_bitmap("assets/image/zombie1.png");
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->gameover = 0;
     pDerivedObj->x = 800;
-    pDerivedObj->hp = 1;
+    pDerivedObj->hp=5;
     //printf("rand: %f\n", ran_num);
-    pDerivedObj->y =  ran_num * (HEIGHT-300) ;
+    pDerivedObj->y =  ran_num * 100 ;
     pDerivedObj->v = 1; //速度
-    pDerivedObj->hitbox = New_Circle(pDerivedObj->x + pDerivedObj->width / 2 - 40,
-                                     pDerivedObj->y + pDerivedObj->height / 2 - 40,
-                                     min(pDerivedObj->width, pDerivedObj->height) / 2 - 40);
+    pDerivedObj->hitbox = New_Circle(pDerivedObj->x + pDerivedObj->width / 2.5 + 30,
+                                     pDerivedObj->y + pDerivedObj->height / 2.5 + 20 ,
+                                     min(pDerivedObj->width, pDerivedObj->height) / 2.5 );
     // setting the interact object
     
     pObj->inter_obj[pObj->inter_len++] = Projectile_L;
@@ -57,12 +57,8 @@ void Zombie1_update(Elements *self)
 {
 
     Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
-    _Zombie1_update_position(self, Obj->v, Obj->v);
-    if(Obj -> hp <= 0){
-        printf("zombie out");
-        self -> dele = true;
-    }
-    if(Obj-> x < 0){
+    _Zombie1_update_position(self, Obj->v, 0);
+    if(Obj-> x <0){
         //Bruce add: if x<0, then game over 
         printf("game over!\n");
         Obj->gameover = 1;
@@ -91,7 +87,7 @@ void _Zombie1_update_position(Elements *self, float dx, float dy)
         start_time = current_time;
     }
     Shape *hitbox = Obj->hitbox;
-    hitbox->update_center_x(hitbox, (-1)*dx);
+    hitbox->update_center_x(hitbox, -1*dx);
     hitbox->update_center_y(hitbox, dy);
 }
 void Zombie1_interact(Elements *self, Elements *tar)
@@ -105,24 +101,30 @@ void Zombie1_interact(Elements *self, Elements *tar)
         else if (Obj->x > WIDTH + Obj->width)
             self->dele = true;
     }
-    // else if (tar->label == Projectile_L)
-    // {
-    //     Projectile *Obj2 = ((Projectile *)(tar->pDerivedObj));
-    //     if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
-    //     {
-    //         printf("Hitted!");
-    //         Gold+=100;
-    //         Score+=100;
-    //         self -> dele=true;
-    //     }
-    // }
+    else if (tar->label == Projectile_L)
+    {
+        Projectile *Obj2 = ((Projectile *)(tar->pDerivedObj));
+        if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
+        {
+            Obj->hp--;
+            printf("Hit! hp: %d\n", Obj->hp);
+            if(Obj->hp <= 0){
+                Gold+=100;
+                Score+=100;
+                self->dele=true;
+            }
+            
+            
+        }
+    }
 }
 void Zombie1_draw(Elements *self)
 {
     Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
-    al_draw_circle(Obj->x + Obj->width / 2 - 40,
-                                     Obj->y + Obj->height / 2 - 40,
-                                     min(Obj->width, Obj->height) / 2 - 40, al_map_rgb(255, 255, 255), 3);
+    al_draw_circle(Obj->x + Obj->width / 2.5 + 30,
+                                     Obj->y + Obj->height / 2.5 + 20 ,
+                                     min(Obj->width,Obj->height) / 2.5 , al_map_rgb(255, 255, 255), 3);
+    
     if (Obj->v > 0)
         al_draw_bitmap(Obj->img, Obj->x, Obj->y,0);
     else
