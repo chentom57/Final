@@ -35,10 +35,10 @@ Elements *New_Flower(int label, int x, int y)
     pDerivedObj->height = pDerivedObj->gif_status[0]->height;
     pDerivedObj->x = x;
     pDerivedObj->y = y;
-    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x + 30,
-                                        pDerivedObj->y + 30,
-                                        pDerivedObj->x + 130,
-                                        pDerivedObj->y + 130);
+    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
+                                        pDerivedObj->y,
+                                        pDerivedObj->x +100,
+                                        pDerivedObj->y + 100);
     pDerivedObj->dir = true; // true: face to right, false: face to left
     // initial the animation component
     pDerivedObj->state = ATK;
@@ -89,7 +89,7 @@ void Flower_update(Elements *self)
             {
                 pro = New_Projectile(Projectile_L,
                                      chara->x + chara->width - 100,
-                                     chara->y - 10,
+                                     chara->y - 40,
                                      5);
                 // printf("enterd");
                 // pro2 = New_Flower(Flower_L, 100, 100);
@@ -99,7 +99,7 @@ void Flower_update(Elements *self)
             {
                 pro = New_Projectile(Projectile_L,
                                      chara->x - 50,
-                                     chara->y - 10,
+                                     chara->y - 40,
                                      -5);
             }
             _Register_elements(scene, pro);
@@ -192,7 +192,7 @@ void Flower_draw(Elements *self)
     
     // with the state, draw corresponding image
     Flower *chara = ((Flower *)(self->pDerivedObj));
-    al_draw_rectangle(chara->x +30,chara->y + 30,chara->x + 130,chara->y + 130, al_map_rgb(255, 255, 255), 5);//draw hitbox 
+    al_draw_rectangle(chara->x,chara->y,chara->x + 100,chara->y + 100, al_map_rgb(255, 255, 255), 5);//draw hitbox 
     ALLEGRO_BITMAP *frame = algif_get_bitmap(chara->gif_status[chara->state], al_get_time());
     if (frame)
     {

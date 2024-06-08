@@ -3,6 +3,7 @@
 #include "../scene/sceneManager.h"
 #include "projectile.h"
 #include "../shapes/Rectangle.h"
+#include "../shapes/Circle.h"
 #include "../algif5/src/algif.h"
 #include <stdio.h>
 #include <stdbool.h>
@@ -39,15 +40,14 @@ Elements *New_bomb(int label, int x, int y)
     pDerivedObj->y = y;
      pDerivedObj->color = al_map_rgb(255, 255, 255);
        pDerivedObj->font=al_load_ttf_font("assets/font/pirulen.ttf",20, 0);
-    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
-                                        pDerivedObj->y,
-                                        pDerivedObj->x + pDerivedObj->width,
-                                        pDerivedObj->y + pDerivedObj->height);
+    pDerivedObj->hitbox = New_Circle(pDerivedObj->x,
+                                        pDerivedObj->y,200);
     pDerivedObj->dir = true; // true: face to right, false: face to left
     // initial the animation component
     pDerivedObj->state = ATK;
     pObj->pDerivedObj = pDerivedObj;
     pObj->inter_obj[pObj->inter_len++] = Ball2_L;
+      pObj->inter_obj[pObj->inter_len++] = Zombie1_L;
     // setting derived object function
     pObj->Draw = bomb_draw;
     pObj->Update = bomb_update;
@@ -191,8 +191,9 @@ void bomb_update(Elements *self)
 void bomb_draw(Elements *self)
 {
     // with the state, draw corresponding image
+     bomb *Obj = ((bomb *)(self->pDerivedObj));
     current_time_bo=time(NULL);
-    bomb *Obj = ((bomb *)(self->pDerivedObj));
+     al_draw_circle(Obj->x,Obj->y,200, al_map_rgb(255,0, 0), 5);//draw hitbox
     sprintf(Obj->text_b, "%ld",(long)(4-(current_time_bo-Obj->start_local)));
     al_draw_bitmap(Obj->img,Obj->x-(Obj->width)/2,Obj->y-(Obj->height)/2,0);
     al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->height)/2, ALLEGRO_ALIGN_CENTRE, Obj->text_b);
@@ -220,11 +221,19 @@ void _bomb_update_position(Elements *self, int dx, int dy)
 void bomb_interact(Elements *self, Elements *tar) {
      bomb *Obj = ((bomb*)(self->pDerivedObj));
      current_time_bo=time(NULL);
-    if((long)(current_time_bo-Obj->start_local-1)>3){
+    if(tar->label == Zombie1_L)
+    {
+        if((long)(current_time_bo-Obj->start_local-1)>3){
         printf("a");
-       self->dele=true;
+        Zombie1 *Obj2 = ((Zombie1 *)(tar->pDerivedObj));
+        if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
+        {
+            printf("Zombie1: ahh!");
+            Obj2-> hp -= 1; 
+        }
+        self->dele=true;
+        }
     }
-    
     //  if(tar->label==Ball2_L){
     //     Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
     //     if(Obj2->placed_range->overlap(Obj2->placed_range, Obj->hitbox))

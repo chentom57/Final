@@ -37,10 +37,10 @@ Elements *New_potato(int label, int x, int y)
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->x = x;
     pDerivedObj->y = y;
-    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x + 30,
-                                        pDerivedObj->y + 30,
-                                        pDerivedObj->x + 130,
-                                        pDerivedObj->y + 130);
+    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
+                                        pDerivedObj->y,
+                                        pDerivedObj->x + 100,
+                                        pDerivedObj->y + 100);
     pDerivedObj->dir = true; // true: face to right, false: face to left
     // initial the animation component
     pDerivedObj->state = ATK;
@@ -209,7 +209,7 @@ void potato_draw(Elements *self)
     // with the state, draw corresponding image
     potato *Obj = ((potato *)(self->pDerivedObj));
     al_draw_bitmap(Obj->img,Obj->x,Obj->y,0);
-    al_draw_rectangle(Obj->x + 30,Obj->y + 30,Obj->x + 130,Obj->y + 130, al_map_rgb(255, 255, 255), 3);
+    al_draw_rectangle(Obj->x,Obj->y,Obj->x + 100,Obj->y + 100, al_map_rgb(255, 255, 255), 3);
 }
 
 void potato_destory(Elements *self)
@@ -232,4 +232,3 @@ void _potato_update_position(Elements *self, int dx, int dy)
     hitbox->update_center_x(hitbox, dx);
     hitbox->update_center_y(hitbox, dy);
 }
-

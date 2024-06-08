@@ -27,10 +27,7 @@ Elements *New_Zombie1(int label)
     
     //0601:used for random create y-axis for zombie spawning
     double ran_num = ((double)rand()/RAND_MAX);
-    
-
     // setting derived object member
-
     pDerivedObj->img = al_load_bitmap("assets/image/zombie1.png");
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
@@ -113,10 +110,8 @@ void Zombie1_interact(Elements *self, Elements *tar)
             Score+=100;
             self->dele=true;
             printf("Hit!");
-    
         }
     }
-    
 }
 void Zombie1_draw(Elements *self)
 {

@@ -52,7 +52,12 @@ void map_draw(Elements *self)
     char Gold_text[100],score_text[100];
     map *Obj = ((map *)(self->pDerivedObj));
     al_draw_bitmap(Obj->img, Obj->x,Obj->y,0);
-    al_draw_line(450,0,450,Obj->height,Obj->color,0);
+    for(int i=0;i<10;i++){
+        al_draw_line(100*i,30,100*i,100*5+30, al_map_rgb(255, 255, 255),5);
+    }
+     for(int i=0;i<=5;i++){
+        al_draw_line(0,i*100,100*10,i*100,al_map_rgb(255, 255, 255),5);
+    }
     sprintf(Gold_text, "%d",Gold);
     sprintf(score_text, "%d",Score);
     //al_draw_bitmap(gs->background, 0, 0, 0);
