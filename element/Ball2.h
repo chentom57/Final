@@ -16,6 +16,7 @@ typedef struct _Ball2
     int selflw;
     int lap; //overlap can't place
     int ranges;
+    int block_x,block_y;
     Shape *hitbox; // the hitbox of object
     Shape *placed_range;
     ALLEGRO_COLOR color;

@@ -17,6 +17,7 @@ Scene *New_GameScene(int label)
     Boss_created=0;
     Gold=500;
     Score=0;
+    memset(placed,0,60*4);
     pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 24, 0);
      pDerivedObj->background_gs =al_load_bitmap("assets/image/gamescene_back.png");
     pDerivedObj->font2 = al_load_ttf_font("assets/font/pirulen.ttf", 36, 0);
