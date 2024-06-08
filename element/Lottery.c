@@ -14,7 +14,7 @@ Elements *New_Lottery(int label)
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->x =500;  
-    pDerivedObj->y =530;
+    pDerivedObj->y =520;
     pDerivedObj->done = 0;
     pDerivedObj->output = 0;
     pDerivedObj->in = -1;

@@ -8,10 +8,10 @@ Elements *New_sunflw_button(int label)
     sunflw_button *pDerivedObj = (sunflw_button *)malloc(sizeof(sunflw_button));
     Elements *pObj = New_Elements(label);
     pDerivedObj->img = al_load_bitmap("assets/image/flowerbutton2.png");
-   
+    pDerivedObj->img2 = al_load_bitmap("assets/image/flowerbutton2(unable).png");
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
-    pDerivedObj->x =180;  
+    pDerivedObj->x =150;  
     pDerivedObj->y = 560;
     pDerivedObj->in = -1;
     pDerivedObj->color = al_map_rgb(0, 255, 255);
@@ -60,12 +60,12 @@ void sunflw_button_draw(Elements *self)
 {   
     sunflw_button *Obj = ((sunflw_button *)(self->pDerivedObj));
     al_draw_bitmap(Obj->img, Obj->x - 50, Obj->y - 35,0);
-    // if(Gold >= 50){
-    //     al_draw_bitmap(Obj->img, Obj->x - 50, Obj->y - 35,0);
-    // }
-    // else {
-    //     al_draw_bitmap(Obj->img2, Obj->x - 50, Obj->y - 35,0);
-    // }
+    if(Gold >= 50){
+        al_draw_bitmap(Obj->img, Obj->x - 50, Obj->y - 35,0);
+    }
+    else {
+        al_draw_bitmap(Obj->img2, Obj->x - 50, Obj->y - 35,0);
+    }
     
     // sunflw_button *Obj = ((sunflw_button *)(self->pDerivedObj));
     // al_draw_rectangle(Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,Obj->x+(Obj->width)/2,Obj->y+(Obj->heigh)/2,Obj->color,(Obj->width)/20);

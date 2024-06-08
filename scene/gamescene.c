@@ -17,7 +17,7 @@ Scene *New_GameScene(int label)
     pObj->pDerivedObj = pDerivedObj;
     start_time_gs=time(NULL);
     Boss_created=0;
-    Gold=500;
+    Gold=200;
     Score=0;
     memset(placed,0,60*4);
     pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 24, 0);
@@ -52,7 +52,7 @@ Scene *New_GameScene(int label)
 void game_scene_update(Scene *self)
 {
     current_time_gs=time(NULL);
-
+    game_scene_lottery(self);
     game_scene_zombie(self);
     if(current_time_gs-start_time_gs>9999){
                     self->scene_end = true;
@@ -127,7 +127,7 @@ void game_scene_update(Scene *self)
 }
 void game_scene_draw(Scene *self)
 {   
-    
+    char Gold_text[100],score_text[100];
     al_clear_to_color(al_map_rgb(0, 0, 0));
     GameScene *gs = ((GameScene *)(self->pDerivedObj));
      al_draw_bitmap(gs->background_gs, 0, 0, 0);
@@ -136,7 +136,13 @@ void game_scene_draw(Scene *self)
     //al_draw_bitmap(gs->background, 0, 0, 0);
      al_draw_text(gs->font2, al_map_rgb(233, 211, 33),750,600, ALLEGRO_ALIGN_CENTRE,"Time:");
      al_draw_text(gs->font2, al_map_rgb(233, 211, 33),850,600, ALLEGRO_ALIGN_CENTRE,gs->text );
-
+    sprintf(Gold_text, "%d",Gold);
+    sprintf(score_text, "%d",Score);
+    //al_draw_bitmap(gs->background, 0, 0, 0);
+    al_draw_text(gs->font, al_map_rgb(255,255, 255),50,600, ALLEGRO_ALIGN_CENTRE,"Gold:");
+     al_draw_text(gs->font, al_map_rgb(255, 255, 255),150,600, ALLEGRO_ALIGN_CENTRE,Gold_text );
+     al_draw_text(gs->font, al_map_rgb(255,255,255),300,600, ALLEGRO_ALIGN_CENTRE,"Score:");
+     al_draw_text(gs->font, al_map_rgb(255,255,255),400,600, ALLEGRO_ALIGN_CENTRE,score_text );
     ElementVec allEle = _Get_all_elements(self);
     for (int i = 0; i < allEle.len; i++)
     {
