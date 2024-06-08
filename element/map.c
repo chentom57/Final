@@ -49,22 +49,15 @@ void map_interact(Elements *self, Elements *tar)
 }
 void map_draw(Elements *self)
 {
-    char Gold_text[100],score_text[100];
     map *Obj = ((map *)(self->pDerivedObj));
     al_draw_bitmap(Obj->img, Obj->x,Obj->y,0);
     for(int i=0;i<10;i++){
-        al_draw_line(100*i,30,100*i,100*5+30, al_map_rgb(255, 255, 255),5);
+        al_draw_line(100*i,0,100*i,100*5, al_map_rgb(255, 255, 255),5);
     }
      for(int i=0;i<=5;i++){
         al_draw_line(0,i*100,100*10,i*100,al_map_rgb(255, 255, 255),5);
     }
-    sprintf(Gold_text, "%d",Gold);
-    sprintf(score_text, "%d",Score);
-    //al_draw_bitmap(gs->background, 0, 0, 0);
-    al_draw_text(Obj->font, al_map_rgb(0,0, 0),50,20, ALLEGRO_ALIGN_CENTRE,"Gold:");
-     al_draw_text(Obj->font, al_map_rgb(0, 0, 0),150,20, ALLEGRO_ALIGN_CENTRE,Gold_text );
-     al_draw_text(Obj->font, al_map_rgb(0,0,0),300,20, ALLEGRO_ALIGN_CENTRE,"Score:");
-     al_draw_text(Obj->font, al_map_rgb(0,0,0),400,20, ALLEGRO_ALIGN_CENTRE,score_text );
+    
     
 }
 void map_destory(Elements *self)

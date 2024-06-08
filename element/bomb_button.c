@@ -10,8 +10,13 @@ Elements *New_bomb_button(int label)
     pDerivedObj->img = al_load_bitmap("assets/image/canva.png");
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
+<<<<<<< HEAD
     pDerivedObj->x =300;  
     pDerivedObj->y = 530;
+=======
+    pDerivedObj->x =280;  
+    pDerivedObj->y = 560;
+>>>>>>> 1d9b027de70409b2c4c24de08aab0352df1cf929
     pDerivedObj->in = -1;
     pDerivedObj->color = al_map_rgb(0, 255, 255);
     pDerivedObj->img = al_load_bitmap("assets/image/bombbutton.png");
@@ -60,8 +65,13 @@ void bomb_button_interact(Elements *self, Elements *tar)
 void bomb_button_draw(Elements *self)
 {
     bomb_button *Obj = ((bomb_button *)(self->pDerivedObj));
+<<<<<<< HEAD
     if(Gold >= 50){
         al_draw_bitmap(Obj->img, Obj->x, Obj->y,0);
+=======
+    if(Gold >=50){
+        al_draw_bitmap(Obj->img, Obj->x - 50, Obj->y - 35,0);
+>>>>>>> 1d9b027de70409b2c4c24de08aab0352df1cf929
     }
     else al_draw_bitmap(Obj->img2, Obj->x, Obj->y,0);
     // bomb_button *Obj = ((bomb_button *)(self->pDerivedObj));

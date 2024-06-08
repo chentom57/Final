@@ -83,11 +83,11 @@ void Ball2_update(Elements *self)
             chara2 -> state2 = 1;
             Obj -> selflw =0;
         }
-        else if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(Obj -> selflw == 2)&&Gold>=150&&Obj->lap==0&&placed[Obj->block_x][Obj->block_y]==0){//*mouse right button is clicked return 1
+        else if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(Obj -> selflw == 2)&&Gold>=50&&Obj->lap==0&&placed[Obj->block_x][Obj->block_y]==0){//*mouse right button is clicked return 1
             printf("mouse left is clicked1\n");
             double fx = round(((Obj->x))/100)*100;
             double fy = round(((Obj->y))/100)*100;
-            Gold-=150;
+            Gold-=50;
             flo2 = New_Sunflw(Sunflw_L,fx, fy);//*generate new flower
             _Register_elements(scene, flo2);
             placed[Obj->block_x][Obj->block_y]=1;
