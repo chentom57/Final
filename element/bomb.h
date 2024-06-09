@@ -27,10 +27,11 @@ typedef struct _bomb
     int x, y;
     int width, height;              // the width and height of image
     bool dir;                       // true: face to right, false: face to left
-    int state;                      // the state of bomb
+    int sound_played;                      // the state of bomb
     ALGIF_ANIMATION *gif_status[3]; // gif for each state. 0: stop, 1: move, 2:attack
-    ALLEGRO_SAMPLE_INSTANCE *atk_Sound;
+    ALLEGRO_SAMPLE_INSTANCE *bang_Sound;
     ALLEGRO_BITMAP *img;
+    ALLEGRO_BITMAP *img2;
     int anime;      // counting the time of animation
     int anime_time; // indicate how long the animation
     long long start_local;
