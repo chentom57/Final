@@ -61,15 +61,8 @@ void flower_button_interact(Elements *self, Elements *tar)
 void flower_button_draw(Elements *self)
 {
     flower_button *Obj = ((flower_button *)(self->pDerivedObj));
-<<<<<<< HEAD
     // al_draw_bitmap(Obj->img, );
     al_draw_bitmap(Obj->img, Obj->x, Obj->y,0);
-=======
-    if(Gold>=100)
-        al_draw_bitmap(Obj->img, Obj->x - 50, Obj->y - 35,0);
-    else
-        al_draw_bitmap(Obj->img2, Obj->x - 50, Obj->y - 35,0);
->>>>>>> 1d9b027de70409b2c4c24de08aab0352df1cf929
     // flower_button *Obj = ((flower_button *)(self->pDerivedObj));
     // al_draw_rectangle(Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,Obj->x+(Obj->width)/2,Obj->y+(Obj->heigh)/2,Obj->color,(Obj->width)/20);
     // al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6-10, ALLEGRO_ALIGN_CENTRE, "Flower");

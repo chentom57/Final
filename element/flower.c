@@ -102,6 +102,8 @@ void Flower_update(Elements *self)
                                      chara->y - 40,
                                      -5);
             }
+            // _Register_elements(scene, pro);
+            // al_rest(0.1);
             _Register_elements(scene, pro);
             chara->new_proj = true;
         }
