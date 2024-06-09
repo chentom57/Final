@@ -29,22 +29,24 @@ Elements *New_bomb(int label, int x, int y)
     // load effective sound
     //ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/atk_sound.mp3");
     pDerivedObj->img = al_load_bitmap("assets/image/bomb.png");
-    //pDerivedObj->atk_Sound = al_create_sample_instance(sample);
-    // al_set_sample_instance_playmode(pDerivedObj->atk_Sound, ALLEGRO_PLAYMODE_ONCE);
-    // al_attach_sample_instance_to_mixer(pDerivedObj->atk_Sound, al_get_default_mixer());
+      pDerivedObj->img2= al_load_bitmap("assets/image/bang.png");
+    ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/bang_sound.mp3");
+     pDerivedObj->bang_Sound = al_create_sample_instance(sample);
+    al_set_sample_instance_playmode(pDerivedObj->bang_Sound, ALLEGRO_PLAYMODE_ONCE);
+    al_attach_sample_instance_to_mixer(pDerivedObj->bang_Sound, al_get_default_mixer());
 
     // initial the geometric information of bomb
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj->img);
     pDerivedObj->height =al_get_bitmap_height(pDerivedObj->img);
     pDerivedObj->x = x;
     pDerivedObj->y = y;
-     pDerivedObj->color = al_map_rgb(255, 255, 255);
-       pDerivedObj->font=al_load_ttf_font("assets/font/pirulen.ttf",20, 0);
-    pDerivedObj->hitbox = New_Circle(pDerivedObj->x,
-                                        pDerivedObj->y,200);
+    pDerivedObj->color = al_map_rgb(255, 0, 0);
+    pDerivedObj->font=al_load_ttf_font("assets/font/pirulen.ttf",24, 0);
+    pDerivedObj->hitbox = New_Circle(pDerivedObj->x+50,
+                                        pDerivedObj->y+50,150);
     pDerivedObj->dir = true; // true: face to right, false: face to left
     // initial the animation component
-    pDerivedObj->state = ATK;
+    pDerivedObj->sound_played = 0;
     pObj->pDerivedObj = pDerivedObj;
     pObj->inter_obj[pObj->inter_len++] = Ball2_L;
       pObj->inter_obj[pObj->inter_len++] = Zombie1_L;
@@ -193,10 +195,18 @@ void bomb_draw(Elements *self)
     // with the state, draw corresponding image
      bomb *Obj = ((bomb *)(self->pDerivedObj));
     current_time_bo=time(NULL);
-     al_draw_circle(Obj->x,Obj->y,200, al_map_rgb(255,0, 0), 5);//draw hitbox
+    al_draw_circle(Obj->x+50,Obj->y+50,150,Obj->color,5);//draw hitbox
     sprintf(Obj->text_b, "%ld",(long)(4-(current_time_bo-Obj->start_local)));
-    al_draw_bitmap(Obj->img,Obj->x-(Obj->width)/2,Obj->y-(Obj->height)/2,0);
-    al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->height)/2, ALLEGRO_ALIGN_CENTRE, Obj->text_b);
+    if((long)(current_time_bo-Obj->start_local-1)>3){
+        al_draw_bitmap(Obj->img2,Obj->x-100,Obj->y-100,0);
+        if(Obj->sound_played==0){
+        al_play_sample_instance(Obj->bang_Sound);
+            Obj->sound_played=1;
+        }
+    }
+    else
+        al_draw_bitmap(Obj->img,Obj->x,Obj->y,0);
+    al_draw_text(Obj->font, Obj->color, Obj->x+50, Obj->y, ALLEGRO_ALIGN_CENTRE, Obj->text_b);
 }
 void bomb_destory(Elements *self)
 {
@@ -223,8 +233,9 @@ void bomb_interact(Elements *self, Elements *tar) {
      current_time_bo=time(NULL);
     if(tar->label == Zombie1_L)
     {
-        if((long)(current_time_bo-Obj->start_local-1)>3){
+        if((long)(current_time_bo-Obj->start_local-1)>4){
         printf("a");
+        
         Zombie1 *Obj2 = ((Zombie1 *)(tar->pDerivedObj));
         if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
         {

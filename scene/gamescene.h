@@ -45,10 +45,11 @@ typedef enum EleType
     FlowerB_L,
     Flower_L,
     BombB_L,
-    Bomb_L,
+  
     Sun_L,
     Sunflw_L,
     Zombie1_L,
+    Bomb_L,
     Potato_L,
     PotatoB_L,
 
