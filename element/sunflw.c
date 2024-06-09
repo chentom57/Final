@@ -32,8 +32,8 @@ Elements *New_Sunflw(int label, int x, int y)
     al_attach_sample_instance_to_mixer(pDerivedObj->atk_Sound, al_get_default_mixer());
 
     // initial the geometric information of sunflw
-    pDerivedObj->width = pDerivedObj->gif_status[0]->width;
-    pDerivedObj->height = pDerivedObj->gif_status[0]->height;
+    pDerivedObj->width = pDerivedObj->gif_status[1]->width;
+    pDerivedObj->height = pDerivedObj->gif_status[1]->height;
     pDerivedObj->x = x;
     pDerivedObj->y = y;
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
@@ -42,8 +42,8 @@ Elements *New_Sunflw(int label, int x, int y)
                                         pDerivedObj->y + 100);
     pDerivedObj->dir = true; // true: face to right, false: face to left
     // initial the animation component
-    pDerivedObj->ptime;
-    pDerivedObj->state = ATK;
+    pDerivedObj->ptime = 1;
+    pDerivedObj->state = STOP;
     pDerivedObj->new_proj = false;
     pObj->pDerivedObj = pDerivedObj;
     pObj->inter_obj[pObj->inter_len++] = Ball2_L;
@@ -106,50 +106,54 @@ void Sunflw_update(Elements *self)
     //         chara->new_proj = true;
     //     }
     //     chara->state = ATK;
-    // if (chara->state == STOP)
-    // {
-    //     // chara->state = ATK;
-    //     if (key_state[ALLEGRO_KEY_SPACE])
-    //     {
-    //         chara->ptime += 1;
-    //         printf("%d", chara->ptime);
-    //         chara->state = ATK;
-    //     }
-    //     else
-    //     {
-    //         chara->state = STOP;
-    //     }
-    // }
-    // else if (chara->state == ATK)
-    // {
-    //     // chara->state = ATK;
-    //     if (chara->gif_status[chara->state]->done)
-    //     {
-    //         chara->state = STOP;
-    //         chara->new_proj = false;
-    //     }
-    //     if (chara->gif_status[ATK]->display_index == 2 && chara->new_proj == false)
-    //     {
-    //         Elements *pro;
-    //         if (chara->dir)
-    //         {
-    //             pro = New_Sun(Projectile_L,
-    //                                  chara->x + chara->width - 100,
-    //                                  chara->y + 10,
-    //                                  1);
-    //         }
-    //         else
-    //         {
-    //             pro = New_Sun(Projectile_L,
-    //                                  chara->x - 50,
-    //                                  chara->y + 10,
-    //                                  -1);
-    //         }
-    //         _Register_elements(scene, pro);
-    //         chara->new_proj = true;
-    //     }
-    //     // chara->state = ATK;
-    // }
+    chara->ptime += 1;
+    int second = chara->ptime/60 + 1;
+    if (chara->state == STOP)
+    {
+        
+        
+        printf("second = %d\n", second);
+        // chara->state = ATK;
+        if (second%5 == 0)
+        {
+            chara->state = ATK;
+        }
+        else
+        {
+            chara->state = STOP;
+        }
+    }
+    else if (chara->state == ATK)
+    {
+        // chara->state = ATK;
+        if (chara->gif_status[chara->state]->done)
+        {
+            chara->state = STOP;
+            chara->new_proj = false;
+        }
+        if (chara->gif_status[ATK]->display_index == 20 && chara->new_proj == false)
+        {
+            Elements *pro;
+            if (chara->dir)
+            {
+                pro = New_Sun(Sun_L,
+                                     chara->x -20,
+                                     chara->y - 10,
+                                     1);
+            }
+            // else
+            // {
+            //     pro = New_Sun(Sun_L,
+            //                          chara->x + 100,
+            //                          chara->y + 100,
+            //                          -1);
+            // }
+            _Register_elements(scene, pro);
+            chara->new_proj = true;
+        }
+        // chara->state = ATK;
+    }
+    
 }
 void Sunflw_draw(Elements *self)
 {
@@ -167,16 +171,7 @@ void Sunflw_draw(Elements *self)
         al_play_sample_instance(chara->atk_Sound);
     }
 }
-void Sunflw_destory(Elements *self)
-{
-    Sunflw *Obj = ((Sunflw *)(self->pDerivedObj));
-    al_destroy_sample_instance(Obj->atk_Sound);
-    for (int i = 0; i < 3; i++)
-    algif_destroy_animation(Obj->gif_status[i]);
-    free(Obj->hitbox);
-    free(Obj);
-    free(self);
-}
+
 
 void _Sunflw_update_position(Elements *self, int dx, int dy)
 {
@@ -198,4 +193,14 @@ void Sunflw_interact(Elements *self, Elements *tar) {
         else
             Obj2->lap=0; 
      }
+}
+void Sunflw_destory(Elements *self)
+{
+    Sunflw *Obj = ((Sunflw *)(self->pDerivedObj));
+    al_destroy_sample_instance(Obj->atk_Sound);
+    for (int i = 0; i < 3; i++)
+    algif_destroy_animation(Obj->gif_status[i]);
+    free(Obj->hitbox);
+    free(Obj);
+    free(self);
 }

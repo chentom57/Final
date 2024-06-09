@@ -29,7 +29,6 @@ Elements *New_Flower(int label, int x, int y)
     pDerivedObj->atk_Sound = al_create_sample_instance(sample);
     al_set_sample_instance_playmode(pDerivedObj->atk_Sound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(pDerivedObj->atk_Sound, al_get_default_mixer());
-
     // initial the geometric information of flower
     pDerivedObj->width = pDerivedObj->gif_status[0]->width;
     pDerivedObj->height = pDerivedObj->gif_status[0]->height;
@@ -45,7 +44,7 @@ Elements *New_Flower(int label, int x, int y)
                                         pDerivedObj->y + 100);
     pDerivedObj->dir = true; // true: face to right, false: face to left
     // initial the animation component
-    pDerivedObj->state = STOP;
+    pDerivedObj->state = ATK;
     pDerivedObj->new_proj = false;
     pObj->pDerivedObj = pDerivedObj;
     //setting interact obj
@@ -67,8 +66,6 @@ void Flower_placing(int x, int y){
 }
 void Flower_update(Elements *self)
 {
-    
-    
     // // use the idea of finite state machine to deal with different state
     // Flower *chara = ((Flower *)(self->pDerivedObj));
     // // printf("flower = %d %d\n", chara -> x, chara -> y);
@@ -223,7 +220,7 @@ void Flower_update(Elements *self)
     Character *chara = ((Character *)(self->pDerivedObj));
     if (chara->state == STOP)
     {
-        if (key_state[ALLEGRO_KEY_SPACE])
+        if (1)
         {
             chara->state = ATK;
         }
@@ -234,24 +231,27 @@ void Flower_update(Elements *self)
     }
     else if (chara->state == ATK)
     {
+        // printf("%s", chara->gif_status[chara->state]);
         if (chara->gif_status[chara->state]->done)
         {
             chara->state = STOP;
             chara->new_proj = false;
         }
+        printf("%d", chara->gif_status[ATK]->display_index);
+        Elements *pro;
         if (chara->gif_status[ATK]->display_index == 29 && chara->new_proj == false)
         {
-            Elements *pro;
-           
+            printf("entered");
+            
             pro = New_Projectile(Projectile_L,
                                      chara->x + chara->width - 100,
                                      chara->y - 50,
                                      5);
-            _Register_elements(scene, pro);
-            chara->new_proj = true;
+           
         }
+        _Register_elements(scene, pro);
+        chara -> new_proj = true;
     }
-
 }
 void Flower_draw(Elements *self)
 {
@@ -259,6 +259,10 @@ void Flower_draw(Elements *self)
     // with the state, draw corresponding image
     Flower *chara = ((Flower *)(self->pDerivedObj));
     al_draw_rectangle(chara->x,chara->y,chara->x + 100,chara->y + 100, al_map_rgb(255, 255, 255), 5);//draw hitbox 
+    al_draw_rectangle(chara->x,
+                                        chara->y,
+                                       chara -> x +700,
+                                        chara ->y+ 100, al_map_rgb(255, 255, 0), 7);
     ALLEGRO_BITMAP *frame = algif_get_bitmap(chara->gif_status[chara->state], al_get_time());
     if (frame)
     {
@@ -269,16 +273,7 @@ void Flower_draw(Elements *self)
         al_play_sample_instance(chara->atk_Sound);
     }
 }
-void Flower_destory(Elements *self)
-{
-    Flower *Obj = ((Flower *)(self->pDerivedObj));
-    al_destroy_sample_instance(Obj->atk_Sound);
-    for (int i = 0; i < 3; i++)
-        algif_destroy_animation(Obj->gif_status[i]);
-    free(Obj->hitbox);
-    free(Obj);
-    free(self);
-}
+
 
 void _Flower_update_position(Elements *self, int dx, int dy)
 {
@@ -304,7 +299,14 @@ void Flower_interact(Elements *self, Elements *tar) {
             Obj -> state = ATK;
         }
      }
-
-     
-
+}
+void Flower_destory(Elements *self)
+{
+    Flower *Obj = ((Flower *)(self->pDerivedObj));
+    al_destroy_sample_instance(Obj->atk_Sound);
+    for (int i = 0; i < 3; i++)
+        algif_destroy_animation(Obj->gif_status[i]);
+    free(Obj->hitbox);
+    free(Obj);
+    free(self);
 }

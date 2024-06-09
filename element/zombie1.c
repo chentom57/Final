@@ -55,7 +55,7 @@ Elements *New_Zombie1(int label)
 }
 void Zombie1_update(Elements *self)
 {
-
+    
     Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
     _Zombie1_update_position(self, Obj->v, 0);
     if(Obj-> x <0){
@@ -134,9 +134,8 @@ void Zombie1_draw(Elements *self)
 {
     Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
     al_draw_circle(Obj->x + Obj->width / 2.5 + 30,
-                                     Obj->y + Obj->height / 2.5 + 20 ,
-                                     min(Obj->width,Obj->height) / 2.5 , al_map_rgb(255, 255, 255), 3);
-    
+                                    Obj->y + Obj->height / 2.5 + 20 ,
+                                    min(Obj->width,Obj->height) / 2.5 , al_map_rgb(255, 255, 255), 3);
     if (Obj->v > 0)
         al_draw_bitmap(Obj->img, Obj->x, Obj->y,0);
     else
