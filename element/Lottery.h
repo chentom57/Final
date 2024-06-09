@@ -16,6 +16,7 @@ typedef struct _Lottery
     int x, y; // the position of image
     int width,height;    // the width
     int done,output; 
+    int sound_played;
     int in;
     char text[10];
     ALLEGRO_BITMAP *img;
@@ -23,6 +24,8 @@ typedef struct _Lottery
     ALLEGRO_COLOR color;
     ALLEGRO_FONT *font;
     ALLEGRO_FONT *font2;
+     ALLEGRO_SAMPLE_INSTANCE *win_Sound;
+      ALLEGRO_SAMPLE_INSTANCE *lose_Sound;
 } Lottery;
 
 Elements *New_Lottery(int label);

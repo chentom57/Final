@@ -4,6 +4,11 @@
 #include "../scene/gamescene.h" // for element label
 #include "../shapes/Shape.h"
 #include "../global.h"
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_image.h>
+#include "../algif5/src/algif.h"
+#include <stdbool.h>
 /*
    [Zombie1 object]
 */
@@ -15,6 +20,13 @@ typedef struct _Zombie1
     int gameover;  // gameover flag
     int hp;     
     ALLEGRO_BITMAP *img;
+    int state; 
+    ALGIF_ANIMATION *gif_status[3]; // gif for each state. 0: stop, 1: move, 2:attack
+    ALLEGRO_SAMPLE_INSTANCE *atk_Sound;
+
+    int anime;      // counting the time of animation
+    int anime_time; // indicate how long the animation
+    bool new_proj;
     Shape *hitbox; // the hitbox of object
 } Zombie1;
 Elements *New_Zombie1(int label);

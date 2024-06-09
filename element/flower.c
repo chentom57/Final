@@ -39,12 +39,17 @@ Elements *New_Flower(int label, int x, int y)
                                         pDerivedObj->y,
                                         pDerivedObj->x +100,
                                         pDerivedObj->y + 100);
+    pDerivedObj->hitbox2 = New_Rectangle(pDerivedObj->x,
+                                        pDerivedObj->y,
+                                        pDerivedObj->x +700,
+                                        pDerivedObj->y + 100);
     pDerivedObj->dir = true; // true: face to right, false: face to left
     // initial the animation component
-    pDerivedObj->state = ATK;
+    pDerivedObj->state = STOP;
     pDerivedObj->new_proj = false;
     pObj->pDerivedObj = pDerivedObj;
     pObj->inter_obj[pObj->inter_len++] = Ball2_L;
+    pObj->inter_obj[pObj->inter_len++] = Zombie1_L;
     // setting derived object function
     pObj->Draw = Flower_draw;
     pObj->Update = Flower_update;
@@ -64,7 +69,6 @@ void Flower_update(Elements *self)
     
     
     // use the idea of finite state machine to deal with different state
-    Flower *chara = ((Flower *)(self->pDerivedObj));
     // printf("flower = %d %d\n", chara -> x, chara -> y);
     
     // if(key_state[ALLEGRO_KEY_SPACE]){
@@ -75,39 +79,39 @@ void Flower_update(Elements *self)
     // if(mouse_state[2] == 1){
     //     printf("mouse right clicked");
     // }
-    chara->state = ATK;
-    if (chara->gif_status[chara->state]->done)
-        {
-            chara->state = STOP;
-            chara->new_proj = false;
-        }
-        if (chara->gif_status[ATK]->display_index == 8 && chara->new_proj == false)
-        {
-            Elements *pro;
-            // Elements *pro2;
-            if (chara->dir)
-            {
-                pro = New_Projectile(Projectile_L,
-                                     chara->x + chara->width - 100,
-                                     chara->y - 40,
-                                     5);
-                // printf("enterd");
-                // pro2 = New_Flower(Flower_L, 100, 100);
-                // _Register_elements(scene, pro2);
-            }
-            else
-            {
-                pro = New_Projectile(Projectile_L,
-                                     chara->x - 50,
-                                     chara->y - 40,
-                                     -5);
-            }
-            // _Register_elements(scene, pro);
-            // al_rest(0.1);
-            _Register_elements(scene, pro);
-            chara->new_proj = true;
-        }
-        chara->state = ATK;
+    // chara->state = ATK;
+    // if (chara->gif_status[chara->state]->done)
+    //     {
+    //         chara->state = STOP;
+    //         chara->new_proj = false;
+    //     }
+    //     if (chara->gif_status[ATK]->display_index == 8 && chara->new_proj == false)
+    //     {
+    //         Elements *pro;
+    //         // Elements *pro2;
+    //         if (chara->dir)
+    //         {
+    //             pro = New_Projectile(Projectile_L,
+    //                                  chara->x + chara->width - 100,
+    //                                  chara->y - 40,
+    //                                  5);
+    //             // printf("enterd");
+    //             // pro2 = New_Flower(Flower_L, 100, 100);
+    //             // _Register_elements(scene, pro2);
+    //         }
+    //         else
+    //         {
+    //             pro = New_Projectile(Projectile_L,
+    //                                  chara->x - 50,
+    //                                  chara->y - 40,
+    //                                  -5);
+    //         }
+    //         // _Register_elements(scene, pro);
+    //         // al_rest(0.1);
+    //         _Register_elements(scene, pro);
+    //         chara->new_proj = true;
+    //     }
+    //     chara->state = ATK;
     // if (chara->state == STOP)
     // {
     //     // chara->state = ATK;
@@ -188,6 +192,38 @@ void Flower_update(Elements *self)
     //     }
     //     // chara->state = ATK;
     // }
+     Flower *chara = ((Flower *)(self->pDerivedObj));
+    if (chara->state == STOP)
+    {
+        if (key_state[ALLEGRO_KEY_SPACE])
+        {
+            chara->state = ATK;
+        }
+        else
+        {
+            chara->state = STOP;
+        }
+    }
+    else if (chara->state == ATK)
+    {
+        if (chara->gif_status[chara->state]->done)
+        {
+            chara->state = STOP;
+            chara->new_proj = false;
+        }
+        if (chara->gif_status[ATK]->display_index == 29 && chara->new_proj == false)
+        {
+            Elements *pro;
+
+            pro = New_Projectile(Projectile_L,
+                                     chara->x + chara->width - 100,
+                                     chara->y - 50,
+                                     5);
+            _Register_elements(scene, pro);
+            chara->new_proj = true;
+        }
+    }
+
 }
 void Flower_draw(Elements *self)
 {
@@ -204,6 +240,7 @@ void Flower_draw(Elements *self)
     {
         al_play_sample_instance(chara->atk_Sound);
     }
+    
 }
 void Flower_destory(Elements *self)
 {
@@ -226,15 +263,12 @@ void _Flower_update_position(Elements *self, int dx, int dy)
     hitbox->update_center_y(hitbox, dy);
 }
 void Flower_interact(Elements *self, Elements *tar) {
-     Flower *Obj = ((Flower*)(self->pDerivedObj));
-     if(tar->label==Ball2_L){
-        Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
-        if(Obj2->placed_range->overlap(Obj2->placed_range, Obj->hitbox))
-            Obj2->lap=1;
-        else
-            Obj2->lap=0; 
+    Flower *Obj = ((Flower *)(self->pDerivedObj));
+    if(tar->label == Zombie1_L){
+        Zombie1 *Obj2 = ((Zombie1 *)(tar -> pDerivedObj));
+        if(Obj2->hitbox->overlap(Obj2->hitbox, Obj->hitbox2)){
+            Obj -> state = ATK;
+        }
      }
-
-     
 
 }

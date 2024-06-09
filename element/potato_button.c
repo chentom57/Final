@@ -12,13 +12,12 @@ Elements *New_potato_button(int label)
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->x =420;  
-    pDerivedObj->y = 530;
+    pDerivedObj->y = 500;
     pDerivedObj->in = -1;
     pDerivedObj->color = al_map_rgb(0, 255, 255);
-    
-    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x-pDerivedObj->width/2,
-                                     pDerivedObj->y-pDerivedObj->height/2,
-                                     pDerivedObj->x+pDerivedObj->width/2,pDerivedObj->y+pDerivedObj->height/2);
+    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
+                                     pDerivedObj->y,
+                                     pDerivedObj->x+pDerivedObj->width,pDerivedObj->y+pDerivedObj->height);
     pDerivedObj->font=al_load_ttf_font("assets/font/pirulen.ttf", 18, 0);
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = Ball2_L;
@@ -41,17 +40,8 @@ void potato_button_interact(Elements *self, Elements *tar)
     if (tar->label == Ball2_L)
     {
         Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
-       if(Gold>=200){
-        if(Obj2->selflw==4)
-            Obj->color=al_map_rgb(255,255,255);
-        else
-            Obj->color=al_map_rgb(0,255,255);
-        }
-        else
-            Obj->color=al_map_rgb(255,0,0);
-        if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]&&Gold>=200){
+        if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]&&Gold>=50){
             printf("flwoerbutton3 button is clicked\n");
-            Obj2 -> lap = 1;
             Obj2 -> selflw = 4;
             // Obj->potato_button = 1;
         }

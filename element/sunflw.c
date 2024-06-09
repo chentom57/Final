@@ -36,6 +36,7 @@ Elements *New_Sunflw(int label, int x, int y)
     pDerivedObj->height = pDerivedObj->gif_status[0]->height;
     pDerivedObj->x = x;
     pDerivedObj->y = y;
+    //pDerivedObj->ptime;
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
                                         pDerivedObj->y,
                                         pDerivedObj->x + 100,
@@ -224,13 +225,5 @@ void _Sunflw_update_position(Elements *self, int dx, int dy)
 }
 void Sunflw_interact(Elements *self, Elements *tar) {
 
-    Sunflw *Obj = ((Sunflw*)(self->pDerivedObj));
-     if(tar->label==Ball2_L){
-        Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
-        if(Obj2->placed_range->overlap(Obj2->placed_range, Obj->hitbox))
-            Obj2->lap=1;
-        else
-            Obj2->lap=0; 
-     }
 
 }

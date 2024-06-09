@@ -12,7 +12,7 @@ Elements *New_flower_button(int label)
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->x =60;  
-    pDerivedObj->y = 530;
+   pDerivedObj->y = 500;
     pDerivedObj->in = -1;
     pDerivedObj->color = al_map_rgb(0, 255, 255);
     // pDerivedObj->img = al_load_bitmap("assets/image/flowerbutton3.png");
@@ -33,6 +33,7 @@ Elements *New_flower_button(int label)
 }
 void flower_button_update(Elements *self)
 {
+  
     
 }
 void flower_button_interact(Elements *self, Elements *tar)
@@ -41,17 +42,8 @@ void flower_button_interact(Elements *self, Elements *tar)
     if (tar->label == Ball2_L)
     {
         Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
-       if(Gold>=200){
-        if(Obj2->selflw==1)
-            Obj->color=al_map_rgb(255,255,255);
-        else
-            Obj->color=al_map_rgb(0,255,255);
-        }
-        else
-            Obj->color=al_map_rgb(255,0,0);
-        if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]&&Gold>=200){
+        if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]&&Gold>=100){
             printf("flwoer button is clicked\n");
-            Obj2->lap=1;
             Obj2 -> selflw = 1;
             // Obj->flower_button = 1;
         }

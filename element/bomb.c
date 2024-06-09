@@ -211,7 +211,7 @@ void bomb_draw(Elements *self)
 void bomb_destory(Elements *self)
 {
     bomb *Obj = ((bomb *)(self->pDerivedObj));
-    // al_destroy_sample_instance(Obj->atk_Sound);
+    al_destroy_sample_instance(Obj->bang_Sound);
     // for (int i = 0; i < 3; i++)
     //     algif_destroy_animation(Obj->gif_status[i]);
     free(Obj->hitbox);
@@ -242,6 +242,7 @@ void bomb_interact(Elements *self, Elements *tar) {
             printf("Zombie1: ahh!");
             Obj2-> hp -= 1;
         }
+        placed[Obj->x/100][Obj->y/100] = 0;
         self->dele=true;
         }
     }

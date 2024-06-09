@@ -17,7 +17,7 @@ Scene *New_GameScene(int label)
     pObj->pDerivedObj = pDerivedObj;
     start_time_gs=time(NULL);
     Boss_created=0;
-    Gold=200;
+    Gold=500;
     Score=0;
     memset(placed,0,60*4);
     pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 24, 0);

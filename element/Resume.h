@@ -15,11 +15,12 @@ typedef struct _Resume
 {
     int Resume;
     int x, y; // the position of image
-    int width,heigh;    // the width 
+    int width,height;    // the width 
     int in;
     Shape *hitbox; // the hitbox of object
     ALLEGRO_COLOR color;
     ALLEGRO_FONT *font;
+     ALLEGRO_BITMAP *img;
 } Resume;
 
 Elements *New_Resume(int label);

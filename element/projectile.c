@@ -35,6 +35,7 @@ void Projectile_update(Elements *self)
 {
     
     Projectile *Obj = ((Projectile *)(self->pDerivedObj));
+    self->label=Projectile_L;
     if(Obj -> x > 850){
         self -> dele = true;
     }

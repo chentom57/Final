@@ -17,15 +17,13 @@ Elements *New_Ball2(int label)
     pDerivedObj->y = mouse.y;
     pDerivedObj->r = 5;
     pDerivedObj->in = -1;
-    pDerivedObj->lap=0;
     pDerivedObj->color = al_map_rgb(255, 0, 0);
     pDerivedObj->hitbox = New_Circle(pDerivedObj->x,
                                      pDerivedObj->y,
                                      1);
     pDerivedObj->state2 = 0;
     pDerivedObj->selflw = 0;
-    pDerivedObj->ranges=50;
-    pDerivedObj->placed_range=New_Circle(pDerivedObj->x,pDerivedObj->y,pDerivedObj->ranges - 20);
+    pDerivedObj->ranges=20;
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = Flower_L;
     pObj->inter_obj[pObj->inter_len++] = Sun_L;
@@ -45,14 +43,11 @@ void Ball2_update(Elements *self)
     ALLEGRO_MOUSE_STATE msstate;
     Ball2 *Obj = ((Ball2 *)(self->pDerivedObj));
     Shape *hitbox = Obj->hitbox;
-    Shape *range = Obj->placed_range;
     hitbox->update_center_x(hitbox, mouse.x - Obj->x);
     hitbox->update_center_y(hitbox, mouse.y - Obj->y);
-    range->update_center_x(range,mouse.x-Obj->x);
-    range->update_center_y(range,mouse.y-Obj->y);
     Obj->x = mouse.x;
     Obj->y = mouse.y;
-    Obj->block_y=(Obj->y-30)/100;
+    Obj->block_y=(Obj->y)/100;
     Obj->block_x=(Obj->x)/100;
     Ball2 *chara2 = ((Ball2 *)(self->pDerivedObj));
     Elements *flo;//flower
@@ -65,58 +60,46 @@ void Ball2_update(Elements *self)
     if(mouse_state[2] == 1)
         Obj->selflw=0;
     if(chara2 -> state2 == 0){
-        // // if(key_state[ALLEGRO_KEY_SPACE]){
-        //     printf("entered1");
-        //     // flo = New_Flower(Flower_L, 100, 100);
-        //     // _Register_elements(scene, flo);
-        //     chara2 -> state2 = 0;
-        if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(Obj -> selflw == 1)&&Gold>=100&&Obj->lap==0&&placed[Obj->block_x][Obj->block_y]==0){
+     if(Obj->block_y<5){
+        if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(Obj -> selflw == 1)&&Gold>=100&&placed[Obj->block_x][Obj->block_y]==0){
             //*mouse right button is clicked return 1
-            
             printf("mouse left is clicked\n");
-            double fx = round(((Obj->x))/100)*100;
-            double fy = round(((Obj->y))/100)*100;
             Gold-=100;
-            flo = New_Flower(Flower_L, fx, fy);//*generate new flower
+            flo = New_Flower(Flower_L, Obj->block_x*100,Obj->block_y*100);//*generate new flower
             _Register_elements(scene, flo);
             placed[Obj->block_x][Obj->block_y]=1;
             chara2 -> state2 = 1;
             Obj -> selflw =0;
         }
-        else if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(Obj -> selflw == 2)&&Gold>=50&&Obj->lap==0&&placed[Obj->block_x][Obj->block_y]==0){//*mouse right button is clicked return 1
+        else if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(Obj -> selflw == 2)&&Gold>=50&&placed[Obj->block_x][Obj->block_y]==0){//*mouse right button is clicked return 1
             printf("mouse left is clicked1\n");
-            double fx = round(((Obj->x))/100)*100;
-            double fy = round(((Obj->y))/100)*100;
             Gold-=50;
-            flo2 = New_Sunflw(Sunflw_L,fx, fy);//*generate new flower
+            flo2 = New_Sunflw(Sunflw_L,Obj->block_x*100,Obj->block_y*100);//*generate new flower
             _Register_elements(scene, flo2);
             placed[Obj->block_x][Obj->block_y]=1;
             chara2 -> state2 = 1;
             Obj -> selflw =0;
         }
-        else if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(mouse.y < 500)&&(Obj -> selflw == 3)&&Gold>=50&&Obj->y<568){//*mouse right button is clicked return 1
+        else if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(mouse.y < 500)&&(Obj -> selflw == 3)&&Gold>=50&&placed[Obj->block_x][Obj->block_y]==0){//*mouse right button is clicked return 1
             printf("mouse left is clicked1\n");
-            double fx = round(((Obj->x))/100)*100;
-            double fy = round(((Obj->y))/100)*100;
             Gold-=50;
-            flo3 = New_bomb(Bomb_L, fx, fy);//*generate new flower
+            flo3 = New_bomb(Bomb_L,Obj->block_x*100,Obj->block_y*100);//*generate new flower
             _Register_elements(scene, flo3);
             placed[Obj->block_x][Obj->block_y] = 1;
             chara2 -> state2 = 1;
             Obj -> selflw =0;
         }
-        else if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(mouse.y < 500)&&(Obj -> selflw == 4)&&Gold>=50&&Obj->y<568){//*mouse right button is clicked return 1
+        else if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(mouse.y < 500)&&(Obj -> selflw == 4)&&Gold>=50&&placed[Obj->block_x][Obj->block_y]==0){//*mouse right button is clicked return 1
             printf("potato is clicked1\n");
-            double fx = round(((Obj->x))/100)*100;
-            double fy = round(((Obj->y))/100)*100;
             Gold-=50;
-            flo4 = New_potato(Potato_L, fx, fy);//*generate new potato
+            flo4 = New_potato(Potato_L,Obj->block_x*100,Obj->block_y*100);//*generate new potato
             _Register_elements(scene, flo4);
+            placed[Obj->block_x][Obj->block_y] = 1;
             chara2 -> state2 = 1;
             Obj -> selflw =0;
         }
         else chara2 -> state2 = 0;
-        // sleep(1);
+     }
     }
     else if(chara2 -> state2 == 1){
         if(al_mouse_button_down(&msstate, 1)){
@@ -153,13 +136,9 @@ void Ball2_interact(Elements *self, Elements *tar)
     //         Obj->in = -1;
     //     }
     // }
-    if(Obj->y>578-Obj->ranges||Obj->y<Obj->ranges-20||Obj->x>450)
-            Obj->lap=1;
     if (tar->label == Flower_L)
     {
         Flower *Obj2 = ((Flower *)(tar->pDerivedObj));
-        if(Obj->placed_range->overlap(Obj->placed_range, Obj2->hitbox))
-            Obj->lap=1;
         if ((Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox))&&(mouse_state[2] == 1))
         {
             Gold+=100;
@@ -197,8 +176,6 @@ void Ball2_interact(Elements *self, Elements *tar)
     else if (tar->label == Sunflw_L)
     {
         Sunflw *Obj2 = ((Sunflw *)(tar->pDerivedObj));
-        if(Obj->placed_range->overlap(Obj->placed_range, Obj2->hitbox))
-            Obj->lap=1;
         if ((Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox))&&(mouse_state[2] == 1))
         {
             Gold+=75;
@@ -217,8 +194,6 @@ void Ball2_interact(Elements *self, Elements *tar)
     else if (tar->label ==Potato_L)
     {
         potato *Obj2 = ((potato *)(tar->pDerivedObj));
-        if(Obj->placed_range->overlap(Obj->placed_range, Obj2->hitbox))
-            Obj->lap=1;
         if ((Obj->hitbox->overlap(Obj->hitbox, Obj2->hitbox))&&(mouse_state[2] == 1))
         {
             Gold+=75;
@@ -240,12 +215,8 @@ void Ball2_draw(Elements *self)
 {
     Ball2 *Obj = ((Ball2 *)(self->pDerivedObj));
     al_draw_circle(Obj->x, Obj->y, Obj->r, Obj->color, 5);
-    if((Obj->selflw==1)||(Obj->selflw==2)){
-        if((Obj->lap)==1)
-            al_draw_circle(Obj->x,Obj->y,Obj->ranges - 20,al_map_rgb(255,0,0),5);
-        else
-            al_draw_circle(Obj->x,Obj->y,Obj->ranges - 20,al_map_rgb(0,255,0),2);
-    }
+    if(Obj->selflw!=0)
+            al_draw_circle(Obj->x,Obj->y,Obj->ranges,al_map_rgb(255,0,0),5);
 }
 
 void Ball2_destory(Elements *self)
