@@ -3,7 +3,7 @@
 #include <time.h>
 time_t start_time, current_time;
 #include <stdlib.h> /* 亂數相關函數 */
-
+#include "potato.h"
 #include "Zombie1.h"
 #include "../shapes/Circle.h"
 int a = 1;
@@ -113,8 +113,20 @@ void Zombie1_interact(Elements *self, Elements *tar)
                 Score+=100;
                 self->dele=true;
             }
-            
-            
+        }
+    }
+    else if (tar->label == Potato_L)
+    {
+        potato *Obj2 = ((potato *)(tar->pDerivedObj));
+        if (Obj2->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
+        {
+            Obj -> v = 0;
+            printf("hit potato");
+            // if(Obj->hp <= 0){
+            //     Gold+=100;
+            //     Score+=100;
+            //     self->dele=true;
+            // }
         }
     }
 }

@@ -31,9 +31,8 @@ Elements *New_Sun(int label, int x, int y, int v)
 }
 void Sun_update(Elements *self)
 {
-    
     Sun *Obj = ((Sun *)(self->pDerivedObj));
-    _Sun_update_position(self,0 , -(Obj->v));
+    _Sun_update_position(self, 0, -(Obj->v));
 }
 void _Sun_update_position(Elements *self, int dx, int dy)
 {

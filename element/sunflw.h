@@ -28,6 +28,7 @@ typedef struct _Sunflw
     int anime;      // counting the time of animation
     int anime_time; // indicate how long the animation
     bool new_proj;
+    int ptime;
     Shape *hitbox; // the hitbox of object
 } Sunflw;
 Elements *New_Sunflw(int label, int x, int y);

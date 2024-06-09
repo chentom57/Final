@@ -12,7 +12,7 @@ Elements *New_sunflw_button(int label)
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->x = 180;  
-    pDerivedObj->y = 530;
+    pDerivedObj->y = 500;
     pDerivedObj->in = -1;
     pDerivedObj->color = al_map_rgb(0, 255, 255);
     

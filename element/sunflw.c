@@ -42,6 +42,7 @@ Elements *New_Sunflw(int label, int x, int y)
                                         pDerivedObj->y + 100);
     pDerivedObj->dir = true; // true: face to right, false: face to left
     // initial the animation component
+    pDerivedObj->ptime;
     pDerivedObj->state = ATK;
     pDerivedObj->new_proj = false;
     pObj->pDerivedObj = pDerivedObj;
@@ -73,87 +74,51 @@ void Sunflw_update(Elements *self)
     //     printf("mouse right clicked");
     // }
     
-    if (chara->gif_status[chara->state]->done)
-        {
-            chara->state = STOP;
-            chara->new_proj = false;
-        }
-        if (chara->gif_status[ATK]->display_index == 20 && chara->new_proj == false)
-        {
+    // if (chara->gif_status[chara->state]->done)
+    //     {
+    //         chara->state = STOP;
+    //         chara->new_proj = false;
+    //     }
+    //     if (chara->gif_status[ATK]->display_index == 20 && chara->new_proj == false)
+    //     {
             
-            Elements *pro;
-            // Elements *pro2;
-            if (chara->dir)
-            {
-                printf("entered new sun\n");
-                pro = New_Sun(Sun_L,
-                                     chara->x + chara->width - 100,
-                                     chara->y + 10,
-                                     1);
-                // printf("enterd");
-                // pro2 = New_Sunflw(Sunflw_L, 100, 100);
-                // _Register_elements(scene, pro2);
-            }
-            else
-            {
-                pro = New_Sun(Sun_L,
-                                     chara->x - 50,
-                                     chara->y + 10,
-                                     -1);
-            }
-            _Register_elements(scene, pro);
-            chara->new_proj = true;
-        }
-        chara->state = ATK;
+    //         Elements *pro;
+    //         // Elements *pro2;
+    //         if (chara->dir)
+    //         {
+    //             printf("entered new sun\n");
+    //             pro = New_Sun(Sun_L,
+    //                                  chara->x + chara->width - 100,
+    //                                  chara->y + 10,
+    //                                  1);
+    //             // printf("enterd");
+    //             // pro2 = New_Sunflw(Sunflw_L, 100, 100);
+    //             // _Register_elements(scene, pro2);
+    //         }
+    //         else
+    //         {
+    //             pro = New_Sun(Sun_L,
+    //                                  chara->x - 50,
+    //                                  chara->y + 10,
+    //                                  -1);
+    //         }
+    //         _Register_elements(scene, pro);
+    //         chara->new_proj = true;
+    //     }
+    //     chara->state = ATK;
     // if (chara->state == STOP)
     // {
     //     // chara->state = ATK;
     //     if (key_state[ALLEGRO_KEY_SPACE])
     //     {
-            
+    //         chara->ptime += 1;
+    //         printf("%d", chara->ptime);
     //         chara->state = ATK;
-    //     }
-    //     else if (key_state[ALLEGRO_KEY_A])
-    //     {
-    //         // Elements *flo;
-    //         // flo = New_Sunflw(Sunflw_L, 100, 100);
-    //         // _Register_elements(scene, flo);
-        
-    //         printf("A");
-    //         chara->dir = false;
-    //         chara->state = MOVE;
-    //     }
-    //     else if (key_state[ALLEGRO_KEY_D])
-    //     {
-    //         chara->dir = true;
-    //         chara->state = MOVE;
     //     }
     //     else
     //     {
     //         chara->state = STOP;
     //     }
-    // }
-    // else if (chara->state == MOVE)
-    // {
-    //     // chara->state = ATK;
-    //     if (key_state[ALLEGRO_KEY_SPACE])
-    //     {
-    //         chara->state = ATK;
-    //     }
-    //     else if (key_state[ALLEGRO_KEY_A])
-    //     {
-    //         chara->dir = false;
-    //         _Sunflw_update_position(self, -5, 0);
-    //         chara->state = MOVE;
-    //     }
-    //     else if (key_state[ALLEGRO_KEY_D])
-    //     {
-    //         chara->dir = true;
-    //         _Sunflw_update_position(self, 5, 0);
-    //         chara->state = MOVE;
-    //     }
-    //     if (chara->gif_status[chara->state]->done)
-    //         chara->state = STOP;
     // }
     // else if (chara->state == ATK)
     // {
@@ -168,17 +133,17 @@ void Sunflw_update(Elements *self)
     //         Elements *pro;
     //         if (chara->dir)
     //         {
-    //             pro = New_Projectile(Projectile_L,
+    //             pro = New_Sun(Projectile_L,
     //                                  chara->x + chara->width - 100,
     //                                  chara->y + 10,
-    //                                  5);
+    //                                  1);
     //         }
     //         else
     //         {
-    //             pro = New_Projectile(Projectile_L,
+    //             pro = New_Sun(Projectile_L,
     //                                  chara->x - 50,
     //                                  chara->y + 10,
-    //                                  -5);
+    //                                  -1);
     //         }
     //         _Register_elements(scene, pro);
     //         chara->new_proj = true;
@@ -222,6 +187,7 @@ void _Sunflw_update_position(Elements *self, int dx, int dy)
     hitbox->update_center_x(hitbox, dx);
     hitbox->update_center_y(hitbox, dy);
 }
+
 void Sunflw_interact(Elements *self, Elements *tar) {
 
     Sunflw *Obj = ((Sunflw*)(self->pDerivedObj));
@@ -232,5 +198,4 @@ void Sunflw_interact(Elements *self, Elements *tar) {
         else
             Obj2->lap=0; 
      }
-
 }

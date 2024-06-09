@@ -28,7 +28,8 @@ typedef struct _Flower
     int anime;      // counting the time of animation
     int anime_time; // indicate how long the animation
     bool new_proj;
-    Shape *hitbox; // the hitbox of object
+    Shape *hitbox;
+    Shape *hitbox2; // the hitbox of object
 } Flower;
 Elements *New_Flower(int label, int x, int y);
 void Flower_placing(int x, int y);
