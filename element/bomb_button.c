@@ -63,8 +63,6 @@ void bomb_button_draw(Elements *self)
 void bomb_button_destory(Elements *self)
 {
     bomb_button *Obj = ((bomb_button *)(self->pDerivedObj));
-     al_destroy_bitmap(Obj->img);
-    al_destroy_bitmap(Obj->img2);
     free(Obj->hitbox);
     free(Obj);
     free(self);

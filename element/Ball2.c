@@ -15,7 +15,7 @@ Elements *New_Ball2(int label)
     Elements *pObj = New_Elements(label);
     pDerivedObj->x = mouse.x;
     pDerivedObj->y = mouse.y;
-    pDerivedObj->r = 15;
+    pDerivedObj->r = 5;
     pDerivedObj->in = -1;
     pDerivedObj->color = al_map_rgb(255, 0, 0);
     pDerivedObj->hitbox = New_Circle(pDerivedObj->x,
@@ -23,6 +23,7 @@ Elements *New_Ball2(int label)
                                      1);
     pDerivedObj->state2 = 0;
     pDerivedObj->selflw = 0;
+    pDerivedObj->ranges=20;
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = Flower_L;
     pObj->inter_obj[pObj->inter_len++] = Sun_L;
@@ -30,8 +31,13 @@ Elements *New_Ball2(int label)
     pObj->inter_obj[pObj->inter_len++] = Bomb_L;
     pObj->inter_obj[pObj->inter_len++] = Potato_L;
     pDerivedObj->img_g= al_load_bitmap("assets/image/mouse_green.png");
-     pDerivedObj->img_y= al_load_bitmap("assets/image/mouse_yellow.png");
-      pDerivedObj->img_r= al_load_bitmap("assets/image/mouse_red.png");
+    pDerivedObj->img_y= al_load_bitmap("assets/image/mouse_yellow.png");
+    pDerivedObj->img_r= al_load_bitmap("assets/image/mouse_red.png");
+    //planting sound
+    pDerivedObj->sample = al_load_sample("assets/sound/planting.mp3");
+    pDerivedObj->Planting_Sound = al_create_sample_instance(pDerivedObj->sample);
+    al_set_sample_instance_playmode(pDerivedObj->Planting_Sound, ALLEGRO_PLAYMODE_ONCE);
+    al_attach_sample_instance_to_mixer(pDerivedObj->Planting_Sound, al_get_default_mixer());
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
     pObj->Draw = Ball2_draw;
@@ -73,7 +79,8 @@ void Ball2_update(Elements *self)
             //*mouse right button is clicked return 1
             printf("mouse left is clicked\n");
             Gold-=100;
-            flo = New_Flower(Flower_L, Obj->block_x*100,Obj->block_y*100);//*generate new flower
+            al_play_sample_instance(Obj->Planting_Sound);
+            flo = New_Flower(Flower_L, Obj->block_x*100, Obj->block_y*100);//*generate new flower
             _Register_elements(scene, flo);
             placed[Obj->block_x][Obj->block_y]=1;
             chara2 -> state2 = 1;
@@ -82,6 +89,7 @@ void Ball2_update(Elements *self)
         else if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(Obj -> selflw == 2)&&Gold>=50&&placed[Obj->block_x][Obj->block_y]==0){//*mouse right button is clicked return 1
             printf("mouse left is clicked1\n");
             Gold-=50;
+            al_play_sample_instance(Obj->Planting_Sound);
             flo2 = New_Sunflw(Sunflw_L,Obj->block_x*100,Obj->block_y*100);//*generate new flower
             _Register_elements(scene, flo2);
             placed[Obj->block_x][Obj->block_y]=1;
@@ -90,7 +98,9 @@ void Ball2_update(Elements *self)
         }
         else if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(mouse.y < 500)&&(Obj -> selflw == 3)&&Gold>=150&&placed[Obj->block_x][Obj->block_y]==0){//*mouse right button is clicked return 1
             printf("mouse left is clicked1\n");
-            Gold-=150;
+            Gold-=50;
+            al_play_sample_instance(Obj->Planting_Sound);
+            
             flo3 = New_bomb(Bomb_L,Obj->block_x*100,Obj->block_y*100);//*generate new flower
             _Register_elements(scene, flo3);
             placed[Obj->block_x][Obj->block_y] = 1;
@@ -100,6 +110,7 @@ void Ball2_update(Elements *self)
         else if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(mouse.y < 500)&&(Obj -> selflw == 4)&&Gold>=50&&placed[Obj->block_x][Obj->block_y]==0){//*mouse right button is clicked return 1
             printf("potato is clicked1\n");
             Gold-=50;
+            al_play_sample_instance(Obj->Planting_Sound);
             flo4 = New_potato(Potato_L,Obj->block_x*100,Obj->block_y*100);//*generate new potato
             _Register_elements(scene, flo4);
             placed[Obj->block_x][Obj->block_y] = 2;
@@ -107,7 +118,7 @@ void Ball2_update(Elements *self)
             Obj -> selflw =0;
         }
         else chara2 -> state2 = 0;
-     }
+    }
     }
     else if(chara2 -> state2 == 1){
         if(al_mouse_button_down(&msstate, 1)){
@@ -222,22 +233,22 @@ void Ball2_interact(Elements *self, Elements *tar)
 void Ball2_draw(Elements *self)
 {
     Ball2 *Obj = ((Ball2 *)(self->pDerivedObj));
+    al_draw_circle(Obj->x, Obj->y, Obj->r, Obj->color, 5);
+    // if(Obj->selflw!=0)
+    //         al_draw_circle(Obj->x,Obj->y,Obj->ranges,al_map_rgb(255,0,0),5);
     if(Obj->selflw!=0){
         if(placed[Obj->block_x][Obj->block_y]==0)
              al_draw_bitmap(Obj->img_y, Obj->x-Obj->r, Obj->y-Obj->r,0);
         else
-             al_draw_bitmap(Obj->img_r, Obj->x-Obj->r, Obj->y-Obj->r,0);
+              al_draw_bitmap(Obj->img_r, Obj->x-Obj->r, Obj->y-Obj->r,0);
     }
-    else
-        al_draw_bitmap(Obj->img_g, Obj->x-Obj->r, Obj->y-Obj->r,0);
+     else
+         al_draw_bitmap(Obj->img_g, Obj->x-Obj->r, Obj->y-Obj->r,0);
 }
 
 void Ball2_destory(Elements *self)
 {
     Ball2 *Obj = ((Ball2 *)(self->pDerivedObj));
-    al_destroy_bitmap(Obj->img_g);
-      al_destroy_bitmap(Obj->img_r);
-        al_destroy_bitmap(Obj->img_y);
     free(Obj->hitbox);
     free(Obj);
     free(self);

@@ -33,7 +33,12 @@ Elements *New_potato(int label, int x, int y)
         sprintf(buffer, "assets/image/chara3_%s.gif", state_string[i]);
         pDerivedObj->gif_status[i] = algif_new_gif(buffer, -1);
     }
-     pDerivedObj->img = al_load_bitmap("assets/image/potato.png");
+    pDerivedObj->img = al_load_bitmap("assets/image/potato.png");
+    //behitted sound
+    pDerivedObj->sample2 = al_load_sample("assets/sound/zombie(eating_sound).mp3");
+    pDerivedObj->behitted_Sound = al_create_sample_instance(pDerivedObj->sample2);
+    al_set_sample_instance_playmode(pDerivedObj->behitted_Sound, ALLEGRO_PLAYMODE_ONCE);
+    al_attach_sample_instance_to_mixer(pDerivedObj->behitted_Sound, al_get_default_mixer());
     // load effective sound
     // ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/atk_sound.mp3");
     // pDerivedObj->atk_Sound = al_create_sample_instance(sample);
@@ -50,6 +55,7 @@ Elements *New_potato(int label, int x, int y)
                                         pDerivedObj->y+60,
                                         30);
     pDerivedObj->dir = true; // true: face to right, false: face to left
+    pDerivedObj->behitted = 0;
     // initial the animation component
     pDerivedObj->state = STOP;
     // pDerivedObj->new_proj = false;
@@ -203,15 +209,16 @@ void potato_update(Elements *self)
 }
 
 void potato_interact(Elements *self, Elements *tar) {
-    //  potato *Obj = ((potato*)(self->pDerivedObj));
-    //  if(tar->label == Zombie1_L){
-    //     printf("zombie ovlp potato\n");
-    //     Zombie1 *zomb = ((Zombie1 *)(tar -> pDerivedObj));
-    //     if(Obj->hitbox->overlap(zomb->hitbox, Obj->hitbox)){
-    //         printf("zombie ovlp potato2\n");
-    //         zomb -> v = 0;
-    //     }
-    //  }
+     potato *Obj = ((potato*)(self->pDerivedObj));
+     if(tar->label == Zombie1_L){
+        // printf("zombie ovlp potato\n
+        Zombie1 *zomb = ((Zombie1 *)(tar -> pDerivedObj));
+        if(zomb->hitbox->overlap(zomb->hitbox, Obj->hitbox)){
+            printf("zombie ovlp potato2\n");
+            Obj->behitted = 1;
+            // zomb -> v = 0;
+        }
+     }
 }
 
 void potato_draw(Elements *self)
@@ -223,11 +230,12 @@ void potato_draw(Elements *self)
     ALLEGRO_BITMAP *frame = algif_get_bitmap(Obj->gif_status[Obj->state], al_get_time());
     if(frame)
     {
-        al_draw_bitmap(frame, Obj->x, Obj->y, ((Obj->dir) ? ALLEGRO_FLIP_HORIZONTAL : 0));
+        al_draw_bitmap(frame, Obj->x, Obj->y, 1);
     }
-    if (Obj->state == ATK && Obj->gif_status[Obj->state]->display_index == 2)
+    if (Obj->behitted == 1)
     {
-        al_play_sample_instance(Obj->atk_Sound);
+        al_play_sample_instance(Obj->behitted_Sound);
+        Obj->behitted = 0;
     }
      al_draw_circle(Obj->x+60, Obj->y+60, 30, al_map_rgb(105, 105, 0), 10);
 }
@@ -235,6 +243,7 @@ void potato_draw(Elements *self)
 void potato_destory(Elements *self)
 {
     potato *Obj = ((potato *)(self->pDerivedObj));
+    // al_destroy_sample_instance(Obj->atk_Sound);
     for (int i = 0; i < 3; i++)
         algif_destroy_animation(Obj->gif_status[i]);
     free(Obj->hitbox);

@@ -26,26 +26,28 @@ Elements *New_Flower(int label, int x, int y)
         pDerivedObj->gif_status[i] = algif_new_gif(buffer, -1);
     }
     // load effective sound
-    pDerivedObj->sample = al_load_sample("assets/sound/atk_sound.mp3");
-    pDerivedObj->atk_Sound = al_create_sample_instance(pDerivedObj->sample);
+    ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/atk_sound.mp3");
+    pDerivedObj->atk_Sound = al_create_sample_instance(sample);
     al_set_sample_instance_playmode(pDerivedObj->atk_Sound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(pDerivedObj->atk_Sound, al_get_default_mixer());
-
+    //behitted sound
+    pDerivedObj->sample2 = al_load_sample("assets/sound/zombie(eating_sound).mp3");
+    pDerivedObj->behitted_Sound = al_create_sample_instance(pDerivedObj->sample2);
+    al_set_sample_instance_playmode(pDerivedObj->behitted_Sound, ALLEGRO_PLAYMODE_ONCE);
+    al_attach_sample_instance_to_mixer(pDerivedObj->behitted_Sound, al_get_default_mixer());
     // initial the geometric information of flower
     pDerivedObj->width = pDerivedObj->gif_status[0]->width;
     pDerivedObj->height = pDerivedObj->gif_status[0]->height;
     pDerivedObj->x = x;
     pDerivedObj->y = y;
-    pDerivedObj->hp = 500;
+    pDerivedObj->hp = 250;
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
                                         pDerivedObj->y,
-                                        pDerivedObj->x +100,
+                                        pDerivedObj->x +800,
                                         pDerivedObj->y + 100);
-                                        
-    
     pDerivedObj->hitbox2 = New_Rectangle(pDerivedObj->x,
                                         pDerivedObj->y,
-                                        pDerivedObj->x +700,
+                                        pDerivedObj->x +800,
                                         pDerivedObj->y + 100);
     pDerivedObj->hitbox3 = New_Circle(pDerivedObj->x+60,
                                     pDerivedObj->y+60,
@@ -59,7 +61,8 @@ Elements *New_Flower(int label, int x, int y)
     pObj->pDerivedObj = pDerivedObj;
     pObj->inter_obj[pObj->inter_len++] = Ball2_L;
     pObj->inter_obj[pObj->inter_len++] = Zombie1_L;
-    // setting derived object function
+      pObj->inter_obj[pObj->inter_len++] = Zomboni_L;
+       pObj->inter_obj[pObj->inter_len++] = Trueboss_L;
     pObj->Draw = Flower_draw;
     pObj->Update = Flower_update;
     pObj->Interact = Flower_interact;
@@ -75,8 +78,6 @@ void Flower_placing(int x, int y){
 }
 void Flower_update(Elements *self)
 {
-    
-    
     // use the idea of finite state machine to deal with different state
     // printf("flower = %d %d\n", chara -> x, chara -> y);
     
@@ -219,6 +220,7 @@ void Flower_update(Elements *self)
         {
             chara->state = STOP;
         }
+        // chara->state = STOP;
     }
     else if (chara->state == ATK)
     {
@@ -239,6 +241,7 @@ void Flower_update(Elements *self)
             chara->new_proj = true;
         }
     }
+    
 
 }
 void Flower_draw(Elements *self)
@@ -252,18 +255,21 @@ void Flower_draw(Elements *self)
     ALLEGRO_BITMAP *frame = algif_get_bitmap(chara->gif_status[chara->state], al_get_time());
     if (frame)
     {
-        al_draw_bitmap(frame, chara->x, chara->y, ((chara->dir) ? ALLEGRO_FLIP_HORIZONTAL : 0));
+        al_draw_bitmap(frame, chara->x, chara->y, 1);
     }
-    if (chara->state == ATK && chara->gif_status[chara->state]->display_index == 2)
+    if (chara->state == ATK && chara->gif_status[chara->state]->display_index == 29)
     {
         al_play_sample_instance(chara->atk_Sound);
     }
-    
+    if (chara->behitted == 1)
+    {
+        al_play_sample_instance(chara->behitted_Sound);
+        chara->behitted = 0;
+    }
 }
 void Flower_destory(Elements *self)
 {
     Flower *Obj = ((Flower *)(self->pDerivedObj));
-    al_destroy_sample(Obj->sample);
     al_destroy_sample_instance(Obj->atk_Sound);
     for (int i = 0; i < 3; i++)
         algif_destroy_animation(Obj->gif_status[i]);
@@ -280,6 +286,12 @@ void _Flower_update_position(Elements *self, int dx, int dy)
     Shape *hitbox = chara->hitbox;
     hitbox->update_center_x(hitbox, dx);
     hitbox->update_center_y(hitbox, dy);
+    Shape *hitbox2 = chara->hitbox;
+    hitbox2->update_center_x(hitbox, dx);
+    hitbox2->update_center_x(hitbox, dy);
+    Shape *hitbox3 = chara->hitbox;
+    hitbox3->update_center_x(hitbox, dx);
+    hitbox3->update_center_x(hitbox, dy);
 }
 void Flower_interact(Elements *self, Elements *tar) {
     Flower *Obj = ((Flower *)(self->pDerivedObj));
@@ -289,9 +301,27 @@ void Flower_interact(Elements *self, Elements *tar) {
             Obj -> state = ATK;
         }
     }
-     if(tar->label == Zomboni_L){
+    if(tar->label == Zomboni_L){
         Zomboni *Obj2 = ((Zomboni *)(tar -> pDerivedObj));
         if(Obj2->hitbox->overlap(Obj2->hitbox, Obj->hitbox2)){
+            Obj -> state = ATK;
+        }
+    }
+    if(tar->label == Trueboss_L){
+        Trueboss *Obj2 = ((Trueboss *)(tar -> pDerivedObj));
+        if(Obj2->hitbox->overlap(Obj2->hitbox, Obj->hitbox2)){
+            Obj -> state = ATK;
+        }
+        if(Obj2->hitbox->overlap(Obj2->hitbox2, Obj->hitbox2)){
+            Obj -> state = ATK;
+        }
+        if(Obj2->hitbox->overlap(Obj2->hitbox3, Obj->hitbox2)){
+            Obj -> state = ATK;
+        }
+        if(Obj2->hitbox->overlap(Obj2->hitbox4, Obj->hitbox2)){
+            Obj -> state = ATK;
+        }
+        if(Obj2->hitbox->overlap(Obj2->hitbox5, Obj->hitbox2)){
             Obj -> state = ATK;
         }
     }

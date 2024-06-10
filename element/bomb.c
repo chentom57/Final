@@ -30,8 +30,8 @@ Elements *New_bomb(int label, int x, int y)
     //ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/atk_sound.mp3");
     pDerivedObj->img = al_load_bitmap("assets/image/bomb.png");
       pDerivedObj->img2= al_load_bitmap("assets/image/bang.png");
-    pDerivedObj->sample = al_load_sample("assets/sound/bang_sound.mp3");
-     pDerivedObj->bang_Sound = al_create_sample_instance(pDerivedObj->sample);
+    ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/bang_sound.mp3");
+     pDerivedObj->bang_Sound = al_create_sample_instance(sample);
     al_set_sample_instance_playmode(pDerivedObj->bang_Sound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(pDerivedObj->bang_Sound, al_get_default_mixer());
 
@@ -50,7 +50,7 @@ Elements *New_bomb(int label, int x, int y)
     pObj->pDerivedObj = pDerivedObj;
     pObj->inter_obj[pObj->inter_len++] = Ball2_L;
     pObj->inter_obj[pObj->inter_len++] = Zombie1_L;
-      pObj->inter_obj[pObj->inter_len++] =Zombie1_L;
+      pObj->inter_obj[pObj->inter_len++] =Zomboni_L;
     // setting derived object function
     pObj->Draw = bomb_draw;
     pObj->Update = bomb_update;
@@ -198,7 +198,7 @@ void bomb_draw(Elements *self)
     current_time_bo=time(NULL);
     al_draw_circle(Obj->x+50,Obj->y+50,150,Obj->color,5);//draw hitbox
     sprintf(Obj->text_b, "%ld",(long)(4-(current_time_bo-Obj->start_local)));
-    if((long)(current_time_bo-Obj->start_local-1)>3){
+    if((long)(current_time_bo-Obj->start_local-1)>2){
         al_draw_bitmap(Obj->img2,Obj->x-100,Obj->y-100,0);
         if(Obj->sound_played==0){
         al_play_sample_instance(Obj->bang_Sound);
@@ -212,10 +212,10 @@ void bomb_draw(Elements *self)
 void bomb_destory(Elements *self)
 {
     bomb *Obj = ((bomb *)(self->pDerivedObj));
-     al_destroy_sample(Obj->sample);
     al_destroy_sample_instance(Obj->bang_Sound);
     // for (int i = 0; i < 3; i++)
     //     algif_destroy_animation(Obj->gif_status[i]);
+    al_destroy_bitmap(Obj->img2);
     free(Obj->hitbox);
     free(Obj);
     free(self);
@@ -235,12 +235,13 @@ void bomb_interact(Elements *self, Elements *tar) {
      current_time_bo=time(NULL);
     if(tar->label == Zombie1_L)
     {
-        if((long)(current_time_bo-Obj->start_local-1)>4){
+        if((long)(current_time_bo-Obj->start_local-1)>3){
         printf("a");
         
         Zombie1 *Obj2 = ((Zombie1 *)(tar->pDerivedObj));
         if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
         {
+            Obj2->behitted = 1;
             printf("Zombie1: ahh!");
             Obj2-> hp -= 3;
         }
@@ -250,7 +251,7 @@ void bomb_interact(Elements *self, Elements *tar) {
     }
     else if(tar->label == Zomboni_L)
     {
-        if((long)(current_time_bo-Obj->start_local-1)>4){
+        if((long)(current_time_bo-Obj->start_local-1)>3){
         printf("a");
         
         Zomboni *Obj2 = ((Zomboni *)(tar->pDerivedObj));
@@ -262,6 +263,42 @@ void bomb_interact(Elements *self, Elements *tar) {
         placed[Obj->x/100][Obj->y/100] = 0;
         self->dele=true;
         }
+    }
+    else if(tar->label == Trueboss_L)
+    {
+        if((long)(current_time_bo-Obj->start_local-1)>3){
+        printf("a");
+        
+        Trueboss *Obj2 = ((Trueboss *)(tar->pDerivedObj));
+        if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
+        {
+            printf("Zomboni: ahh!");
+            Obj2-> hp -= 3;
+        }
+        if (Obj->hitbox->overlap(Obj2->hitbox2, Obj->hitbox))
+        {
+            printf("Zomboni: ahh!");
+            Obj2-> hp -= 3;
+        }
+        if (Obj->hitbox->overlap(Obj2->hitbox3, Obj->hitbox))
+        {
+            printf("Zomboni: ahh!");
+            Obj2-> hp -= 3;
+        }
+        if (Obj->hitbox->overlap(Obj2->hitbox4, Obj->hitbox))
+        {
+            printf("Zomboni: ahh!");
+            Obj2-> hp -= 3;
+        }
+        if (Obj->hitbox->overlap(Obj2->hitbox5, Obj->hitbox))
+        {
+            printf("Zomboni: ahh!");
+            Obj2-> hp -= 3;
+        }
+        placed[Obj->x/100][Obj->y/100] = 0;
+        self->dele=true;
+        }
+        
     }
     //  if(tar->label==Ball2_L){
     //     Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));

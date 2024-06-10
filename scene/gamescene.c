@@ -1,3 +1,4 @@
+
 #include "gamescene.h"
 /*
    [GameScene function]
@@ -7,6 +8,7 @@ int zombie1_created=0;
 //0607 Bruce add
 int Boss_created=0;
 int zomboni_created=0;
+int trueboss_created=0;
 
 Scene *New_GameScene(int label)
 {
@@ -22,16 +24,16 @@ Scene *New_GameScene(int label)
     Gold=500;
     Score=0;
     Invincible=0;
-    pDerivedObj->end_time=40;
+    pDerivedObj->end_time=60;
     memset(placed,0,84*4);
     pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 20, 0);
-     pDerivedObj->background_gs =al_load_bitmap("assets/image/gamescene_back.png");
+    pDerivedObj->background_gs =al_load_bitmap("assets/image/gamescene_back.png");
     pDerivedObj->sun_t =al_load_bitmap("assets/image/sun_t.png");
-     pDerivedObj->Gold_score =al_load_bitmap("assets/image/gold_score.png");
-        pDerivedObj->vvc =al_load_bitmap("assets/image/vvc.png");
-      pDerivedObj->timer_bar =al_load_bitmap("assets/image/timer_bar.png");
+    pDerivedObj->Gold_score =al_load_bitmap("assets/image/gold_score.png");
+    pDerivedObj->vvc =al_load_bitmap("assets/image/vvc.png");
+    pDerivedObj->timer_bar =al_load_bitmap("assets/image/timer_bar.png");
     pDerivedObj->time_spot =al_load_bitmap("assets/image/time_spot.png");
-          pDerivedObj->coin =al_load_bitmap("assets/image/coin.png");
+    pDerivedObj->coin =al_load_bitmap("assets/image/coin.png");
     pDerivedObj->font2 = al_load_ttf_font("assets/font/pirulen.ttf", 36, 0);
     pDerivedObj->lottery_created=0;
     // Load sound
@@ -122,16 +124,16 @@ void game_scene_update(Scene *self)
 
         }
         //0607 Bruce new add:boss
-        else if(ele->label==Boss_L){
-            Boss *Obj = ((Boss*)(ele->pDerivedObj));
+         else if(ele->label==Zomboni_L){
+            Zomboni *Obj = ((Zomboni *)(ele->pDerivedObj));
             if(Obj->gameover==1){
                     self->scene_end = true;
                     window = 2;
             }
 
         }
-         else if(ele->label==Zomboni_L){
-            Zomboni *Obj = ((Zomboni *)(ele->pDerivedObj));
+         else if(ele->label==Trueboss_L){
+            Trueboss *Obj = ((Trueboss *)(ele->pDerivedObj));
             if(Obj->gameover==1){
                     self->scene_end = true;
                     window = 2;
@@ -214,24 +216,21 @@ void game_scene_zombie(Scene *self){
         _Register_elements(self, New_Zombie1(Zombie1_L));
         zombie1_created=1;
      }
-     if((current_time_gs-start_time_gs)%8==1){
+     if((current_time_gs-start_time_gs)%10==1){
         zomboni_created=0;                     //reset the bool zombie been created
      }
 
-     if(((current_time_gs-start_time_gs)%8==0)&&(zomboni_created==0)){
+     if(((current_time_gs-start_time_gs)%10==0)&&(zomboni_created==0)){
         _Register_elements(self, New_Zomboni(Zomboni_L));
         zomboni_created=1;
      }
 
     //0607 Bruce add :boss
-     if((start_time_gs)%3==1){
-        Boss_created=0;                     //reset the bool zombie been created
+     if(((current_time_gs-start_time_gs)% 30 == 0)&&(trueboss_created==0)){
+        printf("spawn");
+        _Register_elements(self, New_Trueboss( Trueboss_L));
+        trueboss_created=1;
      }
-     if(((current_time_gs-start_time_gs)%3==0) && (Boss_created==0)){
-        // _Register_elements(self, New_Boss(Boss_L));
-        Boss_created=1;
-     }
-
 }
 void game_scene_lottery(Scene *self){
     GameScene *Obj = ((GameScene *)(self->pDerivedObj));

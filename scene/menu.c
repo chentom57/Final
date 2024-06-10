@@ -19,11 +19,11 @@ Scene *New_Menu(int label)
     pDerivedObj->img = al_load_bitmap("assets/image/vs.png");
     pDerivedObj->img1 = al_load_bitmap("assets/image/plant_title.png");
     pDerivedObj->img2 = al_load_bitmap("assets/image/zombie_title.png");
-        pDerivedObj->img3 = al_load_bitmap("assets/image/bar.png");
+    pDerivedObj->img3 = al_load_bitmap("assets/image/bar.png");
     pDerivedObj->gif_status[0] = algif_new_gif( "assets/image/zombie1_move.gif", -1);
     pDerivedObj->gif_status[1] = algif_new_gif( "assets/image/chara_attack.gif", -1);
-     pDerivedObj->song = al_load_sample("assets/sound/menu.mp3");
-      pDerivedObj->menu_Sound = al_create_sample_instance(pDerivedObj->song);
+    pDerivedObj->song = al_load_sample("assets/sound/menu_s.mp3");
+    pDerivedObj->menu_Sound = al_create_sample_instance(pDerivedObj->song);
     // Loop the song until the display closes
     al_set_sample_instance_playmode(pDerivedObj->menu_Sound, ALLEGRO_PLAYMODE_LOOP);
     al_restore_default_mixer();

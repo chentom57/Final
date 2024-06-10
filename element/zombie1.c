@@ -23,7 +23,7 @@ Elements *New_Zombie1(int label)
     }    
     
     //Bruce add timer define& start
-    time(&start_time);
+    start_time = al_get_time();
 
     Zombie1 *pDerivedObj = (Zombie1 *)malloc(sizeof(Zombie1));
     Elements *pObj = New_Elements(label);
@@ -39,6 +39,16 @@ Elements *New_Zombie1(int label)
     pDerivedObj->atk_Sound = al_create_sample_instance(sample);
     al_set_sample_instance_playmode(pDerivedObj->atk_Sound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(pDerivedObj->atk_Sound, al_get_default_mixer());
+    //zombbie behitted sound
+    ALLEGRO_SAMPLE *sample2 = al_load_sample("assets/sound/zombie(behitted).mp3");
+    pDerivedObj->behitted_Sound = al_create_sample_instance(sample2);
+    al_set_sample_instance_playmode(pDerivedObj->behitted_Sound, ALLEGRO_PLAYMODE_ONCE);
+    al_attach_sample_instance_to_mixer(pDerivedObj->behitted_Sound, al_get_default_mixer());
+    //zombbie killed sound
+    ALLEGRO_SAMPLE *sample3 = al_load_sample("assets/sound/zombie(killed).mp3");
+    pDerivedObj->killed_Sound = al_create_sample_instance(sample3);
+    al_set_sample_instance_playmode(pDerivedObj->killed_Sound, ALLEGRO_PLAYMODE_ONCE);
+    al_attach_sample_instance_to_mixer(pDerivedObj->killed_Sound, al_get_default_mixer());
     //0601:used for random create y-axis for zombie spawning
     int ran_num = (rand() % 5);
     // setting derived object member
@@ -47,7 +57,8 @@ Elements *New_Zombie1(int label)
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->gameover = 0;
     pDerivedObj->x = 800;
-    pDerivedObj->hp=5;
+    pDerivedObj->hp = 5;
+    pDerivedObj->behitted = 0;
     //printf("rand: %f\n", ran_num);
     pDerivedObj->y =  ran_num * 100 ;
     pDerivedObj->v = 1; //速度
@@ -62,6 +73,7 @@ Elements *New_Zombie1(int label)
     pObj->inter_obj[pObj->inter_len++] = Sunflw_L;
     
    // setting derived object function
+   
     pObj->pDerivedObj = pDerivedObj;
     pObj->Update = Zombie1_update;
     pObj->Interact = Zombie1_interact;
@@ -74,12 +86,11 @@ void Zombie1_update(Elements *self)
 
     Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
     if(Obj->hp <= 0){
+        al_play_sample_instance(Obj->killed_Sound);
         Gold+=100;
         Score+=100;
         self->dele=true;
     }
-
-
     _Zombie1_update_position(self, Obj->v, 0);
      if(placed[(int)(Obj->x + 100)/ 100][(int)Obj->y / 100]==2||placed[(int)(Obj->x + 100)/ 100][(int)Obj->y / 100]==1){
         Obj->state = ATK;
@@ -93,8 +104,12 @@ void Zombie1_update(Elements *self)
         printf("game over!\n");
         Obj->gameover = 1;
     }
+    _Zombie1_update_position(self, Obj->v, 0);
+    //if be hitted play sound
+    
+
 }
-void _Zombie1_update_position(Elements *self, float dx, float dy)
+void _Zombie1_update_position(Elements *self, double dx, double dy)
 {
     Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
 
@@ -126,8 +141,10 @@ void Zombie1_interact(Elements *self, Elements *tar)
     if (tar->label == Projectile_L)
     {
         Projectile *Obj2 = ((Projectile *)(tar->pDerivedObj));
+        
         if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
         {
+            Obj->behitted = 1;
             //Obj->hp--;
             printf("Hit! hp: %d\n", Obj->hp);
                                     
@@ -139,6 +156,7 @@ void Zombie1_interact(Elements *self, Elements *tar)
         Flower *Obj2 = ((Flower *)(tar->pDerivedObj));
         if (Obj->hitbox->overlap(Obj2->hitbox3, Obj->hitbox)&&!Invincible)
         {
+            Obj2 -> behitted = 1;
             Obj2->hp--;
             printf("flower hited! hp: %d\n", Obj2->hp);
                                     
@@ -198,6 +216,11 @@ void Zombie1_draw(Elements *self)
     if (Obj->state == ATK && Obj->gif_status[Obj->state]->display_index == 2)
     {
         al_play_sample_instance(Obj->atk_Sound);
+    }
+    if (Obj->behitted == 1)
+    {
+        al_play_sample_instance(Obj->behitted_Sound);
+        Obj->behitted = 0;
     }
 }
 void Zombie1_destory(Elements *self)

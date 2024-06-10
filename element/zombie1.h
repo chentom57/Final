@@ -21,9 +21,12 @@ typedef struct _Zombie1
     int hp;     
     ALLEGRO_BITMAP *img;
     int state; 
+    
     ALGIF_ANIMATION *gif_status[3]; // gif for each state. 0: stop, 1: move, 2:attack
     ALLEGRO_SAMPLE_INSTANCE *atk_Sound;
-
+    ALLEGRO_SAMPLE_INSTANCE *behitted_Sound;
+    ALLEGRO_SAMPLE_INSTANCE *killed_Sound;
+    int behitted;
     int anime;      // counting the time of animation
     int anime_time; // indicate how long the animation
     bool new_proj;
@@ -34,5 +37,5 @@ void Zombie1_update(Elements *self);
 void Zombie1_interact(Elements *self, Elements *tar);
 void Zombie1_draw(Elements *self);
 void Zombie1_destory(Elements *self);
-void _Zombie1_update_position(Elements *self, float dx, float dy);
+void _Zombie1_update_position(Elements *self, double dx, double dy);
 #endif
