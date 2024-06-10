@@ -26,8 +26,8 @@ Elements *New_Flower(int label, int x, int y)
         pDerivedObj->gif_status[i] = algif_new_gif(buffer, -1);
     }
     // load effective sound
-    pDerivedObj->sample = al_load_sample("assets/sound/atk_sound.mp3");
-    pDerivedObj->atk_Sound = al_create_sample_instance(pDerivedObj->sample);
+    ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/atk_sound.mp3");
+    pDerivedObj->atk_Sound = al_create_sample_instance(sample);
     al_set_sample_instance_playmode(pDerivedObj->atk_Sound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(pDerivedObj->atk_Sound, al_get_default_mixer());
     //behitted sound
@@ -40,7 +40,7 @@ Elements *New_Flower(int label, int x, int y)
     pDerivedObj->height = pDerivedObj->gif_status[0]->height;
     pDerivedObj->x = x;
     pDerivedObj->y = y;
-    pDerivedObj->hp = 500;
+    pDerivedObj->hp = 250;
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
                                         pDerivedObj->y,
                                         pDerivedObj->x +100,
@@ -268,7 +268,6 @@ void Flower_draw(Elements *self)
 void Flower_destory(Elements *self)
 {
     Flower *Obj = ((Flower *)(self->pDerivedObj));
-    al_destroy_sample(Obj->sample);
     al_destroy_sample_instance(Obj->atk_Sound);
     for (int i = 0; i < 3; i++)
         algif_destroy_animation(Obj->gif_status[i]);
@@ -285,6 +284,12 @@ void _Flower_update_position(Elements *self, int dx, int dy)
     Shape *hitbox = chara->hitbox;
     hitbox->update_center_x(hitbox, dx);
     hitbox->update_center_y(hitbox, dy);
+    Shape *hitbox2 = chara->hitbox;
+    hitbox2->update_center_x(hitbox, dx);
+    hitbox2->update_center_x(hitbox, dy);
+    Shape *hitbox3 = chara->hitbox;
+    hitbox3->update_center_x(hitbox, dx);
+    hitbox3->update_center_x(hitbox, dy);
 }
 void Flower_interact(Elements *self, Elements *tar) {
     Flower *Obj = ((Flower *)(self->pDerivedObj));

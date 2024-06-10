@@ -27,9 +27,12 @@ typedef struct _potato
     int x, y;
     int width, height;              // the width and height of image
     bool dir;                       // true: face to right, false: face to left
-    int state;                      // the state of potato
+    int state;     
+    int behitted;                 // the state of potato
     ALGIF_ANIMATION *gif_status[3]; // gif for each state. 0: stop, 1: move, 2:attack
     ALLEGRO_SAMPLE_INSTANCE *atk_Sound;
+    ALLEGRO_SAMPLE_INSTANCE *behitted_Sound;
+    ALLEGRO_SAMPLE *sample2;
     ALLEGRO_BITMAP *img;
     int anime;      // counting the time of animation
     int anime_time; // indicate how long the animation
@@ -38,6 +41,7 @@ typedef struct _potato
     ALLEGRO_COLOR color;
     ALLEGRO_FONT *font;
     Shape *hitbox; // the hitbox of object
+    int hp;
 } potato;
 Elements *New_potato(int label, int x, int y);
 void potato_placing(int x, int y);

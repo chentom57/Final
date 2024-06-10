@@ -14,6 +14,7 @@ typedef struct _Ball2
     int in;
     int state2;
     int selflw;
+    int ranges;
     int block_x,block_y;
     Shape *hitbox; // the hitbox of object
     ALLEGRO_COLOR color;

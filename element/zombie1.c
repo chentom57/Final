@@ -43,6 +43,11 @@ Elements *New_Zombie1(int label)
     pDerivedObj->behitted_Sound = al_create_sample_instance(sample2);
     al_set_sample_instance_playmode(pDerivedObj->behitted_Sound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(pDerivedObj->behitted_Sound, al_get_default_mixer());
+    //zombbie killed sound
+    ALLEGRO_SAMPLE *sample3 = al_load_sample("assets/sound/zombie(killed).mp3");
+    pDerivedObj->killed_Sound = al_create_sample_instance(sample3);
+    al_set_sample_instance_playmode(pDerivedObj->killed_Sound, ALLEGRO_PLAYMODE_ONCE);
+    al_attach_sample_instance_to_mixer(pDerivedObj->killed_Sound, al_get_default_mixer());
     //0601:used for random create y-axis for zombie spawning
     int ran_num = (rand() % 5);
     // setting derived object member
@@ -79,6 +84,7 @@ void Zombie1_update(Elements *self)
 
     Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
     if(Obj->hp <= 0){
+        al_play_sample_instance(Obj->killed_Sound);
         Gold+=100;
         Score+=100;
         self->dele=true;
@@ -158,6 +164,17 @@ void Zombie1_interact(Elements *self, Elements *tar)
             Obj2 -> behitted = 1;
             Obj2->hp--;
             printf("flower hited! hp: %d\n", Obj2->hp);
+                                    
+        }
+    }
+    else if (tar->label == Potato_L)
+    {
+        potato *Obj2 = ((potato *)(tar->pDerivedObj));
+        if (Obj2->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
+        {
+            Obj2 -> behitted = 1;
+            Obj2 -> hp--;
+            // printf("flower hited! hp: %d\n", Obj2->hp);
                                     
         }
     }

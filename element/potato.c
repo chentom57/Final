@@ -33,6 +33,11 @@ Elements *New_potato(int label, int x, int y)
         pDerivedObj->gif_status[i] = algif_new_gif(buffer, -1);
     }
     pDerivedObj->img = al_load_bitmap("assets/image/potato.png");
+    //behitted sound
+    pDerivedObj->sample2 = al_load_sample("assets/sound/zombie(eating_sound).mp3");
+    pDerivedObj->behitted_Sound = al_create_sample_instance(pDerivedObj->sample2);
+    al_set_sample_instance_playmode(pDerivedObj->behitted_Sound, ALLEGRO_PLAYMODE_ONCE);
+    al_attach_sample_instance_to_mixer(pDerivedObj->behitted_Sound, al_get_default_mixer());
     // load effective sound
     // ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/atk_sound.mp3");
     // pDerivedObj->atk_Sound = al_create_sample_instance(sample);
@@ -44,11 +49,13 @@ Elements *New_potato(int label, int x, int y)
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->x = x;
     pDerivedObj->y = y;
+    pDerivedObj->hp = 300;
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
                                         pDerivedObj->y,
                                         pDerivedObj->x + 100,
                                         pDerivedObj->y + 100);
     pDerivedObj->dir = true; // true: face to right, false: face to left
+    pDerivedObj->behitted = 0;
     // initial the animation component
     pDerivedObj->state = STOP;
     // pDerivedObj->new_proj = false;
@@ -75,6 +82,10 @@ void potato_update(Elements *self)
     
     // use the idea of finite state machine to deal with different state
     potato *chara = ((potato *)(self->pDerivedObj));
+    printf("%d", chara->hp);
+    if(chara -> hp <= 0){
+        self -> dele = true;
+    }
     // printf("potato = %d %d\n", chara -> x, chara -> y);
     
     // if(key_state[ALLEGRO_KEY_SPACE]){
@@ -205,7 +216,8 @@ void potato_interact(Elements *self, Elements *tar) {
     //     Zombie1 *zomb = ((Zombie1 *)(tar -> pDerivedObj));
     //     if(Obj->hitbox->overlap(zomb->hitbox, Obj->hitbox)){
     //         printf("zombie ovlp potato2\n");
-    //         zomb -> v = 0;
+
+    //         // zomb -> v = 0;
     //     }
     //  }
 }
@@ -220,6 +232,11 @@ void potato_draw(Elements *self)
     if(frame)
     {
         al_draw_bitmap(frame, Obj->x, Obj->y, ((Obj->dir) ? ALLEGRO_FLIP_HORIZONTAL : 0));
+    }
+    if (Obj->behitted == 1)
+    {
+        al_play_sample_instance(Obj->behitted_Sound);
+        Obj->behitted = 0;
     }
     
 }

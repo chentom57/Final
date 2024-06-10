@@ -11,13 +11,13 @@ Elements *New_Back(int label)
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj->img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj->img);
     pDerivedObj->in = -1;
-    pDerivedObj->color = al_map_rgb(0, 0, 139);
+    pDerivedObj->color = al_map_rgb(255, 0, 0);
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
                                      pDerivedObj->y,
                                      pDerivedObj->x+pDerivedObj->width ,pDerivedObj->y+pDerivedObj->height);
-    pDerivedObj->font=al_load_ttf_font("assets/font/pirulen.ttf", 18, 0);
+    pDerivedObj->font=al_load_ttf_font("assets/font/pirulen.ttf", 12, 0);
     // setting the interact object
-    pObj->inter_obj[pObj->inter_len++] = Ball2_L;
+    pObj->inter_obj[pObj->inter_len++] = Ball_L;
 
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
@@ -34,18 +34,12 @@ void Back_update(Elements *self)
 void Back_interact(Elements *self, Elements *tar)
 {
     Back *Obj = ((Back *)(self->pDerivedObj));
-    if (tar->label == Ball2_L)
+    if (tar->label == Ball_L)
     {
-       Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
-       if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)){
-            Obj->color=al_map_rgb(0,0,139);
-            if(mouse_state[1]){
-                Obj->back=1;
-                self->dele=true;
-            }
-        }
-        else{
-             Obj->color=al_map_rgb(255,255,255);
+       Ball *Obj2 = ((Ball *)(tar->pDerivedObj));
+        if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]){
+            Obj->color=al_map_rgb(200,200,200);
+            Obj->back=1;
         }
     }
 
@@ -54,7 +48,7 @@ void Back_draw(Elements *self)
 {
     Back *Obj = ((Back *)(self->pDerivedObj));
     al_draw_bitmap(Obj->img, Obj->x, Obj->y,0);
-    al_draw_text(Obj->font, Obj->color, Obj->x+(Obj->width)/2, Obj->y+(Obj->height)/3, ALLEGRO_ALIGN_CENTRE, "BACK");
+    al_draw_text(Obj->font, Obj->color, Obj->x+(Obj->width)/2, Obj->y+(Obj->height)/2, ALLEGRO_ALIGN_CENTRE, "BACK");
 }
 void Back_destory(Elements *self)
 {
