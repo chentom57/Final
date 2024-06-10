@@ -54,7 +54,10 @@ void flower_button_draw(Elements *self)
 {
     flower_button *Obj = ((flower_button *)(self->pDerivedObj));
     // al_draw_bitmap(Obj->img, );
-    al_draw_bitmap(Obj->img, Obj->x, Obj->y,0);
+     if(Gold>=100)
+        al_draw_bitmap(Obj->img, Obj->x, Obj->y,0);
+    else
+        al_draw_bitmap(Obj->img2, Obj->x, Obj->y,0);
     // flower_button *Obj = ((flower_button *)(self->pDerivedObj));
     // al_draw_rectangle(Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,Obj->x+(Obj->width)/2,Obj->y+(Obj->heigh)/2,Obj->color,(Obj->width)/20);
     // al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6-10, ALLEGRO_ALIGN_CENTRE, "Flower");
@@ -63,6 +66,8 @@ void flower_button_draw(Elements *self)
 void flower_button_destory(Elements *self)
 {
     flower_button *Obj = ((flower_button *)(self->pDerivedObj));
+     al_destroy_bitmap(Obj->img);
+    al_destroy_bitmap(Obj->img2);
     free(Obj->hitbox);
     free(Obj);
     free(self);

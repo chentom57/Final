@@ -70,7 +70,7 @@ typedef struct _GameScene
     ALLEGRO_FONT *font2;
     ALLEGRO_SAMPLE *song;
     ALLEGRO_BITMAP *background_gs;
-    ALLEGRO_SAMPLE_INSTANCE *sample_instance;
+    ALLEGRO_SAMPLE_INSTANCE *gs_Sound;
     char text[100];
 } GameScene;
 Scene *New_GameScene(int label);

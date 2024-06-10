@@ -30,8 +30,8 @@ Elements *New_bomb(int label, int x, int y)
     //ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/atk_sound.mp3");
     pDerivedObj->img = al_load_bitmap("assets/image/bomb.png");
       pDerivedObj->img2= al_load_bitmap("assets/image/bang.png");
-    ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/bang_sound.mp3");
-     pDerivedObj->bang_Sound = al_create_sample_instance(sample);
+    pDerivedObj->sample = al_load_sample("assets/sound/bang_sound.mp3");
+     pDerivedObj->bang_Sound = al_create_sample_instance(pDerivedObj->sample);
     al_set_sample_instance_playmode(pDerivedObj->bang_Sound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(pDerivedObj->bang_Sound, al_get_default_mixer());
 
@@ -211,6 +211,7 @@ void bomb_draw(Elements *self)
 void bomb_destory(Elements *self)
 {
     bomb *Obj = ((bomb *)(self->pDerivedObj));
+     al_destroy_sample(Obj->sample);
     al_destroy_sample_instance(Obj->bang_Sound);
     // for (int i = 0; i < 3; i++)
     //     algif_destroy_animation(Obj->gif_status[i]);
@@ -239,8 +240,9 @@ void bomb_interact(Elements *self, Elements *tar) {
         Zombie1 *Obj2 = ((Zombie1 *)(tar->pDerivedObj));
         if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
         {
+            Obj2->behitted = 1;
             printf("Zombie1: ahh!");
-            Obj2-> hp -= 1;
+            Obj2-> hp -= 100;
         }
         placed[Obj->x/100][Obj->y/100] = 0;
         self->dele=true;

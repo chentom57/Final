@@ -27,7 +27,7 @@ Elements *New_Sunflw(int label, int x, int y)
         pDerivedObj->gif_status[i] = algif_new_gif(buffer, -1);
     }
     // load effective sound
-    ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/atk_sound2.mp3");
+    ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/sun_generated.mp3");
     pDerivedObj->atk_Sound = al_create_sample_instance(sample);
     al_set_sample_instance_playmode(pDerivedObj->atk_Sound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(pDerivedObj->atk_Sound, al_get_default_mixer());
@@ -145,8 +145,6 @@ void Sunflw_update(Elements *self)
                 _Register_elements(scene, pro);
                 chara->new_proj = true;
             }
-            
-            
         }
         // chara->state = ATK;
     }
@@ -162,7 +160,7 @@ void Sunflw_draw(Elements *self)
     {
         al_draw_bitmap(frame, chara->x, chara->y, ((chara->dir) ? ALLEGRO_FLIP_HORIZONTAL : 0));
     }
-    if (chara->state == ATK && chara->gif_status[chara->state]->display_index == 2)
+    if (chara->state == ATK && chara->gif_status[chara->state]->display_index == 20)
     {
         al_play_sample_instance(chara->atk_Sound);
     }
