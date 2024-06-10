@@ -242,7 +242,7 @@ void bomb_interact(Elements *self, Elements *tar) {
         {
             Obj2->behitted = 1;
             printf("Zombie1: ahh!");
-            Obj2-> hp -= 100;
+            Obj2-> hp -= 3;
         }
         placed[Obj->x/100][Obj->y/100] = 0;
         self->dele=true;

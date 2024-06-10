@@ -49,7 +49,7 @@ Elements *New_potato(int label, int x, int y)
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->x = x;
     pDerivedObj->y = y;
-    pDerivedObj->hp = 300;
+     pDerivedObj->hp = 2000;
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
                                         pDerivedObj->y,
                                         pDerivedObj->x + 100,
@@ -82,12 +82,11 @@ void potato_update(Elements *self)
     
     // use the idea of finite state machine to deal with different state
     potato *chara = ((potato *)(self->pDerivedObj));
-    printf("%d", chara->hp);
-    if(chara -> hp <= 0){
-        self -> dele = true;
+    printf("potato = %d %d\n", chara -> x, chara -> y);
+    if(chara->hp <= 0){                
+        self->dele=true;
+        placed[chara->x / 100][chara->y /100]=0;
     }
-    // printf("potato = %d %d\n", chara -> x, chara -> y);
-    
     // if(key_state[ALLEGRO_KEY_SPACE]){
     //     printf("spcae is pressed");
     //     //New_potato(potato_L, 1, 1);
@@ -210,16 +209,16 @@ void potato_update(Elements *self)
 }
 
 void potato_interact(Elements *self, Elements *tar) {
-    //  potato *Obj = ((potato*)(self->pDerivedObj));
-    //  if(tar->label == Zombie1_L){
-    //     printf("zombie ovlp potato\n");
-    //     Zombie1 *zomb = ((Zombie1 *)(tar -> pDerivedObj));
-    //     if(Obj->hitbox->overlap(zomb->hitbox, Obj->hitbox)){
-    //         printf("zombie ovlp potato2\n");
-
-    //         // zomb -> v = 0;
-    //     }
-    //  }
+     potato *Obj = ((potato*)(self->pDerivedObj));
+     if(tar->label == Zombie1_L){
+        // printf("zombie ovlp potato\n
+        Zombie1 *zomb = ((Zombie1 *)(tar -> pDerivedObj));
+        if(zomb->hitbox->overlap(zomb->hitbox, Obj->hitbox)){
+            printf("zombie ovlp potato2\n");
+            Obj->behitted = 1;
+            // zomb -> v = 0;
+        }
+     }
 }
 
 void potato_draw(Elements *self)
@@ -231,20 +230,19 @@ void potato_draw(Elements *self)
     ALLEGRO_BITMAP *frame = algif_get_bitmap(Obj->gif_status[Obj->state], al_get_time());
     if(frame)
     {
-        al_draw_bitmap(frame, Obj->x, Obj->y, ((Obj->dir) ? ALLEGRO_FLIP_HORIZONTAL : 0));
+        al_draw_bitmap(frame, Obj->x, Obj->y, 1);
     }
     if (Obj->behitted == 1)
     {
         al_play_sample_instance(Obj->behitted_Sound);
         Obj->behitted = 0;
     }
-    
 }
 
 void potato_destory(Elements *self)
 {
     potato *Obj = ((potato *)(self->pDerivedObj));
-    al_destroy_sample_instance(Obj->atk_Sound);
+    // al_destroy_sample_instance(Obj->atk_Sound);
     for (int i = 0; i < 3; i++)
         algif_destroy_animation(Obj->gif_status[i]);
     free(Obj->hitbox);

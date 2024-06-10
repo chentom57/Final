@@ -74,11 +74,12 @@ void Lottery_interact(Elements *self, Elements *tar)
        if(mouse_state[1]==1&&Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&Obj->done==0){
             Obj->done=1;
             Obj->output=count;
-            if(Obj->output>3){
+            if(Obj->output>=4){
               Gold+=Obj->output*100;
+              Score+=Obj->output*100;
             }
             else{
-              Gold-=Obj->output*100;
+              Gold-=(3-Obj->output)*100;
               if(Gold<0)
                 Gold=0;
             }

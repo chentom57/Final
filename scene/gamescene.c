@@ -410,7 +410,6 @@ void game_scene_zombie(Scene *self){
         // _Register_elements(self, New_Boss(Boss_L));
         Boss_created=1;
      }
-
 }
 void game_scene_lottery(Scene *self){
     GameScene *Obj = ((GameScene *)(self->pDerivedObj));

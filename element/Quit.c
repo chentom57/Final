@@ -8,7 +8,7 @@ Elements *New_Quit(int label)
     Elements *pObj = New_Elements(label);
     pDerivedObj->img = al_load_bitmap("assets/image/button_menu.png");
     pDerivedObj->x = 450;
-    pDerivedObj->y = 500;
+    pDerivedObj->y = 550;
     pDerivedObj->width =al_get_bitmap_width(pDerivedObj->img);
     pDerivedObj->heigh =al_get_bitmap_height(pDerivedObj->img);
     pDerivedObj->in = -1;
@@ -38,7 +38,7 @@ void Quit_interact(Elements *self, Elements *tar)
     Quit *Obj = ((Quit *)(self->pDerivedObj));
     if (tar->label == MOUSE_L)
     {
-       Ball *Obj2 = ((Ball *)(tar->pDerivedObj));
+       Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
         if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)){
             Obj->color=al_map_rgb(255,193,37);
             if(mouse_state[1]){

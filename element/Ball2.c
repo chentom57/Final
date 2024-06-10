@@ -67,6 +67,12 @@ void Ball2_update(Elements *self)
     al_get_mouse_state(&msstate); 
     if(mouse_state[2] == 1)
         Obj->selflw=0;
+    if(key_state[ALLEGRO_KEY_1])
+        Gold+=1000;
+    if(key_state[ALLEGRO_KEY_9])
+        Invincible=1;
+    if(key_state[ALLEGRO_KEY_0])
+        Invincible=0;
     if(chara2 -> state2 == 0){
      if(Obj->block_y<5){
         if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(Obj -> selflw == 1)&&Gold>=100&&placed[Obj->block_x][Obj->block_y]==0){
@@ -90,10 +96,11 @@ void Ball2_update(Elements *self)
             chara2 -> state2 = 1;
             Obj -> selflw =0;
         }
-        else if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(mouse.y < 500)&&(Obj -> selflw == 3)&&Gold>=50&&placed[Obj->block_x][Obj->block_y]==0){//*mouse right button is clicked return 1
+        else if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(mouse.y < 500)&&(Obj -> selflw == 3)&&Gold>=150&&placed[Obj->block_x][Obj->block_y]==0){//*mouse right button is clicked return 1
             printf("mouse left is clicked1\n");
             Gold-=50;
             al_play_sample_instance(Obj->Planting_Sound);
+            
             flo3 = New_bomb(Bomb_L,Obj->block_x*100,Obj->block_y*100);//*generate new flower
             _Register_elements(scene, flo3);
             placed[Obj->block_x][Obj->block_y] = 1;
