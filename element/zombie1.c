@@ -10,6 +10,7 @@ int a = 1;
 //0601:random: used for create zombie's y-axis
 int ranflag = 1;
 #include "potato.h"
+#include "flower.h"
 /*
    [Zombie1 function]
 */
@@ -45,7 +46,7 @@ Elements *New_Zombie1(int label)
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->gameover = 0;
     pDerivedObj->x = 800;
-    pDerivedObj->hp=5;
+    pDerivedObj->hp=50;
     //printf("rand: %f\n", ran_num);
     pDerivedObj->y =  ran_num * 100 ;
     pDerivedObj->v = 1; //速度
@@ -56,6 +57,7 @@ Elements *New_Zombie1(int label)
     
     pObj->inter_obj[pObj->inter_len++] = Projectile_L;
     pObj->inter_obj[pObj->inter_len++] = Potato_L;
+    pObj->inter_obj[pObj->inter_len++] = Flower_L;
     
    // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
@@ -69,6 +71,13 @@ void Zombie1_update(Elements *self)
 {
 
     Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
+    if(Obj->hp <= 0){
+        Gold+=100;
+        Score+=100;
+        self->dele=true;
+    }
+
+
     _Zombie1_update_position(self, Obj->v, 0);
      if(placed[(int)(Obj->x + 100)/ 100][(int)Obj->y / 100] == 1){
         Obj->state = ATK;
@@ -127,15 +136,22 @@ void Zombie1_interact(Elements *self, Elements *tar)
         {
             //Obj->hp--;
             printf("Hit! hp: %d\n", Obj->hp);
-            if(Obj->hp <= 0){
-                Gold+=100;
-                Score+=100;
-                self->dele=true;
-            }
-            
-            
+                                    
         }
     }
+    //0610
+    else if (tar->label == Flower_L)
+    {
+        Flower *Obj2 = ((Flower *)(tar->pDerivedObj));
+        if (Obj->hitbox->overlap(Obj2->hitbox3, Obj->hitbox))
+        {
+            Obj2->hp--;
+            printf("flower hited! hp: %d\n", Obj2->hp);
+                                    
+        }
+    }
+
+    
     // else if (tar->label == Potato_L)
     // {
     //     potato *Obj2 = ((potato *)(tar->pDerivedObj));

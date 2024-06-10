@@ -15,7 +15,8 @@ Scene *New_GameScene(int label)
     // setting derived object member
     //pDerivedObj->background = al_load_bitmap("assets/image/stage.jpg");
     pObj->pDerivedObj = pDerivedObj;
-    start_time_gs=time(NULL);
+    //start_time_gs=time(NULL);
+    start_time_gs = al_get_time();
     Boss_created=0;
     Gold=500;
     Score=0;
@@ -51,7 +52,8 @@ Scene *New_GameScene(int label)
 }
 void game_scene_update(Scene *self)
 {
-    current_time_gs=time(NULL);
+    //current_time_gs=time(NULL);
+    current_time_gs = al_get_time();
     game_scene_lottery(self);
     game_scene_zombie(self);
     if(current_time_gs-start_time_gs>9999){
@@ -174,6 +176,8 @@ void game_scene_zombie(Scene *self){
         _Register_elements(self, New_Zombie1(Zombie1_L));
         zombie1_created=1;
      }
+
+
     //0607 Bruce add :boss
      if((start_time_gs)%3==1){
         Boss_created=0;                     //reset the bool zombie been created

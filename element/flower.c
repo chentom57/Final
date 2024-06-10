@@ -3,6 +3,7 @@
 #include "../scene/sceneManager.h"
 #include "projectile.h"
 #include "../shapes/Rectangle.h"
+#include "../shapes/Circle.h"
 #include "../algif5/src/algif.h"
 #include <stdio.h>
 #include <stdbool.h>
@@ -35,14 +36,22 @@ Elements *New_Flower(int label, int x, int y)
     pDerivedObj->height = pDerivedObj->gif_status[0]->height;
     pDerivedObj->x = x;
     pDerivedObj->y = y;
+    pDerivedObj->hp = 500;
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
                                         pDerivedObj->y,
                                         pDerivedObj->x +100,
                                         pDerivedObj->y + 100);
+                                        
+    
     pDerivedObj->hitbox2 = New_Rectangle(pDerivedObj->x,
                                         pDerivedObj->y,
                                         pDerivedObj->x +700,
                                         pDerivedObj->y + 100);
+    pDerivedObj->hitbox3 = New_Circle(pDerivedObj->x+60,
+                                    pDerivedObj->y+60,
+                                    10);
+
+
     pDerivedObj->dir = true; // true: face to right, false: face to left
     // initial the animation component
     pDerivedObj->state = STOP;
@@ -192,7 +201,14 @@ void Flower_update(Elements *self)
     //     }
     //     // chara->state = ATK;
     // }
-     Flower *chara = ((Flower *)(self->pDerivedObj));
+    Flower *chara = ((Flower *)(self->pDerivedObj));
+    //0610
+    if(chara->hp <= 0){                
+        self->dele=true;
+        placed[chara->x / 100][chara->y /100]=0;
+    }
+    //0610 end
+
     if (chara->state == STOP)
     {
         if (key_state[ALLEGRO_KEY_SPACE])
@@ -230,7 +246,9 @@ void Flower_draw(Elements *self)
     
     // with the state, draw corresponding image
     Flower *chara = ((Flower *)(self->pDerivedObj));
-    al_draw_rectangle(chara->x,chara->y,chara->x + 100,chara->y + 100, al_map_rgb(255, 255, 255), 5);//draw hitbox 
+    al_draw_circle(chara->x + 60,
+                    chara->y + 60,
+                    10, al_map_rgb(100, 100, 255), 10);//draw hitbox 
     ALLEGRO_BITMAP *frame = algif_get_bitmap(chara->gif_status[chara->state], al_get_time());
     if (frame)
     {
@@ -269,6 +287,20 @@ void Flower_interact(Elements *self, Elements *tar) {
         if(Obj2->hitbox->overlap(Obj2->hitbox, Obj->hitbox2)){
             Obj -> state = ATK;
         }
-     }
-
+    }
+    //0610
+    /*
+    else if (tar->label == Zombie1_L)
+    {
+        Zombie1 *Obj2 = ((Zombie1 *)(tar->pDerivedObj));
+        if (Obj->hitbox3->overlap(Obj2->hitbox, Obj->hitbox3))
+        {
+            Obj->hp--;
+            printf("flower injured, hp: %d\n", Obj->hp);
+            if(Obj->hp <= 0){
+                self->dele=true;
+            }                        
+        }
+    }
+    */
 }

@@ -27,9 +27,11 @@ typedef struct _Flower
     ALLEGRO_SAMPLE_INSTANCE *atk_Sound;
     int anime;      // counting the time of animation
     int anime_time; // indicate how long the animation
+    int hp;
     bool new_proj;
     Shape *hitbox; // the hitbox of object
     Shape *hitbox2; 
+    Shape *hitbox3;  //for zombie interacting
 } Flower;
 Elements *New_Flower(int label, int x, int y);
 void Flower_placing(int x, int y);
