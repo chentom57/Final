@@ -15,14 +15,16 @@ Scene *New_GameScene(int label)
     // setting derived object member
     //pDerivedObj->background = al_load_bitmap("assets/image/stage.jpg");
     pObj->pDerivedObj = pDerivedObj;
-    start_time_gs=time(NULL);
+    //start_time_gs=time(NULL);
+    start_time_gs = al_get_time();
     Boss_created=0;
     Gold=500;
     Score=0;
     memset(placed,0,60*4);
-    pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 24, 0);
+    pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 20, 0);
      pDerivedObj->background_gs =al_load_bitmap("assets/image/gamescene_back.png");
     pDerivedObj->sun_t =al_load_bitmap("assets/image/sun_t.png");
+     pDerivedObj->Gold_score =al_load_bitmap("assets/image/gold_score.png");
     pDerivedObj->font2 = al_load_ttf_font("assets/font/pirulen.ttf", 36, 0);
     pDerivedObj->lottery_created=0;
     // Load sound
@@ -53,7 +55,8 @@ Scene *New_GameScene(int label)
 }
 void game_scene_update(Scene *self)
 {
-    current_time_gs=time(NULL);
+    //current_time_gs=time(NULL);
+    current_time_gs = al_get_time();
     game_scene_lottery(self);
     game_scene_zombie(self);
     if(current_time_gs-start_time_gs>50){
@@ -142,10 +145,12 @@ void game_scene_draw(Scene *self)
     sprintf(score_text, "%d",Score);
     //al_draw_bitmap(gs->background, 0, 0, 0);
     //al_draw_text(gs->font, al_map_rgb(255,255, 255),50,600, ALLEGRO_ALIGN_CENTRE,"Gold:");
-     al_draw_bitmap(gs->sun_t, 20,600, 0);
-     al_draw_text(gs->font, al_map_rgb(255, 255, 255),150,620, ALLEGRO_ALIGN_CENTRE,Gold_text );
-     al_draw_text(gs->font, al_map_rgb(255,255,255),300,620, ALLEGRO_ALIGN_CENTRE,"Score:");
-     al_draw_text(gs->font, al_map_rgb(255,255,255),400,620, ALLEGRO_ALIGN_CENTRE,score_text );
+    al_draw_bitmap(gs->Gold_score, 10,600, 0);
+    al_draw_bitmap(gs->Gold_score, 220,600, 0);
+     al_draw_bitmap(gs->sun_t, 20,610, 0);
+     al_draw_text(gs->font, al_map_rgb(233, 211, 33),150,620, ALLEGRO_ALIGN_CENTRE,Gold_text );
+    //  al_draw_text(gs->font, al_map_rgb(255,255,255),300,620, ALLEGRO_ALIGN_CENTRE,"Score:");
+     al_draw_text(gs->font, al_map_rgb(255,255,255),370,620, ALLEGRO_ALIGN_CENTRE,score_text );
     al_play_sample_instance(gs->gs_Sound);
     ElementVec allEle = _Get_all_elements(self);
     for (int i = 0; i < allEle.len; i++)
@@ -160,6 +165,7 @@ void game_scene_destroy(Scene *self)
     //ALLEGRO_BITMAP *background = Obj->background;
     al_destroy_bitmap(Obj->background_gs);
       al_destroy_bitmap(Obj->sun_t);
+         al_destroy_bitmap(Obj->Gold_score);
      al_destroy_sample(Obj->song);
      al_destroy_sample_instance(Obj->gs_Sound);
     ElementVec allEle = _Get_all_elements(self);
@@ -181,6 +187,8 @@ void game_scene_zombie(Scene *self){
         _Register_elements(self, New_Zombie1(Zombie1_L));
         zombie1_created=1;
      }
+
+
     //0607 Bruce add :boss
      if((start_time_gs)%3==1){
         Boss_created=0;                     //reset the bool zombie been created

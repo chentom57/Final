@@ -220,12 +220,12 @@ void Ball2_draw(Elements *self)
     Ball2 *Obj = ((Ball2 *)(self->pDerivedObj));
     if(Obj->selflw!=0){
         if(placed[Obj->block_x][Obj->block_y]==0)
-             al_draw_bitmap(Obj->img_g, Obj->x-Obj->r, Obj->y-Obj->r,0);
+             al_draw_bitmap(Obj->img_y, Obj->x-Obj->r, Obj->y-Obj->r,0);
         else
              al_draw_bitmap(Obj->img_r, Obj->x-Obj->r, Obj->y-Obj->r,0);
     }
     else
-        al_draw_bitmap(Obj->img_y, Obj->x-Obj->r, Obj->y-Obj->r,0);
+        al_draw_bitmap(Obj->img_g, Obj->x-Obj->r, Obj->y-Obj->r,0);
 }
 
 void Ball2_destory(Elements *self)
