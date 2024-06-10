@@ -30,9 +30,9 @@ Elements *New_Ball2(int label)
     pObj->inter_obj[pObj->inter_len++] = Sunflw_L;
     pObj->inter_obj[pObj->inter_len++] = Bomb_L;
     pObj->inter_obj[pObj->inter_len++] = Potato_L;
-    // pDerivedObj->img_g= al_load_bitmap("assets/image/mouse_green.png");
-    // pDerivedObj->img_y= al_load_bitmap("assets/image/mouse_yellow.png");
-    // pDerivedObj->img_r= al_load_bitmap("assets/image/mouse_red.png");
+    pDerivedObj->img_g= al_load_bitmap("assets/image/mouse_green.png");
+    pDerivedObj->img_y= al_load_bitmap("assets/image/mouse_yellow.png");
+    pDerivedObj->img_r= al_load_bitmap("assets/image/mouse_red.png");
     //planting sound
     pDerivedObj->sample = al_load_sample("assets/sound/planting.mp3");
     pDerivedObj->Planting_Sound = al_create_sample_instance(pDerivedObj->sample);
@@ -113,7 +113,7 @@ void Ball2_update(Elements *self)
             al_play_sample_instance(Obj->Planting_Sound);
             flo4 = New_potato(Potato_L,Obj->block_x*100,Obj->block_y*100);//*generate new potato
             _Register_elements(scene, flo4);
-            placed[Obj->block_x][Obj->block_y] = 1;
+            placed[Obj->block_x][Obj->block_y] = 2;
             chara2 -> state2 = 1;
             Obj -> selflw =0;
         }
@@ -138,7 +138,7 @@ void Ball2_interact(Elements *self, Elements *tar)
     // printf("hello");
     Ball2 *Obj = ((Ball2 *)(self->pDerivedObj));
     Obj->block_x=(Obj->x)/100;
-    Obj->block_y=(Obj->y-30)/100;
+    Obj->block_y=(Obj->y)/100;
     //printf("%d%d ",Obj->block_x,Obj->block_y);
     // if (tar->label == Character_L)
     // {
@@ -234,16 +234,16 @@ void Ball2_draw(Elements *self)
 {
     Ball2 *Obj = ((Ball2 *)(self->pDerivedObj));
     al_draw_circle(Obj->x, Obj->y, Obj->r, Obj->color, 5);
-    if(Obj->selflw!=0)
-            al_draw_circle(Obj->x,Obj->y,Obj->ranges,al_map_rgb(255,0,0),5);
+    // if(Obj->selflw!=0)
+    //         al_draw_circle(Obj->x,Obj->y,Obj->ranges,al_map_rgb(255,0,0),5);
     if(Obj->selflw!=0){
-        // if(placed[Obj->block_x][Obj->block_y]==0)
-        //     //  al_draw_bitmap(Obj->img_y, Obj->x-Obj->r, Obj->y-Obj->r,0);
-        // else
-        //     //  al_draw_bitmap(Obj->img_r, Obj->x-Obj->r, Obj->y-Obj->r,0);
+        if(placed[Obj->block_x][Obj->block_y]==0)
+             al_draw_bitmap(Obj->img_y, Obj->x-Obj->r, Obj->y-Obj->r,0);
+        else
+              al_draw_bitmap(Obj->img_r, Obj->x-Obj->r, Obj->y-Obj->r,0);
     }
-    // else
-        // al_draw_bitmap(Obj->img_g, Obj->x-Obj->r, Obj->y-Obj->r,0);
+     else
+         al_draw_bitmap(Obj->img_g, Obj->x-Obj->r, Obj->y-Obj->r,0);
 }
 
 void Ball2_destory(Elements *self)

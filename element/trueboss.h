@@ -28,6 +28,10 @@ typedef struct _Trueboss
     int anime_time; // indicate how long the animation
     bool new_proj;
     Shape *hitbox; // the hitbox of object
+    Shape *hitbox2; 
+    Shape *hitbox3;  //for zombie interacting
+    Shape *hitbox4; 
+    Shape *hitbox5;  //for zombie interacting
 } Trueboss;
 Elements *New_Trueboss(int label);
 void Trueboss_update(Elements *self);

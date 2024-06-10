@@ -82,10 +82,10 @@ void potato_update(Elements *self)
     
     // use the idea of finite state machine to deal with different state
     potato *chara = ((potato *)(self->pDerivedObj));
-    printf("potato = %d %d\n", chara -> x, chara -> y);
-    if(chara->hp <= 0){                
+    // printf("potato = %d %d\n", chara -> x, chara -> y);
+    if(chara->hp <= 0){  
+        placed[chara->x / 100][chara->y /100]=0;              
         self->dele=true;
-        placed[chara->x / 100][chara->y /100]=0;
     }
     // if(key_state[ALLEGRO_KEY_SPACE]){
     //     printf("spcae is pressed");
@@ -226,7 +226,7 @@ void potato_draw(Elements *self)
     
     // with the state, draw corresponding image
     potato *Obj = ((potato *)(self->pDerivedObj));
-    al_draw_circle(Obj->x+60, Obj->y+60, 30, al_map_rgb(105, 105, 0), 10);
+   
     ALLEGRO_BITMAP *frame = algif_get_bitmap(Obj->gif_status[Obj->state], al_get_time());
     if(frame)
     {
@@ -237,6 +237,7 @@ void potato_draw(Elements *self)
         al_play_sample_instance(Obj->behitted_Sound);
         Obj->behitted = 0;
     }
+     al_draw_circle(Obj->x+60, Obj->y+60, 30, al_map_rgb(105, 105, 0), 10);
 }
 
 void potato_destory(Elements *self)

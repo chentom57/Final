@@ -14,11 +14,12 @@
 */
 typedef struct _Zomboni
 {
-    float x, y;          // the position of image
+    int x, y;          // the position of image
     int width, height; // the width and height of image
     float v;             // the velocity of Zomboni
     int gameover;  // gameover flag
-    int hp;     
+    int hp;
+    int stop;     
     ALLEGRO_BITMAP *img;
     int state; 
     int behitted;

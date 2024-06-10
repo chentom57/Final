@@ -43,11 +43,11 @@ Elements *New_Flower(int label, int x, int y)
     pDerivedObj->hp = 250;
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
                                         pDerivedObj->y,
-                                        pDerivedObj->x +100,
+                                        pDerivedObj->x +800,
                                         pDerivedObj->y + 100);
     pDerivedObj->hitbox2 = New_Rectangle(pDerivedObj->x,
                                         pDerivedObj->y,
-                                        pDerivedObj->x +700,
+                                        pDerivedObj->x +800,
                                         pDerivedObj->y + 100);
     pDerivedObj->hitbox3 = New_Circle(pDerivedObj->x+60,
                                     pDerivedObj->y+60,
@@ -61,8 +61,8 @@ Elements *New_Flower(int label, int x, int y)
     pObj->pDerivedObj = pDerivedObj;
     pObj->inter_obj[pObj->inter_len++] = Ball2_L;
     pObj->inter_obj[pObj->inter_len++] = Zombie1_L;
-    pObj->inter_obj[pObj->inter_len++] = Zomboni_L;
-    // setting derived object function
+      pObj->inter_obj[pObj->inter_len++] = Zomboni_L;
+       pObj->inter_obj[pObj->inter_len++] = Trueboss_L;
     pObj->Draw = Flower_draw;
     pObj->Update = Flower_update;
     pObj->Interact = Flower_interact;
@@ -241,6 +241,7 @@ void Flower_update(Elements *self)
             chara->new_proj = true;
         }
     }
+    
 
 }
 void Flower_draw(Elements *self)
@@ -300,9 +301,27 @@ void Flower_interact(Elements *self, Elements *tar) {
             Obj -> state = ATK;
         }
     }
-     if(tar->label == Zomboni_L){
+    if(tar->label == Zomboni_L){
         Zomboni *Obj2 = ((Zomboni *)(tar -> pDerivedObj));
         if(Obj2->hitbox->overlap(Obj2->hitbox, Obj->hitbox2)){
+            Obj -> state = ATK;
+        }
+    }
+    if(tar->label == Trueboss_L){
+        Trueboss *Obj2 = ((Trueboss *)(tar -> pDerivedObj));
+        if(Obj2->hitbox->overlap(Obj2->hitbox, Obj->hitbox2)){
+            Obj -> state = ATK;
+        }
+        if(Obj2->hitbox->overlap(Obj2->hitbox2, Obj->hitbox2)){
+            Obj -> state = ATK;
+        }
+        if(Obj2->hitbox->overlap(Obj2->hitbox3, Obj->hitbox2)){
+            Obj -> state = ATK;
+        }
+        if(Obj2->hitbox->overlap(Obj2->hitbox4, Obj->hitbox2)){
+            Obj -> state = ATK;
+        }
+        if(Obj2->hitbox->overlap(Obj2->hitbox5, Obj->hitbox2)){
             Obj -> state = ATK;
         }
     }

@@ -105,6 +105,7 @@
 #include "../element/sunflw_button.h"
 #include "../element/bomb_button.h"
 #include "../element/potato_button.h"
+#include "../element/Trueboss.h"
 #include "../element/Zombie1.h"
 #include "../element/Lottery.h"
 #include <allegro5/allegro_audio.h>
@@ -138,6 +139,7 @@ typedef enum EleType
     PotatoB_L,
 
     Zombie1_L,
+    Trueboss_L,
     Boss_L,
     Zomboni_L,
     SunflwB_L,

@@ -22,7 +22,7 @@ Scene *New_Menu(int label)
     pDerivedObj->img3 = al_load_bitmap("assets/image/bar.png");
     pDerivedObj->gif_status[0] = algif_new_gif( "assets/image/zombie1_move.gif", -1);
     pDerivedObj->gif_status[1] = algif_new_gif( "assets/image/chara_attack.gif", -1);
-    pDerivedObj->song = al_load_sample("assets/sound/menu.mp3");
+    pDerivedObj->song = al_load_sample("assets/sound/menu_s.mp3");
     pDerivedObj->menu_Sound = al_create_sample_instance(pDerivedObj->song);
     // Loop the song until the display closes
     al_set_sample_instance_playmode(pDerivedObj->menu_Sound, ALLEGRO_PLAYMODE_LOOP);

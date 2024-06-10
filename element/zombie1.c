@@ -23,7 +23,7 @@ Elements *New_Zombie1(int label)
     }    
     
     //Bruce add timer define& start
-    time(&start_time);
+    start_time = al_get_time();
 
     Zombie1 *pDerivedObj = (Zombie1 *)malloc(sizeof(Zombie1));
     Elements *pObj = New_Elements(label);
@@ -58,7 +58,6 @@ Elements *New_Zombie1(int label)
     pDerivedObj->gameover = 0;
     pDerivedObj->x = 800;
     pDerivedObj->hp = 5;
-    pDerivedObj->state = MOVE;
     pDerivedObj->behitted = 0;
     //printf("rand: %f\n", ran_num);
     pDerivedObj->y =  ran_num * 100 ;
@@ -92,8 +91,8 @@ void Zombie1_update(Elements *self)
         Score+=100;
         self->dele=true;
     }
-    
-     if(placed[(int)(Obj->x + 100)/ 100][(int)Obj->y / 100] == 1){
+    _Zombie1_update_position(self, Obj->v, 0);
+     if(placed[(int)(Obj->x + 100)/ 100][(int)Obj->y / 100]==2||placed[(int)(Obj->x + 100)/ 100][(int)Obj->y / 100]==1){
         Obj->state = ATK;
     }
     else{
