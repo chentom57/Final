@@ -40,17 +40,8 @@ void sunflw_button_interact(Elements *self, Elements *tar)
     if (tar->label == Ball2_L)
     {
         Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
-       if(Gold>=150){
-        if(Obj2->selflw==2)
-            Obj->color=al_map_rgb(255,255,255);
-        else
-            Obj->color=al_map_rgb(0,255,255);
-        }
-        else
-            Obj->color=al_map_rgb(255,0,0);
-        if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]&&Gold>=150){
+        if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]&&Gold>=50){
             printf("flwoer button is clicked\n");
-            Obj2->lap=1;
             Obj2 -> selflw = 2;
             // Obj->sunflw_button = 1;
         }

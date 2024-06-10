@@ -63,6 +63,8 @@ typedef enum EleType
 typedef struct _GameScene
 {
     int lottery_created;
+    int ptime;
+ 
     //ALLEGRO_BITMAP *background;
     ALLEGRO_FONT *font;
     ALLEGRO_FONT *font2;

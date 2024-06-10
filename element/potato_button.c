@@ -8,14 +8,13 @@ Elements *New_potato_button(int label)
     potato_button *pDerivedObj = (potato_button *)malloc(sizeof(potato_button));
     Elements *pObj = New_Elements(label);
     pDerivedObj->img = al_load_bitmap("assets/image/flowerbutton3.png");
-    pDerivedObj->img2 = al_load_bitmap("assets/image/flowerbutton3(unable).png");
+     pDerivedObj->img2 = al_load_bitmap("assets/image/flowerbutton3(unable).png");
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->x =420;  
     pDerivedObj->y = 500;
     pDerivedObj->in = -1;
     pDerivedObj->color = al_map_rgb(0, 255, 255);
-    
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
                                      pDerivedObj->y,
                                      pDerivedObj->x+pDerivedObj->width,pDerivedObj->y+pDerivedObj->height);
@@ -41,17 +40,8 @@ void potato_button_interact(Elements *self, Elements *tar)
     if (tar->label == Ball2_L)
     {
         Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
-       if(Gold>=200){
-        if(Obj2->selflw==4)
-            Obj->color=al_map_rgb(255,255,255);
-        else
-            Obj->color=al_map_rgb(0,255,255);
-        }
-        else
-            Obj->color=al_map_rgb(255,0,0);
-        if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]&&Gold>=200){
+        if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]&&Gold>=50){
             printf("flwoerbutton3 button is clicked\n");
-            Obj2 -> lap = 1;
             Obj2 -> selflw = 4;
             // Obj->potato_button = 1;
         }

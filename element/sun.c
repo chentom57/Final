@@ -8,7 +8,7 @@ Elements *New_Sun(int label, int x, int y, int v)
     Sun *pDerivedObj = (Sun *)malloc(sizeof(Sun));
     Elements *pObj = New_Elements(label);
     // setting derived object member
-    pDerivedObj->img = al_load_bitmap("assets/image/sun2.png");
+    pDerivedObj->img = al_load_bitmap("assets/image/sun.png");
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj->img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj->img);
     pDerivedObj->x = x;
@@ -31,8 +31,9 @@ Elements *New_Sun(int label, int x, int y, int v)
 }
 void Sun_update(Elements *self)
 {
+    
     Sun *Obj = ((Sun *)(self->pDerivedObj));
-    _Sun_update_position(self, 0, -(Obj->v));
+    _Sun_update_position(self,0 , -(Obj->v));
 }
 void _Sun_update_position(Elements *self, int dx, int dy)
 {

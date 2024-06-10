@@ -3,11 +3,18 @@
 #include "element.h"
 #include "../scene/gamescene.h" // for element label
 #include "../shapes/Shape.h"
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_image.h>
+#include "../shapes/Shape.h"
+#include "../algif5/src/algif.h"
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
-#include <stdbool.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_acodec.h>
+#include <stdbool.h>
+#include "../global.h"
+#include "../shapes/Rectangle.h"
 /*
    [Back object]
 */
@@ -15,11 +22,12 @@ typedef struct _Back
 {
     int back;
     int x, y; // the position of image
-    int width,heigh;    // the width 
+    int width,height;    // the width 
     int in;
     Shape *hitbox; // the hitbox of object
     ALLEGRO_COLOR color;
     ALLEGRO_FONT *font;
+    ALLEGRO_BITMAP *img;
 } Back;
 
 Elements *New_Back(int label);

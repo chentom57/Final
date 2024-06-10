@@ -23,12 +23,12 @@ typedef struct _Sunflw
     int width, height;              // the width and height of image
     bool dir;                       // true: face to right, false: face to left
     int state;                      // the state of sunflw
+     int ptime;
     ALGIF_ANIMATION *gif_status[3]; // gif for each state. 0: stop, 1: move, 2:attack
     ALLEGRO_SAMPLE_INSTANCE *atk_Sound;
     int anime;      // counting the time of animation
     int anime_time; // indicate how long the animation
     bool new_proj;
-    int ptime;
     Shape *hitbox; // the hitbox of object
 } Sunflw;
 Elements *New_Sunflw(int label, int x, int y);

@@ -38,13 +38,6 @@ void map_update(Elements *self)
 void map_interact(Elements *self, Elements *tar)
 {
    //map *Obj = ((map*)(self->pDerivedObj));
-     if(tar->label==Ball2_L){
-        Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
-         if(Obj2->y>578-Obj2->ranges||Obj2->y<Obj2->ranges-20||Obj2->x>450)
-            Obj2->lap=1;
-        else
-            Obj2->lap=0; 
-     }
 
 }
 void map_draw(Elements *self)

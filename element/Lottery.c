@@ -17,6 +17,7 @@ Elements *New_Lottery(int label)
     pDerivedObj->y =520;
     pDerivedObj->done = 0;
     pDerivedObj->output = 0;
+    pDerivedObj->sound_played=0;
     pDerivedObj->in = -1;
     pDerivedObj->color = al_map_rgb(255, 255, 50);
     pDerivedObj->hitbox = New_Circle(pDerivedObj->x + pDerivedObj->width / 2,
@@ -24,6 +25,15 @@ Elements *New_Lottery(int label)
                                      pDerivedObj->width/2);
     pDerivedObj->font=al_load_ttf_font("assets/font/pirulen.ttf", 18, 0);
     pDerivedObj->font2=al_load_ttf_font("assets/font/pirulen.ttf", 36, 0);
+     ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/lottery_win.mp3");
+     pDerivedObj->win_Sound = al_create_sample_instance(sample);
+    ALLEGRO_SAMPLE *sample2 = al_load_sample("assets/sound/lottery_failed.mp3");
+     pDerivedObj->lose_Sound = al_create_sample_instance(sample2);
+     
+    al_set_sample_instance_playmode(pDerivedObj->win_Sound, ALLEGRO_PLAYMODE_ONCE);
+    al_attach_sample_instance_to_mixer(pDerivedObj->win_Sound, al_get_default_mixer());
+     al_set_sample_instance_playmode(pDerivedObj->lose_Sound, ALLEGRO_PLAYMODE_ONCE);
+    al_attach_sample_instance_to_mixer(pDerivedObj->lose_Sound, al_get_default_mixer());
     start_time_lt=time(NULL);
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = Ball2_L;
@@ -67,8 +77,11 @@ void Lottery_interact(Elements *self, Elements *tar)
             if(Obj->output>3){
               Gold+=Obj->output*100;
             }
-            else
+            else{
               Gold-=Obj->output*100;
+              if(Gold<0)
+                Gold=0;
+            }
             start_time_dn=time(NULL);       
 
        }
@@ -91,10 +104,18 @@ void Lottery_draw(Elements *self)
         if(Obj->output>3){
             Obj->color=al_map_rgb(0,255,0);
            al_draw_text(Obj->font, Obj->color, Obj->x+Obj->width/2, Obj->y+Obj->height/4+50, ALLEGRO_ALIGN_CENTRE, "lucky");
+           if(Obj->sound_played==0){
+            al_play_sample_instance(Obj->win_Sound);
+            Obj->sound_played=1;
+            }
         }
         else{
             Obj->color=al_map_rgb(255,0,0);
             al_draw_text(Obj->font, Obj->color, Obj->x+Obj->width/2, Obj->y+Obj->height/4+50, ALLEGRO_ALIGN_CENTRE, "failed");
+            if(Obj->sound_played==0){
+            al_play_sample_instance(Obj->lose_Sound);
+            Obj->sound_played=1;
+            }
         }
     }
     al_draw_text(Obj->font2, Obj->color, Obj->x+Obj->width/2, Obj->y+Obj->height/4, ALLEGRO_ALIGN_CENTRE,Obj->text);
@@ -103,6 +124,8 @@ void Lottery_draw(Elements *self)
 void Lottery_destory(Elements *self)
 {
     Lottery *Obj = ((Lottery *)(self->pDerivedObj));
+     al_destroy_sample_instance(Obj->win_Sound);
+      al_destroy_sample_instance(Obj->lose_Sound);
     free(Obj->hitbox);
     free(Obj);
     free(self);

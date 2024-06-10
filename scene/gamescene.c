@@ -17,9 +17,11 @@ Scene *New_GameScene(int label)
     pObj->pDerivedObj = pDerivedObj;
     start_time_gs=time(NULL);
     Boss_created=0;
-    Gold=200;
+    Gold=500;
     Score=0;
     memset(placed,0,60*4);
+   
+    pDerivedObj->ptime = 1;
     pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 24, 0);
      pDerivedObj->background_gs =al_load_bitmap("assets/image/gamescene_back.png");
     pDerivedObj->font2 = al_load_ttf_font("assets/font/pirulen.ttf", 36, 0);
@@ -54,7 +56,7 @@ void game_scene_update(Scene *self)
     current_time_gs=time(NULL);
     game_scene_lottery(self);
     game_scene_zombie(self);
-    if(current_time_gs-start_time_gs>99){
+    if(current_time_gs - start_time_gs>99){
                     self->scene_end = true;
                     window = 3;
             
@@ -150,31 +152,19 @@ void game_scene_draw(Scene *self)
         ele->Draw(ele);
     }
 }
-void game_scene_destroy(Scene *self)
-{
-    GameScene *Obj = ((GameScene *)(self->pDerivedObj));
-    //ALLEGRO_BITMAP *background = Obj->background;
-    //al_destroy_bitmap(background);
-    ElementVec allEle = _Get_all_elements(self);
-    for (int i = 0; i < allEle.len; i++)
-    {
-        Elements *ele = allEle.arr[i];
-        ele->Destroy(ele);
-    }
-    free(Obj);
-    free(self);
-}
+
 //Create zombie schedule
 void game_scene_zombie(Scene *self){
-     
+    
      if((current_time_gs-start_time_gs)%3==1){
         zombie1_created=0;                     //reset the bool zombie been created
      }
-     if(((current_time_gs-start_time_gs)%3==0)&&(zombie1_created==0)){
-        // _Register_elements(self, New_Zombie1(Zombie1_L));
+     else if(((current_time_gs-start_time_gs)%3==0)&&(zombie1_created==0)){
+        //  _Register_elements(self, New_Zombie1(Zombie1_L));
         zombie1_created=1;
      }
-    //0607 Bruce add :boss
+    
+    // 0607 Bruce add :boss
      if((start_time_gs-start_time_gs)%3==1){
         Boss_created=0;                     //reset the bool zombie been created
      }
@@ -192,4 +182,18 @@ void game_scene_lottery(Scene *self){
         Obj->lottery_created=1;
          _Register_elements(self, New_Lottery(Lottery_L));                   
      }
+}
+void game_scene_destroy(Scene *self)
+{
+    GameScene *Obj = ((GameScene *)(self->pDerivedObj));
+    //ALLEGRO_BITMAP *background = Obj->background;
+    //al_destroy_bitmap(background);
+    ElementVec allEle = _Get_all_elements(self);
+    for (int i = 0; i < allEle.len; i++)
+    {
+        Elements *ele = allEle.arr[i];
+        ele->Destroy(ele);
+    }
+    free(Obj);
+    free(self);
 }

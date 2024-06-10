@@ -18,6 +18,13 @@ Elements *New_potato(int label, int x, int y)
     Elements *pObj = New_Elements(label);
     // setting derived object member
     // load potato images
+    // char state_string[3][10] = {"stop", "move", "attack"};
+    // for (int i = 0; i < 3; i++)
+    // {
+    //     char buffer[50];
+    //     sprintf(buffer, "assets/image/chara_%s.gif", state_string[i]);
+    //     pDerivedObj->gif_status[i] = algif_new_gif(buffer, -1);
+    // }
     char state_string[3][10] = {"stop", "move", "attack"};
     for (int i = 0; i < 3; i++)
     {
@@ -25,7 +32,7 @@ Elements *New_potato(int label, int x, int y)
         sprintf(buffer, "assets/image/chara3_%s.gif", state_string[i]);
         pDerivedObj->gif_status[i] = algif_new_gif(buffer, -1);
     }
-     pDerivedObj->img = al_load_bitmap("assets/image/potato.png");
+    pDerivedObj->img = al_load_bitmap("assets/image/potato.png");
     // load effective sound
     // ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/atk_sound.mp3");
     // pDerivedObj->atk_Sound = al_create_sample_instance(sample);
@@ -68,7 +75,7 @@ void potato_update(Elements *self)
     
     // use the idea of finite state machine to deal with different state
     potato *chara = ((potato *)(self->pDerivedObj));
-    printf("potato = %d %d\n", chara -> x, chara -> y);
+    // printf("potato = %d %d\n", chara -> x, chara -> y);
     
     // if(key_state[ALLEGRO_KEY_SPACE]){
     //     printf("spcae is pressed");
@@ -208,18 +215,13 @@ void potato_draw(Elements *self)
     
     // with the state, draw corresponding image
     potato *Obj = ((potato *)(self->pDerivedObj));
-    // al_draw_bitmap(Obj->img,Obj->x,Obj->y,0);
     al_draw_rectangle(Obj->x,Obj->y,Obj->x + 100,Obj->y + 101, al_map_rgb(255, 255, 0), 3);
     ALLEGRO_BITMAP *frame = algif_get_bitmap(Obj->gif_status[Obj->state], al_get_time());
     if(frame)
     {
         al_draw_bitmap(frame, Obj->x, Obj->y, ((Obj->dir) ? ALLEGRO_FLIP_HORIZONTAL : 0));
     }
-    if (Obj->state == ATK && Obj->gif_status[Obj->state]->display_index == 2)
-    {
-        al_play_sample_instance(Obj->atk_Sound);
-    }
-
+    
 }
 
 void potato_destory(Elements *self)

@@ -1,3 +1,4 @@
+
 #include "charater.h"
 #include "sunflw.h"
 #include "sun.h"
@@ -32,17 +33,18 @@ Elements *New_Sunflw(int label, int x, int y)
     al_attach_sample_instance_to_mixer(pDerivedObj->atk_Sound, al_get_default_mixer());
 
     // initial the geometric information of sunflw
-    pDerivedObj->width = pDerivedObj->gif_status[1]->width;
-    pDerivedObj->height = pDerivedObj->gif_status[1]->height;
+    pDerivedObj->width = pDerivedObj->gif_status[0]->width;
+    pDerivedObj->height = pDerivedObj->gif_status[0]->height;
     pDerivedObj->x = x;
     pDerivedObj->y = y;
+    pDerivedObj->ptime = 1;
+    //pDerivedObj->ptime;
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
                                         pDerivedObj->y,
                                         pDerivedObj->x + 100,
                                         pDerivedObj->y + 100);
     pDerivedObj->dir = true; // true: face to right, false: face to left
     // initial the animation component
-    pDerivedObj->ptime = 1;
     pDerivedObj->state = STOP;
     pDerivedObj->new_proj = false;
     pObj->pDerivedObj = pDerivedObj;
@@ -63,8 +65,9 @@ void Sunflw_placing(int x, int y){
 }
 void Sunflw_update(Elements *self)
 {
+    
     // use the idea of finite state machine to deal with different state
-    Sunflw *chara = ((Sunflw *)(self->pDerivedObj));
+    
     // if(key_state[ALLEGRO_KEY_SPACE]){
     //     printf("spcae is pressed");
     //     //New_Sunflw(Sunflw_L, 1, 1);
@@ -106,15 +109,14 @@ void Sunflw_update(Elements *self)
     //         chara->new_proj = true;
     //     }
     //     chara->state = ATK;
-    chara->ptime += 1;
+    Sunflw *chara = ((Sunflw *)(self->pDerivedObj));
+    chara->ptime +=1;
     int second = chara->ptime/60 + 1;
+    printf("%d\n", second%15);
     if (chara->state == STOP)
     {
-        
-        
-        printf("second = %d\n", second);
         // chara->state = ATK;
-        if (second%5 == 0)
+        if (second%15 == 14)
         {
             chara->state = ATK;
         }
@@ -137,23 +139,17 @@ void Sunflw_update(Elements *self)
             if (chara->dir)
             {
                 pro = New_Sun(Sun_L,
-                                     chara->x -20,
-                                     chara->y - 10,
+                                     chara->x + chara->width - 100,
+                                     chara->y + 10,
                                      1);
+                _Register_elements(scene, pro);
+                chara->new_proj = true;
             }
-            // else
-            // {
-            //     pro = New_Sun(Sun_L,
-            //                          chara->x + 100,
-            //                          chara->y + 100,
-            //                          -1);
-            // }
-            _Register_elements(scene, pro);
-            chara->new_proj = true;
+            
+            
         }
         // chara->state = ATK;
     }
-    
 }
 void Sunflw_draw(Elements *self)
 {
@@ -171,29 +167,6 @@ void Sunflw_draw(Elements *self)
         al_play_sample_instance(chara->atk_Sound);
     }
 }
-
-
-void _Sunflw_update_position(Elements *self, int dx, int dy)
-{
-    Sunflw *chara = ((Sunflw *)(self->pDerivedObj));
-    chara->x += dx;
-    chara->y += dy;
-    Shape *hitbox = chara->hitbox;
-    hitbox->update_center_x(hitbox, dx);
-    hitbox->update_center_y(hitbox, dy);
-}
-
-void Sunflw_interact(Elements *self, Elements *tar) {
-
-    Sunflw *Obj = ((Sunflw*)(self->pDerivedObj));
-     if(tar->label==Ball2_L){
-        Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
-        if(Obj2->placed_range->overlap(Obj2->placed_range, Obj->hitbox))
-            Obj2->lap=1;
-        else
-            Obj2->lap=0; 
-     }
-}
 void Sunflw_destory(Elements *self)
 {
     Sunflw *Obj = ((Sunflw *)(self->pDerivedObj));
@@ -204,3 +177,18 @@ void Sunflw_destory(Elements *self)
     free(Obj);
     free(self);
 }
+
+void _Sunflw_update_position(Elements *self, int dx, int dy)
+{
+    Sunflw *chara = ((Sunflw *)(self->pDerivedObj));
+    chara->x += dx;
+    chara->y += dy;
+    Shape *hitbox = chara->hitbox;
+    hitbox->update_center_x(hitbox, dx);
+    hitbox->update_center_y(hitbox, dy);
+}
+void Sunflw_interact(Elements *self, Elements *tar) {
+
+
+}
+
