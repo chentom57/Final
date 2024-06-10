@@ -22,6 +22,7 @@ Scene *New_GameScene(int label)
     memset(placed,0,60*4);
     pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 24, 0);
      pDerivedObj->background_gs =al_load_bitmap("assets/image/gamescene_back.png");
+    pDerivedObj->sun_t =al_load_bitmap("assets/image/sun_t.png");
     pDerivedObj->font2 = al_load_ttf_font("assets/font/pirulen.ttf", 36, 0);
     pDerivedObj->lottery_created=0;
     // Load sound
@@ -140,10 +141,11 @@ void game_scene_draw(Scene *self)
     sprintf(Gold_text, "%d",Gold);
     sprintf(score_text, "%d",Score);
     //al_draw_bitmap(gs->background, 0, 0, 0);
-    al_draw_text(gs->font, al_map_rgb(255,255, 255),50,600, ALLEGRO_ALIGN_CENTRE,"Gold:");
-     al_draw_text(gs->font, al_map_rgb(255, 255, 255),150,600, ALLEGRO_ALIGN_CENTRE,Gold_text );
-     al_draw_text(gs->font, al_map_rgb(255,255,255),300,600, ALLEGRO_ALIGN_CENTRE,"Score:");
-     al_draw_text(gs->font, al_map_rgb(255,255,255),400,600, ALLEGRO_ALIGN_CENTRE,score_text );
+    //al_draw_text(gs->font, al_map_rgb(255,255, 255),50,600, ALLEGRO_ALIGN_CENTRE,"Gold:");
+     al_draw_bitmap(gs->sun_t, 20,600, 0);
+     al_draw_text(gs->font, al_map_rgb(255, 255, 255),150,620, ALLEGRO_ALIGN_CENTRE,Gold_text );
+     al_draw_text(gs->font, al_map_rgb(255,255,255),300,620, ALLEGRO_ALIGN_CENTRE,"Score:");
+     al_draw_text(gs->font, al_map_rgb(255,255,255),400,620, ALLEGRO_ALIGN_CENTRE,score_text );
     al_play_sample_instance(gs->gs_Sound);
     ElementVec allEle = _Get_all_elements(self);
     for (int i = 0; i < allEle.len; i++)
@@ -157,6 +159,7 @@ void game_scene_destroy(Scene *self)
     GameScene *Obj = ((GameScene *)(self->pDerivedObj));
     //ALLEGRO_BITMAP *background = Obj->background;
     al_destroy_bitmap(Obj->background_gs);
+      al_destroy_bitmap(Obj->sun_t);
      al_destroy_sample(Obj->song);
      al_destroy_sample_instance(Obj->gs_Sound);
     ElementVec allEle = _Get_all_elements(self);
