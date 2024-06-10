@@ -50,10 +50,7 @@ void sunflw_button_interact(Elements *self, Elements *tar)
 void sunflw_button_draw(Elements *self)
 {   
     sunflw_button *Obj = ((sunflw_button *)(self->pDerivedObj));
-    if(Gold>=50)
-        al_draw_bitmap(Obj->img, Obj->x, Obj->y,0);
-    else
-        al_draw_bitmap(Obj->img2, Obj->x, Obj->y,0);
+    al_draw_bitmap(Obj->img, Obj->x, Obj->y,0);
     // if(Gold >= 50){
     //     al_draw_bitmap(Obj->img, Obj->x - 50, Obj->y - 35,0);
     // }
@@ -69,8 +66,6 @@ void sunflw_button_draw(Elements *self)
 void sunflw_button_destory(Elements *self)
 {
     sunflw_button *Obj = ((sunflw_button *)(self->pDerivedObj));
-    al_destroy_bitmap(Obj->img);
-    al_destroy_bitmap(Obj->img2);
     free(Obj->hitbox);
     free(Obj);
     free(self);

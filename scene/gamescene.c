@@ -26,11 +26,9 @@ Scene *New_GameScene(int label)
     pDerivedObj->font2 = al_load_ttf_font("assets/font/pirulen.ttf", 36, 0);
     pDerivedObj->lottery_created=0;
     // Load sound
-    pDerivedObj->song = al_load_sample("assets/sound/gs.mp3");
+    pDerivedObj->song = al_load_sample("assets/sound/menu.mp3");
     al_reserve_samples(24);
-    pDerivedObj->gs_Sound= al_create_sample_instance(pDerivedObj->song);
-    al_set_sample_instance_playmode(pDerivedObj->gs_Sound, ALLEGRO_PLAYMODE_LOOP);
-    al_attach_sample_instance_to_mixer(pDerivedObj->gs_Sound, al_get_default_mixer());
+    pDerivedObj->sample_instance= al_create_sample_instance(pDerivedObj->song);
     // register element
     // _Register_elements(pObj, New_Character(Character_L));
     _Register_elements(pObj, New_Back(Back_L));
@@ -39,6 +37,7 @@ Scene *New_GameScene(int label)
     _Register_elements(pObj, New_sunflw_button(SunflwB_L));
     _Register_elements(pObj, New_bomb_button(BombB_L));
     _Register_elements(pObj, New_potato_button(PotatoB_L));
+    _Register_elements(pObj, New_Ball(Ball_L));
     _Register_elements(pObj, New_Ball2(Ball2_L));
     _Register_elements(pObj, New_map(Map_L));
     
@@ -57,7 +56,7 @@ void game_scene_update(Scene *self)
     current_time_gs = al_get_time();
     game_scene_lottery(self);
     game_scene_zombie(self);
-    if(current_time_gs-start_time_gs>50){
+    if(current_time_gs-start_time_gs>9999){
                     self->scene_end = true;
                     window = 3;
             
@@ -146,7 +145,6 @@ void game_scene_draw(Scene *self)
      al_draw_text(gs->font, al_map_rgb(255, 255, 255),150,600, ALLEGRO_ALIGN_CENTRE,Gold_text );
      al_draw_text(gs->font, al_map_rgb(255,255,255),300,600, ALLEGRO_ALIGN_CENTRE,"Score:");
      al_draw_text(gs->font, al_map_rgb(255,255,255),400,600, ALLEGRO_ALIGN_CENTRE,score_text );
-    al_play_sample_instance(gs->gs_Sound);
     ElementVec allEle = _Get_all_elements(self);
     for (int i = 0; i < allEle.len; i++)
     {
@@ -158,9 +156,7 @@ void game_scene_destroy(Scene *self)
 {
     GameScene *Obj = ((GameScene *)(self->pDerivedObj));
     //ALLEGRO_BITMAP *background = Obj->background;
-    al_destroy_bitmap(Obj->background_gs);
-     al_destroy_sample(Obj->song);
-     al_destroy_sample_instance(Obj->gs_Sound);
+    //al_destroy_bitmap(background);
     ElementVec allEle = _Get_all_elements(self);
     for (int i = 0; i < allEle.len; i++)
     {
@@ -173,7 +169,7 @@ void game_scene_destroy(Scene *self)
 //Create zombie schedule
 void game_scene_zombie(Scene *self){
      
-     if((current_time_gs-start_time_gs)%3==1){
+     if((current_time_gs-start_time_gs)%6==1){
         zombie1_created=0;                     //reset the bool zombie been created
      }
      if(((current_time_gs-start_time_gs)%3==0)&&(zombie1_created==0)){

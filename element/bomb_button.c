@@ -51,10 +51,7 @@ void bomb_button_interact(Elements *self, Elements *tar)
 void bomb_button_draw(Elements *self)
 {
     bomb_button *Obj = ((bomb_button *)(self->pDerivedObj));
-    if(Gold>=50)
-        al_draw_bitmap(Obj->img, Obj->x, Obj->y,0);
-    else
-        al_draw_bitmap(Obj->img2, Obj->x, Obj->y,0);
+    al_draw_bitmap(Obj->img, Obj->x, Obj->y,0);
     // bomb_button *Obj = ((bomb_button *)(self->pDerivedObj));
     // al_draw_rectangle(Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,Obj->x+(Obj->width)/2,Obj->y+(Obj->heigh)/2,Obj->color,(Obj->width)/20);
     // al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6-10, ALLEGRO_ALIGN_CENTRE, "Bomb");
@@ -63,8 +60,6 @@ void bomb_button_draw(Elements *self)
 void bomb_button_destory(Elements *self)
 {
     bomb_button *Obj = ((bomb_button *)(self->pDerivedObj));
-     al_destroy_bitmap(Obj->img);
-    al_destroy_bitmap(Obj->img2);
     free(Obj->hitbox);
     free(Obj);
     free(self);

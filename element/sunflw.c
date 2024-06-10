@@ -4,6 +4,7 @@
 #include "../scene/sceneManager.h"
 #include "projectile.h"
 #include "../shapes/Rectangle.h"
+#include "../shapes/Circle.h"
 #include "../algif5/src/algif.h"
 #include <stdio.h>
 #include <stdbool.h>
@@ -36,11 +37,11 @@ Elements *New_Sunflw(int label, int x, int y)
     pDerivedObj->height = pDerivedObj->gif_status[0]->height;
     pDerivedObj->x = x;
     pDerivedObj->y = y;
+    pDerivedObj->hp = 250;
     //pDerivedObj->ptime;
-    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
-                                        pDerivedObj->y,
-                                        pDerivedObj->x + 100,
-                                        pDerivedObj->y + 100);
+    pDerivedObj->hitbox = New_Circle(pDerivedObj->x + 60,
+                                        pDerivedObj->y + 60,
+                                        10);
     pDerivedObj->dir = true; // true: face to right, false: face to left
     // initial the animation component
     pDerivedObj->state = ATK;
@@ -73,7 +74,12 @@ void Sunflw_update(Elements *self)
     // if(mouse_state[2] == 1){
     //     printf("mouse right clicked");
     // }
-    
+    //0610 hp system
+    if(chara->hp <= 0){                
+        self->dele=true;
+        placed[chara->x / 100][chara->y /100]=0;
+    }
+    // 0610 end
     if (chara->gif_status[chara->state]->done)
         {
             chara->state = STOP;
@@ -192,7 +198,8 @@ void Sunflw_draw(Elements *self)
     // with the state, draw corresponding image
     Sunflw *chara = ((Sunflw *)(self->pDerivedObj));
     
-    al_draw_rectangle(chara->x,chara->y,chara->x + 100,chara->y + 100, al_map_rgb(255, 255, 255), 5);//draw hitbox 
+    //al_draw_rectangle(chara->x,chara->y,chara->x + 100,chara->y + 100, al_map_rgb(100, 100, 255), 10);//draw hitbox 
+    al_draw_circle(chara->x + 60,chara->y + 60,10, al_map_rgb(100, 100, 255), 10);
     ALLEGRO_BITMAP *frame = algif_get_bitmap(chara->gif_status[chara->state], al_get_time());
     if (frame)
     {

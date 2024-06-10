@@ -44,6 +44,7 @@ Elements *New_potato(int label, int x, int y)
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->x = x;
     pDerivedObj->y = y;
+    pDerivedObj->hp = 2000;
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
                                         pDerivedObj->y,
                                         pDerivedObj->x + 100,
@@ -75,7 +76,13 @@ void potato_update(Elements *self)
     
     // use the idea of finite state machine to deal with different state
     potato *chara = ((potato *)(self->pDerivedObj));
-    printf("potato = %d %d\n", chara -> x, chara -> y);
+    //0610 hp system
+    if(chara->hp <= 0){                
+        self->dele=true;
+        placed[chara->x / 100][chara->y /100]=0;
+    }
+
+    //printf("potato = %d %d\n", chara -> x, chara -> y);
     
     // if(key_state[ALLEGRO_KEY_SPACE]){
     //     printf("spcae is pressed");

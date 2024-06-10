@@ -14,12 +14,10 @@ typedef struct _Ball2
     int in;
     int state2;
     int selflw;
+    int ranges;
     int block_x,block_y;
     Shape *hitbox; // the hitbox of object
     ALLEGRO_COLOR color;
-    ALLEGRO_BITMAP *img_r;
-    ALLEGRO_BITMAP *img_g;
-    ALLEGRO_BITMAP *img_y;
 } Ball2;
 
 Elements *New_Ball2(int label);

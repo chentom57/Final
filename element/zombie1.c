@@ -11,6 +11,7 @@ int a = 1;
 int ranflag = 1;
 #include "potato.h"
 #include "flower.h"
+#include "sunflw.h"
 /*
    [Zombie1 function]
 */
@@ -46,7 +47,7 @@ Elements *New_Zombie1(int label)
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->gameover = 0;
     pDerivedObj->x = 800;
-    pDerivedObj->hp=50;
+    pDerivedObj->hp=8;
     //printf("rand: %f\n", ran_num);
     pDerivedObj->y =  ran_num * 100 ;
     pDerivedObj->v = 1; //速度
@@ -58,6 +59,7 @@ Elements *New_Zombie1(int label)
     pObj->inter_obj[pObj->inter_len++] = Projectile_L;
     pObj->inter_obj[pObj->inter_len++] = Potato_L;
     pObj->inter_obj[pObj->inter_len++] = Flower_L;
+    pObj->inter_obj[pObj->inter_len++] = Sunflw_L;
     
    // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
@@ -81,6 +83,7 @@ void Zombie1_update(Elements *self)
     _Zombie1_update_position(self, Obj->v, 0);
      if(placed[(int)(Obj->x + 100)/ 100][(int)Obj->y / 100] == 1){
         Obj->state = ATK;
+        
     }
     else{
         Obj->state = MOVE;
@@ -135,7 +138,7 @@ void Zombie1_interact(Elements *self, Elements *tar)
         if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
         {
             //Obj->hp--;
-            printf("Hit! hp: %d\n", Obj->hp);
+            //printf("Hit! hp: %d\n", Obj->hp);
                                     
         }
     }
@@ -143,13 +146,35 @@ void Zombie1_interact(Elements *self, Elements *tar)
     else if (tar->label == Flower_L)
     {
         Flower *Obj2 = ((Flower *)(tar->pDerivedObj));
-        if (Obj->hitbox->overlap(Obj2->hitbox3, Obj->hitbox))
+        if (Obj->hitbox->overlap(Obj2->hitbox3, Obj->hitbox) )
         {
-            Obj2->hp--;
-            printf("flower hited! hp: %d\n", Obj2->hp);
+            Obj2->hp--; //hp record in the one who attack
+            //printf("flower hited! hp: %d\n", Obj2->hp);
                                     
         }
     }
+
+    else if (tar->label == Sunflw_L)
+    {
+        Sunflw *Obj2 = ((Sunflw *)(tar->pDerivedObj));
+        if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox)  )
+        {
+            Obj2->hp--; //hp record in the one who attack
+            //printf("sunflower hited! hp: %d\n", Obj2->hp);
+                                    
+        }
+    }
+    else if (tar->label == Potato_L)
+    {
+        potato *Obj2 = ((potato *)(tar->pDerivedObj));
+        if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox)  )
+        {
+            Obj2->hp--; //hp record in the one who attack
+            //printf("sunflower hited! hp: %d\n", Obj2->hp);
+                                    
+        }
+    }
+
 
     
     // else if (tar->label == Potato_L)

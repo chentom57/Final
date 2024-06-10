@@ -38,6 +38,7 @@ typedef struct _potato
     ALLEGRO_COLOR color;
     ALLEGRO_FONT *font;
     Shape *hitbox; // the hitbox of object
+    int hp;
 } potato;
 Elements *New_potato(int label, int x, int y);
 void potato_placing(int x, int y);

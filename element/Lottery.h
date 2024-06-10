@@ -24,8 +24,6 @@ typedef struct _Lottery
     ALLEGRO_COLOR color;
     ALLEGRO_FONT *font;
     ALLEGRO_FONT *font2;
-    ALLEGRO_SAMPLE *sample1;
-    ALLEGRO_SAMPLE *sample2;
      ALLEGRO_SAMPLE_INSTANCE *win_Sound;
       ALLEGRO_SAMPLE_INSTANCE *lose_Sound;
 } Lottery;
