@@ -19,6 +19,7 @@ Scene *New_endgame(int label)
     pDerivedObj->background_e = al_load_bitmap("assets/image/victory_back.png");
     pDerivedObj->img_e = al_load_bitmap("assets/image/victory_t.png");
     pDerivedObj->img_ee = al_load_bitmap("assets/image/vvc.png");
+    pDerivedObj->coin_tile=al_load_bitmap("assets/image/coin_tile.png");
     pDerivedObj->sample_instance_e = al_create_sample_instance(pDerivedObj->song_e);
     pDerivedObj->title_x_e = 250;
     pDerivedObj->title_y_e = -20;
@@ -32,7 +33,7 @@ Scene *New_endgame(int label)
     // setting derived object function
      _Register_elements(pObj, New_Back_gg(Back_gg_L));
     // _Register_elements(pObj, New_Resume(Resume_gg_L));
-    _Register_elements(pObj, New_Ball(MOUSE_gg_L));
+    _Register_elements(pObj, New_Ball2(MOUSE_gg_L));
     pObj->Update = endgame_update;
     pObj->Draw = endgame_draw;
     pObj->Destroy = endgame_destroy;
@@ -100,7 +101,8 @@ void endgame_draw(Scene *self)
     al_draw_bitmap(Obj->background_e, 0, 0, 0);
     //al_draw_bitmap(Obj->img_ee, Obj->title_x_e+70,190,0);
     al_draw_bitmap(Obj->img_e, Obj->title_x_e-40,Obj->title_y_e+dyy,0);
-    al_draw_text(Obj->font_e, al_map_rgb(0,0,0),450,250, ALLEGRO_ALIGN_CENTRE,"Score:");
+      al_draw_bitmap(Obj->coin_tile,400,250,0);
+    //al_draw_text(Obj->font_e, al_map_rgb(0,0,0),450,250, ALLEGRO_ALIGN_CENTRE,"Score:");
      al_draw_text(Obj->font_e, al_map_rgb(0,0,0),450,300, ALLEGRO_ALIGN_CENTRE,score_text );
     al_play_sample_instance(Obj->sample_instance_e);
     ElementVec allEle = _Get_all_elements(self);
@@ -114,6 +116,7 @@ void endgame_destroy(Scene *self)
 {
     Victory=0;
     endgame *Obj = ((endgame *)(self->pDerivedObj));
+    al_destroy_bitmap(Obj->coin_tile);
     al_destroy_font(Obj->font_e);
     al_destroy_sample(Obj->song_e);
     al_destroy_sample_instance(Obj->sample_instance_e);

@@ -17,6 +17,7 @@ Elements *New_Sunflw(int label, int x, int y)
 {
     Sunflw *pDerivedObj = (Sunflw *)malloc(sizeof(Sunflw));
     Elements *pObj = New_Elements(label);
+     pDerivedObj->hp = 250;
     // setting derived object member
     // load sunflw images
     char state_string[3][10] = {"stop", "move", "attack"};
@@ -74,12 +75,19 @@ void Sunflw_update(Elements *self)
     // if(mouse_state[2] == 1){
     //     printf("mouse right clicked");
     // }
+<<<<<<< HEAD
     //0610 hp system
     if(chara->hp <= 0){                
         self->dele=true;
         placed[chara->x / 100][chara->y /100]=0;
     }
     // 0610 end
+=======
+     if(chara->hp <= 0){                
+        self->dele=true;
+        placed[chara->x / 100][chara->y /100]=0;
+    }
+>>>>>>> a4d4daca7c8813e2266b271432af1f3e5316f78c
     if (chara->gif_status[chara->state]->done)
         {
             chara->state = STOP;
@@ -198,8 +206,12 @@ void Sunflw_draw(Elements *self)
     // with the state, draw corresponding image
     Sunflw *chara = ((Sunflw *)(self->pDerivedObj));
     
+<<<<<<< HEAD
     //al_draw_rectangle(chara->x,chara->y,chara->x + 100,chara->y + 100, al_map_rgb(100, 100, 255), 10);//draw hitbox 
     al_draw_circle(chara->x + 60,chara->y + 60,10, al_map_rgb(100, 100, 255), 10);
+=======
+     al_draw_circle(chara->x + 60,chara->y + 60,10, al_map_rgb(100, 100, 255), 10);//draw hitbox 
+>>>>>>> a4d4daca7c8813e2266b271432af1f3e5316f78c
     ALLEGRO_BITMAP *frame = algif_get_bitmap(chara->gif_status[chara->state], al_get_time());
     if (frame)
     {

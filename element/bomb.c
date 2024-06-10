@@ -240,7 +240,7 @@ void bomb_interact(Elements *self, Elements *tar) {
         if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
         {
             printf("Zombie1: ahh!");
-            Obj2-> hp -= 1;
+            Obj2-> hp -= 3;
         }
         placed[Obj->x/100][Obj->y/100] = 0;
         self->dele=true;

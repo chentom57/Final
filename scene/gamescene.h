@@ -49,28 +49,45 @@ typedef enum EleType
   
     Sun_L,
     Sunflw_L,
-    Zombie1_L,
     Bomb_L,
     Potato_L,
     PotatoB_L,
 
+    Zombie1_L,
+    Boss_L,
     SunflwB_L,
     Lottery_L,
+<<<<<<< HEAD
     Ball_L,
     Ball2_L,
     Boss_L,
     Zomboni_L // 0610
+=======
+    Ball2_L
+  
+>>>>>>> a4d4daca7c8813e2266b271432af1f3e5316f78c
     
 } EleType;
 typedef struct _GameScene
 {
     int lottery_created;
     //ALLEGRO_BITMAP *background;
+      int end_time;
     ALLEGRO_FONT *font;
     ALLEGRO_FONT *font2;
     ALLEGRO_SAMPLE *song;
     ALLEGRO_BITMAP *background_gs;
+<<<<<<< HEAD
     ALLEGRO_SAMPLE_INSTANCE *sample_instance;
+=======
+     ALLEGRO_BITMAP *timer_bar;
+      ALLEGRO_BITMAP *time_spot;
+    ALLEGRO_BITMAP *sun_t;
+     ALLEGRO_BITMAP *coin;
+     ALLEGRO_BITMAP *Gold_score;
+      ALLEGRO_BITMAP *vvc;
+    ALLEGRO_SAMPLE_INSTANCE *gs_Sound;
+>>>>>>> a4d4daca7c8813e2266b271432af1f3e5316f78c
     char text[100];
 } GameScene;
 Scene *New_GameScene(int label);

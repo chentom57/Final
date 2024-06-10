@@ -41,7 +41,7 @@ void bomb_button_interact(Elements *self, Elements *tar)
     if (tar->label == Ball2_L)
     {
         Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
-        if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]&&Gold>=50){
+        if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]&&Gold>=150){
             printf("flwoer button is clicked\n");
             Obj2 -> selflw = 3;
             // Obj->bomb_button = 1;
@@ -51,7 +51,14 @@ void bomb_button_interact(Elements *self, Elements *tar)
 void bomb_button_draw(Elements *self)
 {
     bomb_button *Obj = ((bomb_button *)(self->pDerivedObj));
+<<<<<<< HEAD
     al_draw_bitmap(Obj->img, Obj->x, Obj->y,0);
+=======
+    if(Gold>=150)
+        al_draw_bitmap(Obj->img, Obj->x, Obj->y,0);
+    else
+        al_draw_bitmap(Obj->img2, Obj->x, Obj->y,0);
+>>>>>>> a4d4daca7c8813e2266b271432af1f3e5316f78c
     // bomb_button *Obj = ((bomb_button *)(self->pDerivedObj));
     // al_draw_rectangle(Obj->x-(Obj->width)/2,Obj->y-(Obj->heigh)/2,Obj->x+(Obj->width)/2,Obj->y+(Obj->heigh)/2,Obj->color,(Obj->width)/20);
     // al_draw_text(Obj->font, Obj->color, Obj->x, Obj->y-(Obj->heigh)/6-10, ALLEGRO_ALIGN_CENTRE, "Bomb");

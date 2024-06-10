@@ -31,7 +31,7 @@ Scene *New_gameover(int label)
     // setting derived object function
      _Register_elements(pObj, New_Back_gg(Back_gg_L));
     // _Register_elements(pObj, New_Resume(Resume_gg_L));
-    _Register_elements(pObj, New_Ball(MOUSE_gg_L));
+    _Register_elements(pObj, New_Ball2(MOUSE_gg_L));
     pObj->Update = gameover_update;
     pObj->Draw = gameover_draw;
     pObj->Destroy = gameover_destroy;
