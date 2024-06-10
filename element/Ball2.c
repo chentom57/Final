@@ -214,9 +214,20 @@ void Ball2_interact(Elements *self, Elements *tar)
 void Ball2_draw(Elements *self)
 {
     Ball2 *Obj = ((Ball2 *)(self->pDerivedObj));
+<<<<<<< HEAD
     al_draw_circle(Obj->x, Obj->y, Obj->r, Obj->color, 5);
     if(Obj->selflw!=0)
             al_draw_circle(Obj->x,Obj->y,Obj->ranges,al_map_rgb(255,0,0),5);
+=======
+    if(Obj->selflw!=0){
+        if(placed[Obj->block_x][Obj->block_y]==0)
+             al_draw_bitmap(Obj->img_y, Obj->x-Obj->r, Obj->y-Obj->r,0);
+        else
+             al_draw_bitmap(Obj->img_r, Obj->x-Obj->r, Obj->y-Obj->r,0);
+    }
+    else
+        al_draw_bitmap(Obj->img_g, Obj->x-Obj->r, Obj->y-Obj->r,0);
+>>>>>>> 93cd4995d25194f3de9e2e5e84208fafc48ace5f
 }
 
 void Ball2_destory(Elements *self)

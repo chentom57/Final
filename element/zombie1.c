@@ -47,7 +47,11 @@ Elements *New_Zombie1(int label)
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
     pDerivedObj->gameover = 0;
     pDerivedObj->x = 800;
+<<<<<<< HEAD
     pDerivedObj->hp=8;
+=======
+    pDerivedObj->hp=5;
+>>>>>>> 93cd4995d25194f3de9e2e5e84208fafc48ace5f
     //printf("rand: %f\n", ran_num);
     pDerivedObj->y =  ran_num * 100 ;
     pDerivedObj->v = 1; //速度

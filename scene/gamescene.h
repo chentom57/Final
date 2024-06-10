@@ -68,7 +68,13 @@ typedef struct _GameScene
     ALLEGRO_FONT *font2;
     ALLEGRO_SAMPLE *song;
     ALLEGRO_BITMAP *background_gs;
+<<<<<<< HEAD
     ALLEGRO_SAMPLE_INSTANCE *sample_instance;
+=======
+    ALLEGRO_BITMAP *sun_t;
+     ALLEGRO_BITMAP *Gold_score;
+    ALLEGRO_SAMPLE_INSTANCE *gs_Sound;
+>>>>>>> 93cd4995d25194f3de9e2e5e84208fafc48ace5f
     char text[100];
 } GameScene;
 Scene *New_GameScene(int label);
