@@ -22,8 +22,8 @@ Scene *New_GameScene(int label)
     Gold=500;
     Score=0;
     Invincible=0;
-    pDerivedObj->end_time=20;
-    memset(placed,0,60*4);
+    pDerivedObj->end_time=40;
+    memset(placed,0,84*4);
     pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 20, 0);
      pDerivedObj->background_gs =al_load_bitmap("assets/image/gamescene_back.png");
     pDerivedObj->sun_t =al_load_bitmap("assets/image/sun_t.png");

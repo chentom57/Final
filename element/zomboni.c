@@ -56,6 +56,7 @@ Elements *New_Zomboni(int label)
     pDerivedObj->gameover = 0;
     pDerivedObj->x = 800;
     pDerivedObj->hp=8;
+    pDerivedObj->stop=0;
     //printf("rand: %f\n", ran_num);
     pDerivedObj->y =  ran_num * 100 -20;
     pDerivedObj->v = 1; //速度
@@ -86,8 +87,9 @@ void Zomboni_update(Elements *self)
         Score+=100;
         self->dele=true;
     }
-
-    _Zomboni_update_position(self, Obj->v, 0);
+    if(Obj->stop==0){
+        _Zomboni_update_position(self, Obj->v, 0);
+    }
      if(placed[(int)(Obj->x + 100)/ 100][(int)Obj->y / 100] == 1){
         
         
@@ -175,11 +177,16 @@ void Zomboni_interact(Elements *self, Elements *tar)
     else if (tar->label == Potato_L)
     {
         potato *Obj2 = ((potato *)(tar->pDerivedObj));
-        if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox)  &&!Invincible )
+        if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox) )
         {
-            Obj2->hp = 0; //hp record in the one who attack
+            Obj->stop=1;
+           if(!Invincible)
+                Obj2->hp-=2; //hp record in the one who attack
             //printf("sunflower hited! hp: %d\n", Obj2->hp);
-                                    
+
+        }
+        else if(placed[Obj->x/100][Obj->y/100]!=2&&placed[Obj->x-1/100][Obj->y/100]!=2){
+                Obj->stop=0;
         }
     }
 
@@ -203,14 +210,15 @@ void Zomboni_interact(Elements *self, Elements *tar)
 void Zomboni_draw(Elements *self)
 {
     Zomboni *Obj = ((Zomboni *)(self->pDerivedObj));
-    al_draw_circle(Obj->x + Obj->width / 2.5 - 30 ,
-                                     Obj->y + Obj->height / 2.5  ,
-                                     30  , al_map_rgb(100, 100, 255), 10);
-    
+  
     if (Obj->v > 0)
         al_draw_bitmap(Obj->img, Obj->x, Obj->y,0);
     else
         al_draw_bitmap(Obj->img, Obj->x, Obj->y, 0);
+      al_draw_circle(Obj->x + Obj->width / 2.5 - 30 ,
+                                     Obj->y + Obj->height / 2.5  ,
+                                     30  , al_map_rgb(100, 100, 255), 10);
+    
     /*
    ALLEGRO_BITMAP *frame = algif_get_bitmap(Obj->gif_status[Obj->state], al_get_time());
     if (frame)

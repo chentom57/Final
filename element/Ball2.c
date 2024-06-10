@@ -102,7 +102,7 @@ void Ball2_update(Elements *self)
             Gold-=50;
             flo4 = New_potato(Potato_L,Obj->block_x*100,Obj->block_y*100);//*generate new potato
             _Register_elements(scene, flo4);
-            placed[Obj->block_x][Obj->block_y] = 1;
+            placed[Obj->block_x][Obj->block_y] = 2;
             chara2 -> state2 = 1;
             Obj -> selflw =0;
         }
@@ -127,7 +127,7 @@ void Ball2_interact(Elements *self, Elements *tar)
     // printf("hello");
     Ball2 *Obj = ((Ball2 *)(self->pDerivedObj));
     Obj->block_x=(Obj->x)/100;
-    Obj->block_y=(Obj->y-30)/100;
+    Obj->block_y=(Obj->y)/100;
     //printf("%d%d ",Obj->block_x,Obj->block_y);
     // if (tar->label == Character_L)
     // {

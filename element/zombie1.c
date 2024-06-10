@@ -81,7 +81,7 @@ void Zombie1_update(Elements *self)
 
 
     _Zombie1_update_position(self, Obj->v, 0);
-     if(placed[(int)(Obj->x + 100)/ 100][(int)Obj->y / 100] == 1){
+     if(placed[(int)(Obj->x + 100)/ 100][(int)Obj->y / 100]==2||placed[(int)(Obj->x + 100)/ 100][(int)Obj->y / 100]==1){
         Obj->state = ATK;
     }
     else{

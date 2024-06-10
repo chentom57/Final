@@ -16,7 +16,7 @@
 extern const double FPS;
 extern const int WIDTH;
 extern const int HEIGHT;
-extern int Score,Gold,Victory,placed[6][10], Invincible,high_score;
+extern int Score,Gold,Victory,placed[7][12], Invincible,high_score;
 extern int window;
 extern bool key_state[ALLEGRO_KEY_MAX];
 extern bool mouse_state[ALLEGRO_MOUSE_MAX_EXTRA_AXES];
