@@ -15,7 +15,7 @@ Elements *New_Ball2(int label)
     Elements *pObj = New_Elements(label);
     pDerivedObj->x = mouse.x;
     pDerivedObj->y = mouse.y;
-    pDerivedObj->r = 5;
+    pDerivedObj->r = 15;
     pDerivedObj->in = -1;
     pDerivedObj->color = al_map_rgb(255, 0, 0);
     pDerivedObj->hitbox = New_Circle(pDerivedObj->x,
@@ -23,13 +23,15 @@ Elements *New_Ball2(int label)
                                      1);
     pDerivedObj->state2 = 0;
     pDerivedObj->selflw = 0;
-    pDerivedObj->ranges=20;
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = Flower_L;
     pObj->inter_obj[pObj->inter_len++] = Sun_L;
     pObj->inter_obj[pObj->inter_len++] = Sunflw_L;
     pObj->inter_obj[pObj->inter_len++] = Bomb_L;
     pObj->inter_obj[pObj->inter_len++] = Potato_L;
+    pDerivedObj->img_g= al_load_bitmap("assets/image/mouse_green.png");
+     pDerivedObj->img_y= al_load_bitmap("assets/image/mouse_yellow.png");
+      pDerivedObj->img_r= al_load_bitmap("assets/image/mouse_red.png");
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
     pObj->Draw = Ball2_draw;
@@ -59,6 +61,8 @@ void Ball2_update(Elements *self)
     al_get_mouse_state(&msstate); 
     if(mouse_state[2] == 1)
         Obj->selflw=0;
+    if(key_state[ALLEGRO_KEY_0])
+        Gold+=1000;
     if(chara2 -> state2 == 0){
      if(Obj->block_y<5){
         if((al_mouse_button_down(&msstate, 1)&&(mouse.x < 700))&&(Obj -> selflw == 1)&&Gold>=100&&placed[Obj->block_x][Obj->block_y]==0){
@@ -214,14 +218,22 @@ void Ball2_interact(Elements *self, Elements *tar)
 void Ball2_draw(Elements *self)
 {
     Ball2 *Obj = ((Ball2 *)(self->pDerivedObj));
-    al_draw_circle(Obj->x, Obj->y, Obj->r, Obj->color, 5);
-    if(Obj->selflw!=0)
-            al_draw_circle(Obj->x,Obj->y,Obj->ranges,al_map_rgb(255,0,0),5);
+    if(Obj->selflw!=0){
+        if(placed[Obj->block_x][Obj->block_y]==0)
+             al_draw_bitmap(Obj->img_g, Obj->x-Obj->r, Obj->y-Obj->r,0);
+        else
+             al_draw_bitmap(Obj->img_r, Obj->x-Obj->r, Obj->y-Obj->r,0);
+    }
+    else
+        al_draw_bitmap(Obj->img_y, Obj->x-Obj->r, Obj->y-Obj->r,0);
 }
 
 void Ball2_destory(Elements *self)
 {
     Ball2 *Obj = ((Ball2 *)(self->pDerivedObj));
+    al_destroy_bitmap(Obj->img_g);
+      al_destroy_bitmap(Obj->img_r);
+        al_destroy_bitmap(Obj->img_y);
     free(Obj->hitbox);
     free(Obj);
     free(self);

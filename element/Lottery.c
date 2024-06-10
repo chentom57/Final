@@ -25,10 +25,12 @@ Elements *New_Lottery(int label)
                                      pDerivedObj->width/2);
     pDerivedObj->font=al_load_ttf_font("assets/font/pirulen.ttf", 18, 0);
     pDerivedObj->font2=al_load_ttf_font("assets/font/pirulen.ttf", 36, 0);
-     ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/lottery_win.mp3");
-     pDerivedObj->win_Sound = al_create_sample_instance(sample);
-    ALLEGRO_SAMPLE *sample2 = al_load_sample("assets/sound/lottery_failed.mp3");
-     pDerivedObj->lose_Sound = al_create_sample_instance(sample2);
+    pDerivedObj->sample1 = al_load_sample("assets/sound/lottery_win.mp3");
+     pDerivedObj->win_Sound = al_create_sample_instance(pDerivedObj->sample1);
+         al_set_sample_instance_gain(pDerivedObj->win_Sound, 2);
+    pDerivedObj->sample2 = al_load_sample("assets/sound/lottery_failed.mp3");
+     pDerivedObj->lose_Sound = al_create_sample_instance(pDerivedObj->sample2);
+        al_set_sample_instance_gain(pDerivedObj->lose_Sound, 0.5);
      
     al_set_sample_instance_playmode(pDerivedObj->win_Sound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(pDerivedObj->win_Sound, al_get_default_mixer());
@@ -124,6 +126,8 @@ void Lottery_draw(Elements *self)
 void Lottery_destory(Elements *self)
 {
     Lottery *Obj = ((Lottery *)(self->pDerivedObj));
+     al_destroy_sample(Obj->sample1);
+      al_destroy_sample(Obj->sample2);
      al_destroy_sample_instance(Obj->win_Sound);
       al_destroy_sample_instance(Obj->lose_Sound);
     free(Obj->hitbox);

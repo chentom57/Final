@@ -29,6 +29,7 @@ typedef struct _bomb
     bool dir;                       // true: face to right, false: face to left
     int sound_played;                      // the state of bomb
     ALGIF_ANIMATION *gif_status[3]; // gif for each state. 0: stop, 1: move, 2:attack
+    ALLEGRO_SAMPLE *sample;
     ALLEGRO_SAMPLE_INSTANCE *bang_Sound;
     ALLEGRO_BITMAP *img;
     ALLEGRO_BITMAP *img2;

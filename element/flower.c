@@ -26,8 +26,8 @@ Elements *New_Flower(int label, int x, int y)
         pDerivedObj->gif_status[i] = algif_new_gif(buffer, -1);
     }
     // load effective sound
-    ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/atk_sound.mp3");
-    pDerivedObj->atk_Sound = al_create_sample_instance(sample);
+    pDerivedObj->sample = al_load_sample("assets/sound/atk_sound.mp3");
+    pDerivedObj->atk_Sound = al_create_sample_instance(pDerivedObj->sample);
     al_set_sample_instance_playmode(pDerivedObj->atk_Sound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(pDerivedObj->atk_Sound, al_get_default_mixer());
 
@@ -263,6 +263,7 @@ void Flower_draw(Elements *self)
 void Flower_destory(Elements *self)
 {
     Flower *Obj = ((Flower *)(self->pDerivedObj));
+    al_destroy_sample(Obj->sample);
     al_destroy_sample_instance(Obj->atk_Sound);
     for (int i = 0; i < 3; i++)
         algif_destroy_animation(Obj->gif_status[i]);
