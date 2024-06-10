@@ -154,7 +154,7 @@ void Zomboni_interact(Elements *self, Elements *tar)
     else if (tar->label == Flower_L)
     {
         Flower *Obj2 = ((Flower *)(tar->pDerivedObj));
-        if (Obj->hitbox->overlap(Obj2->hitbox3, Obj->hitbox) )
+        if (Obj->hitbox->overlap(Obj2->hitbox3, Obj->hitbox)  &&!Invincible)
         {
             Obj2->hp = 0;; //hp record in the one who attack
             //printf("flower hited! hp: %d\n", Obj2->hp);
@@ -165,7 +165,7 @@ void Zomboni_interact(Elements *self, Elements *tar)
     else if (tar->label == Sunflw_L)
     {
         Sunflw *Obj2 = ((Sunflw *)(tar->pDerivedObj));
-        if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox)  )
+        if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox)  &&!Invincible )
         {
             Obj2->hp = 0; //hp record in the one who attack
             //printf("sunflower hited! hp: %d\n", Obj2->hp);
@@ -175,7 +175,7 @@ void Zomboni_interact(Elements *self, Elements *tar)
     else if (tar->label == Potato_L)
     {
         potato *Obj2 = ((potato *)(tar->pDerivedObj));
-        if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox)  )
+        if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox)  &&!Invincible )
         {
             Obj2->hp = 0; //hp record in the one who attack
             //printf("sunflower hited! hp: %d\n", Obj2->hp);

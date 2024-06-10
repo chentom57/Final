@@ -100,6 +100,7 @@
 #include "../element/Boss.h"
 #include "../element/bomb.h"
 #include "../element/Ball2.h"
+#include "../element/zomboni.h"
 #include "../element/flower_button.h"
 #include "../element/sunflw_button.h"
 #include "../element/bomb_button.h"
@@ -138,6 +139,7 @@ typedef enum EleType
 
     Zombie1_L,
     Boss_L,
+    Zomboni_L,
     SunflwB_L,
     Lottery_L,
     Ball2_L

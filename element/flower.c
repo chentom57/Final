@@ -299,6 +299,12 @@ void Flower_interact(Elements *self, Elements *tar) {
             Obj -> state = ATK;
         }
     }
+     if(tar->label == Zomboni_L){
+        Zomboni *Obj2 = ((Zomboni *)(tar -> pDerivedObj));
+        if(Obj2->hitbox->overlap(Obj2->hitbox, Obj->hitbox2)){
+            Obj -> state = ATK;
+        }
+    }
     //0610
     /*
     else if (tar->label == Zombie1_L)
