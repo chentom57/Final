@@ -23,6 +23,7 @@ Elements *New_Projectile(int label, int x, int y, int v)
     pObj->inter_obj[pObj->inter_len++] = Tree_L;
     pObj->inter_obj[pObj->inter_len++] = Floor_L;
     pObj->inter_obj[pObj->inter_len++] = Zombie1_L;
+    pObj->inter_obj[pObj->inter_len++] = Zomboni_L; //0610
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
     pObj->Update = Projectile_update;
@@ -87,6 +88,22 @@ void Projectile_interact(Elements *self, Elements *tar)
         if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
         {
             printf("projt hitted zombie\n");
+            Obj2-> hp -= 1;
+            
+            // if(Obj -> hp < 1){
+            //     //Gold+=100;
+            //     //Score+=100;
+                                
+            // }
+            self->dele=true;                
+        }
+    }
+    else if (tar->label == Zomboni_L)
+    {
+        Zomboni *Obj2 = ((Zomboni *)(tar->pDerivedObj));
+        if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
+        {
+            printf("Zomboni hitted zombie\n");
             Obj2-> hp -= 1;
             
             // if(Obj -> hp < 1){

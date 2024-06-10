@@ -20,7 +20,8 @@
 #include "../element/sunflw_button.h"
 #include "../element/bomb_button.h"
 #include "../element/potato_button.h"
-#include "../element/Zombie1.h"
+#include "../element/zombie1.h"
+#include "../element/zomboni.h"
 #include "../element/Lottery.h"
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
@@ -57,7 +58,8 @@ typedef enum EleType
     Lottery_L,
     Ball_L,
     Ball2_L,
-    Boss_L
+    Boss_L,
+    Zomboni_L // 0610
     
 } EleType;
 typedef struct _GameScene
@@ -68,13 +70,7 @@ typedef struct _GameScene
     ALLEGRO_FONT *font2;
     ALLEGRO_SAMPLE *song;
     ALLEGRO_BITMAP *background_gs;
-<<<<<<< HEAD
     ALLEGRO_SAMPLE_INSTANCE *sample_instance;
-=======
-    ALLEGRO_BITMAP *sun_t;
-     ALLEGRO_BITMAP *Gold_score;
-    ALLEGRO_SAMPLE_INSTANCE *gs_Sound;
->>>>>>> 93cd4995d25194f3de9e2e5e84208fafc48ace5f
     char text[100];
 } GameScene;
 Scene *New_GameScene(int label);

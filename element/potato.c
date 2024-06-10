@@ -3,6 +3,7 @@
 #include "../scene/sceneManager.h"
 #include "projectile.h"
 #include "../shapes/Rectangle.h"
+#include "../shapes/Circle.h"
 #include "../algif5/src/algif.h"
 #include <stdio.h>
 #include <stdbool.h>
@@ -45,10 +46,9 @@ Elements *New_potato(int label, int x, int y)
     pDerivedObj->x = x;
     pDerivedObj->y = y;
     pDerivedObj->hp = 2000;
-    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
-                                        pDerivedObj->y,
-                                        pDerivedObj->x + 100,
-                                        pDerivedObj->y + 100);
+    pDerivedObj->hitbox = New_Circle(pDerivedObj->x+60,
+                                        pDerivedObj->y+60,
+                                        30);
     pDerivedObj->dir = true; // true: face to right, false: face to left
     // initial the animation component
     pDerivedObj->state = STOP;
@@ -222,7 +222,8 @@ void potato_draw(Elements *self)
     
     // with the state, draw corresponding image
     potato *Obj = ((potato *)(self->pDerivedObj));
-    al_draw_rectangle(Obj->x,Obj->y,Obj->x + 100,Obj->y + 101, al_map_rgb(255, 255, 0), 3);
+    //al_draw_rectangle(Obj->x,Obj->y,Obj->x + 100,Obj->y + 101, al_map_rgb(255, 255, 0), 100);
+    al_draw_circle(Obj->x+60, Obj->y+60, 30, al_map_rgb(105, 105, 0), 10);
     ALLEGRO_BITMAP *frame = algif_get_bitmap(Obj->gif_status[Obj->state], al_get_time());
     if(frame)
     {
@@ -237,6 +238,7 @@ void potato_draw(Elements *self)
 void potato_destory(Elements *self)
 {
     potato *Obj = ((potato *)(self->pDerivedObj));
+    al_destroy_sample_instance(Obj->atk_Sound);
     for (int i = 0; i < 3; i++)
         algif_destroy_animation(Obj->gif_status[i]);
     free(Obj->hitbox);

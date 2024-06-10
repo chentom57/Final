@@ -4,47 +4,52 @@
 time_t start_time, current_time;
 #include <stdlib.h> /* 亂數相關函數 */
 
-#include "Zombie1.h"
+#include "Trueboss.h"
 #include "../shapes/Circle.h"
-int a = 1;
+
 //0601:random: used for create zombie's y-axis
-int ranflag = 1;
+
 #include "potato.h"
 #include "flower.h"
 #include "sunflw.h"
 /*
-   [Zombie1 function]
+   [Trueboss function]
 */
-Elements *New_Zombie1(int label)
+Elements *New_Trueboss(int label)
 {   
+    /*
     if(ranflag == 1){
         srand( time(NULL) );
         ranflag = 0;
     }    
-    
+    */
     //Bruce add timer define& start
     time(&start_time);
 
-    Zombie1 *pDerivedObj = (Zombie1 *)malloc(sizeof(Zombie1));
+    Trueboss *pDerivedObj = (Trueboss *)malloc(sizeof(Trueboss));
     Elements *pObj = New_Elements(label);
      char state_string[3][10] = {"stop", "move", "attack"}; //0 stop ; 1 move ; 2 attack
     for (int i = 0; i < 3; i++)
     {
         char buffer[50];
-        sprintf(buffer, "assets/image/zombie1_%s.gif", state_string[i]);
+        sprintf(buffer, "assets/image/Trueboss_%s.gif", state_string[i]);
         pDerivedObj->gif_status[i] = algif_new_gif(buffer, -1);
     }
     // load effective sound
+    /*
     ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/atk_sound2.mp3");
     pDerivedObj->atk_Sound = al_create_sample_instance(sample);
     al_set_sample_instance_playmode(pDerivedObj->atk_Sound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(pDerivedObj->atk_Sound, al_get_default_mixer());
+    */
     //0601:used for random create y-axis for zombie spawning
     int ran_num = (rand() % 5);
     // setting derived object member
-    pDerivedObj->img = al_load_bitmap("assets/image/zombie1.png");
-    pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
-    pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
+    //pDerivedObj->img = al_load_bitmap("assets/image/Trueboss.png");
+    //pDerivedObj->width = al_get_bitmap_width(pDerivedObj-> img);
+    //pDerivedObj->height = al_get_bitmap_height(pDerivedObj-> img);
+    pDerivedObj->height =200;
+    pDerivedObj->width = 200;
     pDerivedObj->gameover = 0;
     pDerivedObj->x = 800;
     pDerivedObj->hp=8;
@@ -63,24 +68,23 @@ Elements *New_Zombie1(int label)
     
    // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
-    pObj->Update = Zombie1_update;
-    pObj->Interact = Zombie1_interact;
-    pObj->Draw = Zombie1_draw;
-    pObj->Destroy = Zombie1_destory;
+    pObj->Update = Trueboss_update;
+    pObj->Interact = Trueboss_interact;
+    pObj->Draw = Trueboss_draw;
+    pObj->Destroy = Trueboss_destory;
     return pObj;
 }
-void Zombie1_update(Elements *self)
+void Trueboss_update(Elements *self)
 {
 
-    Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
+    Trueboss *Obj = ((Trueboss *)(self->pDerivedObj));
     if(Obj->hp <= 0){
         Gold+=100;
         Score+=100;
         self->dele=true;
     }
 
-
-    _Zombie1_update_position(self, Obj->v, 0);
+    _Trueboss_update_position(self, Obj->v, 0);
      if(placed[(int)(Obj->x + 100)/ 100][(int)Obj->y / 100] == 1){
         Obj->state = ATK;
         
@@ -95,18 +99,20 @@ void Zombie1_update(Elements *self)
         Obj->gameover = 1;
     }
 }
-void _Zombie1_update_position(Elements *self, float dx, float dy)
+void _Trueboss_update_position(Elements *self, float dx, float dy)
 {
-    Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
+    Trueboss *Obj = ((Trueboss *)(self->pDerivedObj));
 
     //Bruce add timer
     time(&current_time);
     
     //Obj->x -=  1* dx;
+    /*
     if(difftime(current_time, start_time) > 1.0){
         a= a*-1;
         start_time = current_time;
     }
+    */
     if(Obj->state == MOVE){
         Obj->x -=  1* dx;
         Shape *hitbox = Obj->hitbox;
@@ -119,11 +125,12 @@ void _Zombie1_update_position(Elements *self, float dx, float dy)
         hitbox->update_center_x(hitbox,0);
         hitbox->update_center_y(hitbox, dy);
     }
+
     Obj->y += dy;
 }
-void Zombie1_interact(Elements *self, Elements *tar)
+void Trueboss_interact(Elements *self, Elements *tar)
 {
-    Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
+    Trueboss *Obj = ((Trueboss *)(self->pDerivedObj));
     if (tar->label == Floor_L)
     {
         if (Obj->x < 0 - Obj->width){        
@@ -148,7 +155,7 @@ void Zombie1_interact(Elements *self, Elements *tar)
         Flower *Obj2 = ((Flower *)(tar->pDerivedObj));
         if (Obj->hitbox->overlap(Obj2->hitbox3, Obj->hitbox) )
         {
-            Obj2->hp--; //hp record in the one who attack
+            Obj2->hp = 0;; //hp record in the one who attack
             //printf("flower hited! hp: %d\n", Obj2->hp);
                                     
         }
@@ -159,7 +166,7 @@ void Zombie1_interact(Elements *self, Elements *tar)
         Sunflw *Obj2 = ((Sunflw *)(tar->pDerivedObj));
         if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox)  )
         {
-            Obj2->hp--; //hp record in the one who attack
+            Obj2->hp = 0; //hp record in the one who attack
             //printf("sunflower hited! hp: %d\n", Obj2->hp);
                                     
         }
@@ -169,8 +176,8 @@ void Zombie1_interact(Elements *self, Elements *tar)
         potato *Obj2 = ((potato *)(tar->pDerivedObj));
         if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox)  )
         {
-            Obj2->hp--; //hp record in the one who attack
-            printf("potato hited! hp: %d\n", Obj2->hp);
+            Obj2->hp = 0; //hp record in the one who attack
+            //printf("sunflower hited! hp: %d\n", Obj2->hp);
                                     
         }
     }
@@ -192,9 +199,9 @@ void Zombie1_interact(Elements *self, Elements *tar)
     //     }
     // }
 }
-void Zombie1_draw(Elements *self)
+void Trueboss_draw(Elements *self)
 {
-    Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
+    Trueboss *Obj = ((Trueboss *)(self->pDerivedObj));
     al_draw_circle(Obj->x + Obj->width / 2.5 + 60,
                                      Obj->y + Obj->height / 2.5 + 20 ,
                                      min(Obj->width,Obj->height) / 2.5 , al_map_rgb(255, 255, 255), 3);
@@ -209,9 +216,9 @@ void Zombie1_draw(Elements *self)
         al_play_sample_instance(Obj->atk_Sound);
     }
 }
-void Zombie1_destory(Elements *self)
+void Trueboss_destory(Elements *self)
 {
-    Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
+    Trueboss *Obj = ((Trueboss *)(self->pDerivedObj));
      al_destroy_sample_instance(Obj->atk_Sound);
     for (int i = 0; i < 3; i++)
         algif_destroy_animation(Obj->gif_status[i]);

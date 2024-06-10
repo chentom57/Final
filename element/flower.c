@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <unistd.h>
+
 /*
    [Flower function]
 */
@@ -59,6 +60,7 @@ Elements *New_Flower(int label, int x, int y)
     pObj->pDerivedObj = pDerivedObj;
     pObj->inter_obj[pObj->inter_len++] = Ball2_L;
     pObj->inter_obj[pObj->inter_len++] = Zombie1_L;
+    pObj->inter_obj[pObj->inter_len++] = Zomboni_L;
     // setting derived object function
     pObj->Draw = Flower_draw;
     pObj->Update = Flower_update;
@@ -290,6 +292,12 @@ void Flower_interact(Elements *self, Elements *tar) {
     Flower *Obj = ((Flower *)(self->pDerivedObj));
     if(tar->label == Zombie1_L){
         Zombie1 *Obj2 = ((Zombie1 *)(tar -> pDerivedObj));
+        if(Obj2->hitbox->overlap(Obj2->hitbox, Obj->hitbox2)){
+            Obj -> state = ATK;
+        }
+    }
+    if(tar->label == Zomboni_L){
+        Zomboni *Obj2 = ((Zomboni *)(tar -> pDerivedObj));
         if(Obj2->hitbox->overlap(Obj2->hitbox, Obj->hitbox2)){
             Obj -> state = ATK;
         }
