@@ -6,6 +6,7 @@ time_t start_time_gs,current_time_gs;
 int zombie1_created=0;
 //0607 Bruce add
 int Boss_created=0;
+int zomboni_created=0;
 
 Scene *New_GameScene(int label)
 {
@@ -49,6 +50,7 @@ Scene *New_GameScene(int label)
     _Register_elements(pObj, New_potato_button(PotatoB_L));
     _Register_elements(pObj, New_Ball2(Ball2_L));
     _Register_elements(pObj, New_map(Map_L));
+    //   _Register_elements(pObj, New_Zomboni(Zomboni_L));
     
       //_Register_elements(pObj, New_Zombie1(Zombie1_L)); //Burce add:Register Zomvie1
     //  _Register_elements(pObj, New_Flower(Flower_L));
@@ -128,6 +130,14 @@ void game_scene_update(Scene *self)
             }
 
         }
+         else if(ele->label==Zomboni_L){
+            Zomboni *Obj = ((Zomboni *)(ele->pDerivedObj));
+            if(Obj->gameover==1){
+                    self->scene_end = true;
+                    window = 2;
+            }
+
+        }
     }
     // remove element
     for (int i = 0; i < allEle.len; i++)
@@ -197,14 +207,21 @@ void game_scene_destroy(Scene *self)
 //Create zombie schedule
 void game_scene_zombie(Scene *self){
      
-     if((current_time_gs-start_time_gs)%3==1){
+      if((current_time_gs-start_time_gs)%3==1){
         zombie1_created=0;                     //reset the bool zombie been created
      }
-     if(((current_time_gs-start_time_gs)%3==0)&&(zombie1_created==0)){
+    if(((current_time_gs-start_time_gs)%3==0)&&(zombie1_created==0)){
         _Register_elements(self, New_Zombie1(Zombie1_L));
         zombie1_created=1;
      }
+     if((current_time_gs-start_time_gs)%8==1){
+        zomboni_created=0;                     //reset the bool zombie been created
+     }
 
+     if(((current_time_gs-start_time_gs)%8==0)&&(zomboni_created==0)){
+        _Register_elements(self, New_Zomboni(Zomboni_L));
+        zomboni_created=1;
+     }
 
     //0607 Bruce add :boss
      if((start_time_gs)%3==1){

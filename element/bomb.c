@@ -49,7 +49,8 @@ Elements *New_bomb(int label, int x, int y)
     pDerivedObj->sound_played = 0;
     pObj->pDerivedObj = pDerivedObj;
     pObj->inter_obj[pObj->inter_len++] = Ball2_L;
-      pObj->inter_obj[pObj->inter_len++] = Zombie1_L;
+    pObj->inter_obj[pObj->inter_len++] = Zombie1_L;
+      pObj->inter_obj[pObj->inter_len++] =Zombie1_L;
     // setting derived object function
     pObj->Draw = bomb_draw;
     pObj->Update = bomb_update;
@@ -241,6 +242,21 @@ void bomb_interact(Elements *self, Elements *tar) {
         if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
         {
             printf("Zombie1: ahh!");
+            Obj2-> hp -= 3;
+        }
+        placed[Obj->x/100][Obj->y/100] = 0;
+        self->dele=true;
+        }
+    }
+    else if(tar->label == Zomboni_L)
+    {
+        if((long)(current_time_bo-Obj->start_local-1)>4){
+        printf("a");
+        
+        Zomboni *Obj2 = ((Zomboni *)(tar->pDerivedObj));
+        if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox))
+        {
+            printf("Zomboni: ahh!");
             Obj2-> hp -= 3;
         }
         placed[Obj->x/100][Obj->y/100] = 0;
