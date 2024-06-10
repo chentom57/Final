@@ -21,6 +21,7 @@ typedef struct _Zomboni
     int hp;     
     ALLEGRO_BITMAP *img;
     int state; 
+    int behitted;
     ALGIF_ANIMATION *gif_status[3]; // gif for each state. 0: stop, 1: move, 2:attack
     ALLEGRO_SAMPLE_INSTANCE *atk_Sound;
 

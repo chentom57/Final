@@ -42,8 +42,8 @@ void Start_interact(Elements *self, Elements *tar)
         if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)){
             Obj->color=al_map_rgb(255,193,37);
             if(mouse_state[1]){
-                Obj->start=1;
-                al_rest(1);//避免在按鈕位置產生植物
+                Obj->start = 1;
+                al_rest(0.1);//避免在按鈕位置產生植物
             }
         }
         else{

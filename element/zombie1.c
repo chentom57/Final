@@ -27,7 +27,7 @@ Elements *New_Zombie1(int label)
 
     Zombie1 *pDerivedObj = (Zombie1 *)malloc(sizeof(Zombie1));
     Elements *pObj = New_Elements(label);
-     char state_string[3][10] = {"stop", "move", "attack"}; //0 stop ; 1 move ; 2 attack
+    char state_string[3][10] = {"stop", "move", "attack"}; //0 stop ; 1 move ; 2 attack
     for (int i = 0; i < 3; i++)
     {
         char buffer[50];
@@ -58,6 +58,7 @@ Elements *New_Zombie1(int label)
     pDerivedObj->gameover = 0;
     pDerivedObj->x = 800;
     pDerivedObj->hp = 5;
+    pDerivedObj->state = MOVE;
     pDerivedObj->behitted = 0;
     //printf("rand: %f\n", ran_num);
     pDerivedObj->y =  ran_num * 100 ;
@@ -91,7 +92,7 @@ void Zombie1_update(Elements *self)
         Score+=100;
         self->dele=true;
     }
-    _Zombie1_update_position(self, Obj->v, 0);
+    
      if(placed[(int)(Obj->x + 100)/ 100][(int)Obj->y / 100] == 1){
         Obj->state = ATK;
     }

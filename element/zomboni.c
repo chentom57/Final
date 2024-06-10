@@ -56,12 +56,13 @@ Elements *New_Zomboni(int label)
     pDerivedObj->gameover = 0;
     pDerivedObj->x = 800;
     pDerivedObj->hp=8;
+    pDerivedObj->behitted = 0;
     //printf("rand: %f\n", ran_num);
     pDerivedObj->y =  ran_num * 100 -20;
     pDerivedObj->v = 1; //速度
     pDerivedObj->hitbox = New_Circle(pDerivedObj->x + pDerivedObj->width / 2.5 - 30 ,
                                      pDerivedObj->y + pDerivedObj->height / 2.5  ,
-                                     30 );
+                                     30 );//30->10
     // setting the interact object
     
     pObj->inter_obj[pObj->inter_len++] = Projectile_L;
@@ -86,7 +87,6 @@ void Zomboni_update(Elements *self)
         Score+=100;
         self->dele=true;
     }
-
     _Zomboni_update_position(self, Obj->v, 0);
      if(placed[(int)(Obj->x + 100)/ 100][(int)Obj->y / 100] == 1){
         
@@ -165,7 +165,7 @@ void Zomboni_interact(Elements *self, Elements *tar)
     else if (tar->label == Sunflw_L)
     {
         Sunflw *Obj2 = ((Sunflw *)(tar->pDerivedObj));
-        if (Obj->hitbox->overlap(Obj2->hitbox, Obj->hitbox)  &&!Invincible )
+        if (Obj2->hitbox->overlap(Obj2->hitbox, Obj->hitbox)  &&!Invincible )
         {
             Obj2->hp = 0; //hp record in the one who attack
             //printf("sunflower hited! hp: %d\n", Obj2->hp);

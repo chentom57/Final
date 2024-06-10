@@ -61,6 +61,7 @@ Elements *New_Flower(int label, int x, int y)
     pObj->pDerivedObj = pDerivedObj;
     pObj->inter_obj[pObj->inter_len++] = Ball2_L;
     pObj->inter_obj[pObj->inter_len++] = Zombie1_L;
+    pObj->inter_obj[pObj->inter_len++] = Zomboni_L;
     // setting derived object function
     pObj->Draw = Flower_draw;
     pObj->Update = Flower_update;
@@ -228,7 +229,7 @@ void Flower_update(Elements *self)
             chara->state = STOP;
             chara->new_proj = false;
         }
-        if (chara->gif_status[ATK]->display_index == 29 && chara->new_proj == false)
+        if (chara->gif_status[ATK]->display_index == 12 && chara->new_proj == false)
         {
             Elements *pro;
 
@@ -255,7 +256,7 @@ void Flower_draw(Elements *self)
     {
         al_draw_bitmap(frame, chara->x, chara->y, 1);
     }
-    if (chara->state == ATK && chara->gif_status[chara->state]->display_index == 29)
+    if (chara->state == ATK && chara->gif_status[chara->state]->display_index == 12)
     {
         al_play_sample_instance(chara->atk_Sound);
     }

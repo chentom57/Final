@@ -29,9 +29,9 @@ Elements *New_bomb(int label, int x, int y)
     // load effective sound
     //ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/atk_sound.mp3");
     pDerivedObj->img = al_load_bitmap("assets/image/bomb.png");
-      pDerivedObj->img2= al_load_bitmap("assets/image/bang.png");
+    pDerivedObj->img2= al_load_bitmap("assets/image/bang.png");
     ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/bang_sound.mp3");
-     pDerivedObj->bang_Sound = al_create_sample_instance(sample);
+    pDerivedObj->bang_Sound = al_create_sample_instance(sample);
     al_set_sample_instance_playmode(pDerivedObj->bang_Sound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(pDerivedObj->bang_Sound, al_get_default_mixer());
 

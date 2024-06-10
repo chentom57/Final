@@ -110,10 +110,14 @@ void Sunflw_update(Elements *self)
     //         chara->new_proj = true;
     //     }
     //     chara->state = ATK;
+   
     Sunflw *chara = ((Sunflw *)(self->pDerivedObj));
     chara->ptime +=1;
     int second = chara->ptime/60 + 1;
     printf("%d\n", second%15);
+    if(chara->hp <= 0){
+        self ->dele = true;
+    }
     if (chara->state == STOP)
     {
         // chara->state = ATK;
@@ -141,7 +145,7 @@ void Sunflw_update(Elements *self)
 //     if (chara->gif_status[chara->state]->done)
 // >>>>>>> a4d4daca7c8813e2266b271432af1f3e5316f78c
         
-        if (chara->gif_status[ATK]->display_index == 20 && chara->new_proj == false)
+        if (chara->gif_status[ATK]->display_index == 7 && chara->new_proj == false)
         {
             Elements *pro;
             if (chara->dir)
@@ -168,7 +172,7 @@ void Sunflw_draw(Elements *self)
     {
         al_draw_bitmap(frame, chara->x, chara->y, ((chara->dir) ? ALLEGRO_FLIP_HORIZONTAL : 0));
     }
-    if (chara->state == ATK && chara->gif_status[chara->state]->display_index == 20)
+    if (chara->state == ATK && chara->gif_status[chara->state]->display_index == 7)
     {
         al_play_sample_instance(chara->atk_Sound);
     }
