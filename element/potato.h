@@ -35,6 +35,7 @@ typedef struct _potato
     int anime_time; // indicate how long the animation
     long long start_local;
     char text_b[10];
+    int hp;
     ALLEGRO_COLOR color;
     ALLEGRO_FONT *font;
     Shape *hitbox; // the hitbox of object

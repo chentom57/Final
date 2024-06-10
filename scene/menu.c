@@ -10,7 +10,7 @@ Scene *New_Menu(int label)
     Menu *pDerivedObj = (Menu *)malloc(sizeof(Menu));
     Scene *pObj = New_Scene(label);
     // setting derived object member
-    pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 12, 0);
+    pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 40, 0);
     // Load sound
     al_reserve_samples(20);
     pDerivedObj->title_x_z =800;
@@ -19,6 +19,7 @@ Scene *New_Menu(int label)
     pDerivedObj->img = al_load_bitmap("assets/image/vs.png");
     pDerivedObj->img1 = al_load_bitmap("assets/image/plant_title.png");
     pDerivedObj->img2 = al_load_bitmap("assets/image/zombie_title.png");
+        pDerivedObj->img3 = al_load_bitmap("assets/image/bar.png");
     pDerivedObj->gif_status[0] = algif_new_gif( "assets/image/zombie1_move.gif", -1);
     pDerivedObj->gif_status[1] = algif_new_gif( "assets/image/chara_attack.gif", -1);
      pDerivedObj->song = al_load_sample("assets/sound/menu.mp3");
@@ -33,7 +34,7 @@ Scene *New_Menu(int label)
     // setting derived object function
     // _Register_elements(pObj, New_start(START_L));
      _Register_elements(pObj, New_Start(START_L));
-     _Register_elements(pObj, New_Ball(MOUSE_L));
+     _Register_elements(pObj, New_Ball2(MOUSE_L));
     _Register_elements(pObj, New_Quit(Quit_L));
     pObj->Update = menu_update;
     pObj->Draw = menu_draw;
@@ -103,11 +104,16 @@ void menu_update(Scene *self)
 void menu_draw(Scene *self)
 {
     Menu *Obj = ((Menu *)(self->pDerivedObj));
+     char score_text[100];
+     sprintf(score_text, "%d",high_score);
+    
     if(Obj->title_x_p<30)
         Obj->title_x_p+=1.3;
     if(Obj->title_x_z>530)
         Obj->title_x_z-=1.3;
     al_draw_bitmap(Obj->background, 0, 0, 0);
+    al_draw_bitmap(Obj->img3,310,255,0);
+    al_draw_text(Obj->font, al_map_rgb(255,255,255),450,280, ALLEGRO_ALIGN_CENTRE,score_text );
     al_draw_bitmap(Obj->img, 360,80,0);
     al_draw_bitmap(Obj->img1, Obj->title_x_p,110,0);
     al_draw_bitmap(Obj->img2, Obj->title_x_z,100,0);

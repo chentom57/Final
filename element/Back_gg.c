@@ -41,7 +41,7 @@ void Back_gg_interact(Elements *self, Elements *tar)
     Back_gg *Obj = ((Back_gg *)(self->pDerivedObj));
     if (tar->label == MOUSE_gg_L)
     {
-       Ball *Obj2 = ((Ball *)(tar->pDerivedObj));
+       Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
         if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)){
             Obj->color=al_map_rgb(255,193,37);
             if(mouse_state[1])

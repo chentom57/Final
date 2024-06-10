@@ -41,7 +41,7 @@ void bomb_button_interact(Elements *self, Elements *tar)
     if (tar->label == Ball2_L)
     {
         Ball2 *Obj2 = ((Ball2 *)(tar->pDerivedObj));
-        if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]&&Gold>=50){
+        if(Obj->hitbox->overlap(Obj->hitbox,Obj2->hitbox)&&mouse_state[1]&&Gold>=150){
             printf("flwoer button is clicked\n");
             Obj2 -> selflw = 3;
             // Obj->bomb_button = 1;
@@ -51,7 +51,7 @@ void bomb_button_interact(Elements *self, Elements *tar)
 void bomb_button_draw(Elements *self)
 {
     bomb_button *Obj = ((bomb_button *)(self->pDerivedObj));
-    if(Gold>=50)
+    if(Gold>=150)
         al_draw_bitmap(Obj->img, Obj->x, Obj->y,0);
     else
         al_draw_bitmap(Obj->img2, Obj->x, Obj->y,0);

@@ -4,6 +4,7 @@
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_image.h>
 #include "element.h"
+#include "../shapes/Circle.h"
 #include "../shapes/Shape.h"
 #include "../algif5/src/algif.h"
 #include <stdbool.h>
@@ -24,6 +25,7 @@ typedef struct _Sunflw
     bool dir;                       // true: face to right, false: face to left
     int state;                      // the state of sunflw
      int ptime;
+       int hp;
     ALGIF_ANIMATION *gif_status[3]; // gif for each state. 0: stop, 1: move, 2:attack
     ALLEGRO_SAMPLE_INSTANCE *atk_Sound;
     int anime;      // counting the time of animation

@@ -27,6 +27,7 @@ typedef struct _Menu
     ALLEGRO_BITMAP *img;
    ALLEGRO_BITMAP *img1;
    ALLEGRO_BITMAP *img2;
+     ALLEGRO_BITMAP *img3;
     ALLEGRO_SAMPLE_INSTANCE *menu_Sound;
     ALGIF_ANIMATION *gif_status[3];
     int title_x_z, title_x_p;

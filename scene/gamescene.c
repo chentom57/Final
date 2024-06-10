@@ -20,11 +20,17 @@ Scene *New_GameScene(int label)
     Boss_created=0;
     Gold=500;
     Score=0;
+    Invincible=0;
+    pDerivedObj->end_time=20;
     memset(placed,0,60*4);
     pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 20, 0);
      pDerivedObj->background_gs =al_load_bitmap("assets/image/gamescene_back.png");
     pDerivedObj->sun_t =al_load_bitmap("assets/image/sun_t.png");
      pDerivedObj->Gold_score =al_load_bitmap("assets/image/gold_score.png");
+        pDerivedObj->vvc =al_load_bitmap("assets/image/vvc.png");
+      pDerivedObj->timer_bar =al_load_bitmap("assets/image/timer_bar.png");
+    pDerivedObj->time_spot =al_load_bitmap("assets/image/time_spot.png");
+          pDerivedObj->coin =al_load_bitmap("assets/image/coin.png");
     pDerivedObj->font2 = al_load_ttf_font("assets/font/pirulen.ttf", 36, 0);
     pDerivedObj->lottery_created=0;
     // Load sound
@@ -56,10 +62,11 @@ Scene *New_GameScene(int label)
 void game_scene_update(Scene *self)
 {
     //current_time_gs=time(NULL);
+     GameScene *gs = ((GameScene *)(self->pDerivedObj));
     current_time_gs = al_get_time();
     game_scene_lottery(self);
     game_scene_zombie(self);
-    if(current_time_gs-start_time_gs>50){
+    if(current_time_gs-start_time_gs>gs->end_time+1){
                     self->scene_end = true;
                     window = 3;
             
@@ -136,21 +143,26 @@ void game_scene_draw(Scene *self)
     al_clear_to_color(al_map_rgb(0, 0, 0));
     GameScene *gs = ((GameScene *)(self->pDerivedObj));
      al_draw_bitmap(gs->background_gs, 0, 0, 0);
-    current_time_gs=time(NULL);
     sprintf(gs->text, "%ld",(long)(current_time_gs-start_time_gs-1));
     //al_draw_bitmap(gs->background, 0, 0, 0);
-     al_draw_text(gs->font2, al_map_rgb(233, 211, 33),750,600, ALLEGRO_ALIGN_CENTRE,"Time:");
-     al_draw_text(gs->font2, al_map_rgb(233, 211, 33),850,600, ALLEGRO_ALIGN_CENTRE,gs->text );
+     //al_draw_text(gs->font2, al_map_rgb(233, 211, 33),750,600, ALLEGRO_ALIGN_CENTRE,"Time:");
+    al_draw_bitmap(gs->timer_bar, 600,600, 0);
+    al_draw_bitmap(gs->time_spot, 600+235*((int)(current_time_gs-start_time_gs-1))/gs->end_time,600, 0);
+    //  al_draw_text(gs->font2, al_map_rgb(233, 211, 33),600,600, ALLEGRO_ALIGN_CENTRE,gs->text );
     sprintf(Gold_text, "%d",Gold);
     sprintf(score_text, "%d",Score);
     //al_draw_bitmap(gs->background, 0, 0, 0);
     //al_draw_text(gs->font, al_map_rgb(255,255, 255),50,600, ALLEGRO_ALIGN_CENTRE,"Gold:");
+    if(Invincible){
+        al_draw_bitmap(gs->vvc, 430,615, 0); 
+    }
     al_draw_bitmap(gs->Gold_score, 10,600, 0);
     al_draw_bitmap(gs->Gold_score, 220,600, 0);
      al_draw_bitmap(gs->sun_t, 20,610, 0);
+       al_draw_bitmap(gs->coin, 235,615, 0);
      al_draw_text(gs->font, al_map_rgb(233, 211, 33),150,620, ALLEGRO_ALIGN_CENTRE,Gold_text );
     //  al_draw_text(gs->font, al_map_rgb(255,255,255),300,620, ALLEGRO_ALIGN_CENTRE,"Score:");
-     al_draw_text(gs->font, al_map_rgb(255,255,255),370,620, ALLEGRO_ALIGN_CENTRE,score_text );
+     al_draw_text(gs->font, al_map_rgb(0,0,0),370,620, ALLEGRO_ALIGN_CENTRE,score_text );
     al_play_sample_instance(gs->gs_Sound);
     ElementVec allEle = _Get_all_elements(self);
     for (int i = 0; i < allEle.len; i++)
@@ -162,12 +174,17 @@ void game_scene_draw(Scene *self)
 void game_scene_destroy(Scene *self)
 {
     GameScene *Obj = ((GameScene *)(self->pDerivedObj));
+    if(Score>=high_score)
+        high_score=Score;
     //ALLEGRO_BITMAP *background = Obj->background;
     al_destroy_bitmap(Obj->background_gs);
-      al_destroy_bitmap(Obj->sun_t);
-         al_destroy_bitmap(Obj->Gold_score);
-     al_destroy_sample(Obj->song);
-     al_destroy_sample_instance(Obj->gs_Sound);
+    al_destroy_bitmap(Obj->sun_t);
+    al_destroy_bitmap(Obj->Gold_score);
+       al_destroy_bitmap(Obj->timer_bar);
+          al_destroy_bitmap(Obj->time_spot);
+             al_destroy_bitmap(Obj->coin);
+    al_destroy_sample(Obj->song);
+    al_destroy_sample_instance(Obj->gs_Sound);
     ElementVec allEle = _Get_all_elements(self);
     for (int i = 0; i < allEle.len; i++)
     {
