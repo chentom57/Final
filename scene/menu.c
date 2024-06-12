@@ -120,7 +120,7 @@ void menu_draw(Scene *self)
     ALLEGRO_BITMAP *frame = algif_get_bitmap(Obj->gif_status[0], al_get_time());
      ALLEGRO_BITMAP *frame2 = algif_get_bitmap(Obj->gif_status[1], al_get_time());
     al_draw_bitmap(frame, 550, 200, 0);
-    al_draw_bitmap(frame2, 200, 200, 0);
+    al_draw_bitmap(frame2, 200, 200, 1);
     // al_draw_text(Obj->font, al_map_rgb(233, 211, 33), Obj->title_x, Obj->title_y, ALLEGRO_ALIGN_CENTRE, "Press 'Space' to start");
     // al_draw_rectangle(Obj->title_x - 150, Obj->title_y - 50, Obj->title_x + 150, Obj->title_y + 50, al_map_rgb(255, 255, 255), 0);
     // al_play_sample_instance(Obj->sample_instance);

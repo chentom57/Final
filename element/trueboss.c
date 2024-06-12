@@ -97,15 +97,15 @@ void Trueboss_update(Elements *self)
     Trueboss *Obj = ((Trueboss *)(self->pDerivedObj));
     if(Obj->hp <= 0){
         Gold+=100;
-        Score+=100;
+        Score+=1000;
         self->dele=true;
     }
 
     if(((current_time - start_time)%5 )% 4== 0){
-        //printf("mode 1\n");
+        printf("mode 1\n");
         _Trueboss_update_position(self, Obj->v, 0);
     }
-    else{ //printf("mode 2\n");
+    else{ printf("mode 2\n");
         _Trueboss_update_position(self,0, 0);
     }
     if(Obj-> x <0){
@@ -292,7 +292,7 @@ void Trueboss_interact(Elements *self, Elements *tar)
 void Trueboss_draw(Elements *self)
 {
     Trueboss *Obj = ((Trueboss *)(self->pDerivedObj));
-    
+    /*
   al_draw_circle(Obj->x +60 ,
                 Obj->y +60  ,
                 30, al_map_rgb(100, 100, 255), 10);
@@ -308,7 +308,9 @@ void Trueboss_draw(Elements *self)
     al_draw_circle(Obj->x +60 ,
                 Obj->y +460  ,
                 30, al_map_rgb(100, 100, 255), 10);
+    */
                  if (Obj->v > 0)
+
         al_draw_bitmap(Obj->img, Obj->x, Obj->y,0);
     else
         al_draw_bitmap(Obj->img, Obj->x, Obj->y, 0);

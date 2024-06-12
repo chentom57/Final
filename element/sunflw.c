@@ -166,7 +166,7 @@ void Sunflw_draw(Elements *self)
     // with the state, draw corresponding image
     Sunflw *chara = ((Sunflw *)(self->pDerivedObj));
     
-    al_draw_rectangle(chara->x,chara->y,chara->x + 100,chara->y + 100, al_map_rgb(255, 255, 255), 5);//draw hitbox 
+    //al_draw_rectangle(chara->x,chara->y,chara->x + 100,chara->y + 100, al_map_rgb(255, 255, 255), 5);//draw hitbox 
     ALLEGRO_BITMAP *frame = algif_get_bitmap(chara->gif_status[chara->state], al_get_time());
     if (frame)
     {

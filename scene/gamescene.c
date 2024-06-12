@@ -20,6 +20,7 @@ Scene *New_GameScene(int label)
     pObj->pDerivedObj = pDerivedObj;
     //start_time_gs=time(NULL);
     start_time_gs = al_get_time();
+    trueboss_created=0;
     Boss_created=0;
     Gold=500;
     Score=0;
@@ -225,7 +226,11 @@ void game_scene_zombie(Scene *self){
      }
 
     //0607 Bruce add :boss
-     if(((current_time_gs-start_time_gs)% 30 == 0)&&(trueboss_created==0)){
+    if((current_time_gs-start_time_gs)==9){
+        zomboni_created=0;                     //reset the bool zombie been created
+     }
+
+     if(((current_time_gs-start_time_gs) == 30)&&(trueboss_created==0)){
         printf("spawn");
         _Register_elements(self, New_Trueboss( Trueboss_L));
         trueboss_created=1;

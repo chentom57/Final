@@ -45,7 +45,7 @@ void Back_interact(Elements *self, Elements *tar)
             }
         }
         else{
-             Obj->color=al_map_rgb(255,255,255);
+             Obj->color=al_map_rgb(135,51,0);
         }
     }
 

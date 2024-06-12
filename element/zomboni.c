@@ -215,10 +215,11 @@ void Zomboni_draw(Elements *self)
         al_draw_bitmap(Obj->img, Obj->x, Obj->y,0);
     else
         al_draw_bitmap(Obj->img, Obj->x, Obj->y, 0);
+        /*
       al_draw_circle(Obj->x +Obj->width / 2.5 - 25 ,
                                    Obj->y +Obj->height /2.5-12 ,
                                      40 , al_map_rgb(100, 100, 255), 5);
-    
+    */
     /*
    ALLEGRO_BITMAP *frame = algif_get_bitmap(Obj->gif_status[Obj->state], al_get_time());
     if (frame)

@@ -237,7 +237,7 @@ void potato_draw(Elements *self)
         al_play_sample_instance(Obj->behitted_Sound);
         Obj->behitted = 0;
     }
-     al_draw_circle(Obj->x+60, Obj->y+60, 30, al_map_rgb(105, 105, 0), 10);
+     //al_draw_circle(Obj->x+60, Obj->y+60, 30, al_map_rgb(105, 105, 0), 10);
 }
 
 void potato_destory(Elements *self)

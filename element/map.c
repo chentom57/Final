@@ -45,10 +45,10 @@ void map_draw(Elements *self)
     map *Obj = ((map *)(self->pDerivedObj));
     al_draw_bitmap(Obj->img, Obj->x,Obj->y,0);
     for(int i=0;i<10;i++){
-        al_draw_line(100*i,0,100*i,100*5, al_map_rgb(255, 255, 255),5);
+        al_draw_line(100*i,0,100*i,100*5, al_map_rgb(135,51,0),5);
     }
      for(int i=0;i<=5;i++){
-        al_draw_line(0,i*100,100*10,i*100,al_map_rgb(255, 255, 255),5);
+        al_draw_line(0,i*100,100*10,i*100,al_map_rgb(135,51,0),5);
     }
     
     

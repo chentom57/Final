@@ -204,10 +204,11 @@ void Zombie1_interact(Elements *self, Elements *tar)
 void Zombie1_draw(Elements *self)
 {
     Zombie1 *Obj = ((Zombie1 *)(self->pDerivedObj));
+    /*
     al_draw_circle(Obj->x + Obj->width / 2.5 + 60,
                                      Obj->y + Obj->height / 2.5 + 20 ,
                                      min(Obj->width,Obj->height) / 2.5 , al_map_rgb(255, 255, 255), 3);
-    
+    */
    ALLEGRO_BITMAP *frame = algif_get_bitmap(Obj->gif_status[Obj->state], al_get_time());
     if (frame)
     {

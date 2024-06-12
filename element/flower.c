@@ -249,9 +249,11 @@ void Flower_draw(Elements *self)
     
     // with the state, draw corresponding image
     Flower *chara = ((Flower *)(self->pDerivedObj));
+    /*
     al_draw_circle(chara->x + 60,
                     chara->y + 60,
                     10, al_map_rgb(100, 100, 255), 10);//draw hitbox 
+                    */
     ALLEGRO_BITMAP *frame = algif_get_bitmap(chara->gif_status[chara->state], al_get_time());
     if (frame)
     {
